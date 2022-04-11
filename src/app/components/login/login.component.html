@@ -1,0 +1,39 @@
+<div class="div">
+  <div el-container>
+    <div el-aside width="700px">
+      <img src="assets/img/index.jpg" class="img">
+    </div>
+    <div el-main>
+      <div class="menu">
+        <el-menu (modelChange)="handle($event)" mode="horizontal"
+                 active-text-color="#ffd04b">
+            <a routerLink="">
+              <el-menu-item index="1">登录</el-menu-item>
+            </a>
+            <a routerLink="/register">
+              <el-menu-item index="2">注册</el-menu-item>
+            </a>
+        </el-menu>
+      </div>
+
+      <div class="form">
+        <el-form [formGroup]="infoForm" label-width="100px" [show-icon]="true"
+                 [show-message]="true">
+          <el-form-item label="账户" [required]="true"
+                        [status]="statusCtrl('account')" [error]="messageCtrl('account')">
+            <el-input formControlName="account" type="text"></el-input>
+          </el-form-item>
+
+          <el-form-item label="密码" [required]="true"
+                        [status]="statusCtrl('password')" [error]="messageCtrl('password')">
+            <el-input formControlName="password" native-type="password"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" (click)="submit()">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</div>

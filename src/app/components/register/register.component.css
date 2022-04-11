@@ -1,0 +1,19 @@
+.menu{
+  text-align: center;
+  margin-top: 90px;
+  margin-bottom: 50px;
+  margin-left: 40%;
+  margin-right: 40%;
+}
+.form{
+  vertical-align: center;
+  text-align: center;
+  width: 70%;
+  margin-left: 10%;
+}
+.img{
+  width: 350px;
+  height: 500px;
+  margin-top: 50px;
+  margin-left: 20%;
+}

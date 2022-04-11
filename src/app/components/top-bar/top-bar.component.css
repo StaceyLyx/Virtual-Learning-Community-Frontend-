@@ -1,0 +1,11 @@
+.header{
+  text-align: center;
+  background-color: darkcyan;
+  height: 70px;
+  padding: 50px;
+}
+.headerText{
+  color: white;
+  margin: 0;
+  font-family: "Lucida Handwriting";
+}

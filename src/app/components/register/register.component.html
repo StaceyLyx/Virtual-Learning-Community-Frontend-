@@ -1,0 +1,48 @@
+<div class="div">
+  <div el-container>
+    <div el-aside width="700px">
+      <img src="assets/img/index.jpg" class="img">
+    </div>
+    <div el-main>
+      <div class="menu">
+        <el-menu mode="horizontal"
+                 active-text-color="#ffd04b">
+          <a routerLink="">
+            <el-menu-item index="1">登录</el-menu-item>
+          </a>
+          <a routerLink="/register">
+            <el-menu-item index="2">注册</el-menu-item>
+          </a>
+        </el-menu>
+      </div>
+
+      <div class="form">
+        <el-form [formGroup]="infoForm" label-width="100px" [show-icon]="true"
+                 [show-message]="true" [show-icon]="true">
+          <el-form-item label="账户" [required]="true"
+                        [status]="statusCtrl('account')" [error]="messageCtrl('account')">
+            <el-input formControlName="account" type="text"></el-input>
+          </el-form-item>
+
+          <el-form-item label="邮箱" [status]="statusCtrl('email')" [error]="messageCtrl('email')">
+            <el-input formControlName="email" native-type="text"></el-input>
+          </el-form-item>
+
+          <el-form-item label="密码" [required]="true"
+                        [status]="statusCtrl('password')" [error]="messageCtrl('password')">
+            <el-input formControlName="password" native-type="password"></el-input>
+          </el-form-item>
+
+          <el-form-item label="确认密码" [required]="true"
+                        [status]="statusCtrl('passwordConfirm')" [error]="messageCtrl('passwordConfirm')">
+            <el-input formControlName="passwordConfirm" native-type="password"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button [plain]="true" type="primary" (click)="submit()">注册</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</div>
