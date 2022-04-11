@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl("")
     }else{
       this.message.setOptions({ showClose: true })
-      this.message.error('注册失败，请更正注册信息')
+      this.message.error('注册失败，请修改注册信息')
     }
   }
 
