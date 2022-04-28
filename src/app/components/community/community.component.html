@@ -1,0 +1,12 @@
+<el-aside>
+    <ul class="courseList">
+        <h1 style="text-align: center;">课堂</h1>
+        <li *ngFor="let item of courseList">
+        <!-- 跳转页面的 -->
+            <a class="course-sidebar" [routerLink]="['/assignTask']" routerLinkActive="router-link-active"
+                [queryParams]="{course:item.course}">
+                {{item.course}}: {{item.className}}</a>
+            <br>
+            <br>
+    </ul>
+</el-aside>

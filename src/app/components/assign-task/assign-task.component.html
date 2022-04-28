@@ -1,0 +1,60 @@
+<div class="container">
+    <form [formGroup]="taskForm" >
+        <div class="form-group">
+            <label style="font-family: cursive;">任务名称： </label>
+            <input type="text" formControlName="taskName" class="form-control" id="taskName" [(ngModel)]="taskInfo.taskName"
+             required>
+             <div *ngIf="taskForm.get('taskName').invalid && (taskForm.get('taskName').dirty || taskForm.get('taskName').touched)" class="alert alert-danger">
+                     <div style="font-family: cursive;color:tomato"  *ngIf="taskForm.get('taskName').errors.required">任务名称不能为空</div>
+                    
+             </div>
+        </div>
+        <div class="form-group">
+            <label style="font-family: cursive;">任务课程： </label>
+            <input type="text" formControlName="taskClass" class="form-control" id="taskClass" [(ngModel)]="taskInfo.taskClass"
+                 required>
+                <div *ngIf="taskForm.get('taskClass').invalid && (taskForm.get('taskClass').dirty || taskForm.get('taskClass').touched)" class="alert alert-danger">
+                    <div style="font-family: cursive;color:tomato;"  *ngIf="taskForm.get('taskClass').errors.required">任务课程不能为空</div>
+        </div>
+                </div>
+        <div class="form-group">
+            <label style="font-family: cursive;">分配经验值：</label>
+            <input type="number" min="1" max="10000" formControlName="taskExp" class="form-control" id="taskExp" [(ngModel)]="taskInfo.taskExp"
+                required>
+                <div *ngIf="taskForm.get('taskExp').invalid && (taskForm.get('taskExp').dirty || taskForm.get('taskExp').touched)" class="alert alert-danger">
+                    <div style="font-family: cursive;color:tomato"  *ngIf="taskForm.get('taskExp').errors.required">任务经验值不能为空</div>
+        </div>
+                </div>
+        <div class="form-group">
+            <label style="font-family: cursive;">任务完成时间： </label>
+            <input type="number" min="1" max="10000" id="taskTime" formControlName="taskTime" [(ngModel)]="taskInfo.taskTime"
+                required>
+                <div *ngIf="taskForm.get('taskTime').invalid && (taskForm.get('taskTime').dirty || taskForm.get('taskTime').touched)" class="alert alert-danger">
+                    <div style="font-family: cursive;color:tomato"  *ngIf="taskForm.get('taskTime').errors.required">任务完成时间不能为空</div>
+        </div>
+                </div>
+        <div class="form-group">
+            <input type="radio" formControlName="taskProperty" class="radio1" name="taskProperty" value="1" [(ngModel)]="taskInfo.taskProperty"
+                >
+            <span class="radio-text" style="font-family: cursive;">个人任务</span>
+            <input type="radio" formControlName="taskProperty" class="radio1" name="taskProperty" value="2" [(ngModel)]="taskInfo.taskProperty"
+                >
+            <span class="radio-text" style="font-family: cursive;">团队任务</span>
+            <div *ngIf="taskForm.get('taskProperty').invalid && (taskForm.get('taskProperty').dirty || taskForm.get('taskProperty').touched)" class="alert alert-danger">
+                <div style="font-family: cursive;color:tomato"  *ngIf="taskForm.get('taskProperty').errors.required">不能为空</div>
+    </div>
+        </div>
+        <div class="form-group">
+            <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="1" [(ngModel)]="taskInfo.taskNecessity"
+               >
+            <span class="radio-text" style="font-family: cursive;">可选</span>
+            <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="2" [(ngModel)]="taskInfo.taskNecessity"
+                >
+            <span class="radio-text" style="font-family: cursive;">必选</span>
+            <div *ngIf="taskForm.get('taskNecessity').invalid && (taskForm.get('taskNecessity').dirty || taskForm.get('taskNecessity').touched)" class="alert alert-danger">
+                <div style="font-family: cursive;color:tomato"  *ngIf="taskForm.get('taskNecessity').errors.required">不能为空</div>
+    </div>
+        </div>
+        <button [disabled]="!taskForm.valid" type="submit" class="button" (click)="onSubmit()">提交</button>
+    </form>
+</div>
