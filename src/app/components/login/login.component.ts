@@ -1,5 +1,6 @@
-import {Component, forwardRef, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   })
 
-  constructor(@Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.infoForm = this.formBuilder.group({
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit(){
-    alert("balabala")
+    this.router.navigateByUrl("scene")
   }
 
   handle(index: string): void {
