@@ -21,8 +21,8 @@
         <el-form [formGroup]="infoForm" label-width="100px" [show-icon]="true"
                  [show-message]="true">
           <el-form-item label="账户" [required]="true"
-                        [status]="statusCtrl('account')" [error]="messageCtrl('account')">
-            <el-input formControlName="account" type="text"></el-input>
+                        [status]="statusCtrl('username')" [error]="messageCtrl('username')">
+            <el-input formControlName="username" type="text"></el-input>
           </el-form-item>
 
           <el-form-item label="密码" [required]="true"

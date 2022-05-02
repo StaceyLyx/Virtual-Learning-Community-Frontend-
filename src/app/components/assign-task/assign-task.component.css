@@ -1,0 +1,18 @@
+.container{
+    margin-left: 40%;
+    width:30%;
+    margin-top:50px
+}
+.button{
+    width: 100px;
+    height:40px;
+    font-family: cursive;
+    border-radius: 10px;
+    background-color: rgb(240, 247, 253);
+    text-decoration: antiquewhite;
+    margin-left: 30%;
+    margin-top: 20px;
+}
+.form-group{
+    margin-top: 20px;
+}

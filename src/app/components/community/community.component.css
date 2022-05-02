@@ -1,0 +1,23 @@
+.courseList {
+    padding: 2px;
+    width: 300px;
+    height: 450px;
+    line-height: 20px;
+    color: rgb(123, 124, 109);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #e3eaf1;
+    border: 1px solid #999;
+    list-style: none;
+    text-align: center;
+}
+.course-sidebar{
+    color: #999;
+    font-size: 20px;
+    text-decoration: none;
+}
+.courseList :hover {
+    cursor: pointer;
+    background-color: #d7e6ec;
+}

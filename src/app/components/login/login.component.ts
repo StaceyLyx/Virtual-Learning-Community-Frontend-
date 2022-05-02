@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import axios from 'axios'
+import {ElMessageService} from "element-angular";
 
 @Component({
   selector: 'app-login',
@@ -9,23 +11,63 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
+  url = "localhost:8181"
+
   infoForm: FormGroup = new FormGroup({
-    account: new FormControl(''),
+    username: new FormControl(''),
     password: new FormControl('')
   })
 
+  usernameY: Boolean = false;
+  passwordY: Boolean = false;
+
   constructor(private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private message: ElMessageService) { }
 
   ngOnInit(): void {
     this.infoForm = this.formBuilder.group({
-      account: ['', [this.accountCheck]],
+      username: ['', [this.usernameCheck]],
       password: ['', [this.passwordCheck]]
     })
   }
 
   submit(){
-    this.router.navigateByUrl("scene")
+    if(this.usernameY && this.passwordY){
+      axios({
+        method: 'post',
+        url: this.url + '/login',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          username: this.infoForm.controls['username'].value,
+          password: this.infoForm.controls['password'].value
+        }
+      }).then((response) =>{
+        if(response.status == 200){
+          this.message.setOptions({ showClose: true })
+          this.message.success('登陆成功！')
+          this.router.navigateByUrl("scene").then(r => {
+            if(r){
+              console.log("navigate to scene")
+            }else{
+              this.message.setOptions({ showClose: true })
+              this.message.warning('跳转失败')
+              console.log("navigate failed")
+            }
+          })
+        }
+      }).catch((error) =>{
+        if(error.response.status == 400){
+          this.message.setOptions({ showClose: true })
+          this.message.error("登录失败")
+        }
+      })
+    }else{
+      this.message.setOptions({ showClose: true })
+      this.message.error('请输入用户名与密码')
+    }
   }
 
   handle(index: string): void {
@@ -52,10 +94,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private accountCheck = (control: FormControl): any => {
+  private usernameCheck = (control: FormControl): any => {
     if (!control.value) {
       return { status: 'error', message: '账户是必填项' }
     }
+    this.usernameY = true;
     return { status: 'success' }
   }
 
@@ -63,6 +106,7 @@ export class LoginComponent implements OnInit {
     if (!control.value) {
       return { status: 'error', message: '密码是必填项' }
     }
+    this.passwordY = true;
     return { status: 'success' }
   }
 

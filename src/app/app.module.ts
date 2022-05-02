@@ -11,7 +11,9 @@ import { ElModule } from "element-angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SceneComponent } from './components/scene/scene.component';
-
+import { CommunityComponent } from './components/community/community.component';
+import { AssignTaskComponent } from './components/assign-task/assign-task.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
@@ -19,15 +21,20 @@ import { SceneComponent } from './components/scene/scene.component';
     TopBarComponent,
     LoginComponent,
     RegisterComponent,
-    SceneComponent
+    SceneComponent,
+    CommunityComponent,
+    AssignTaskComponent,
+   
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     ElModule.forRoot(),
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
