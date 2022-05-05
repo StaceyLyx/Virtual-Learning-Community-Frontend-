@@ -5,13 +5,15 @@ import { RegisterComponent } from "./components/register/register.component";
 import { SceneComponent } from "./components/scene/scene.component";
 import { CommunityComponent } from "./components/community/community.component";
 import { AssignTaskComponent } from "./components/assign-task/assign-task.component"
+import {TaskListComponent} from "./components/task-list/task-list.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'scene', component: SceneComponent},
   { path: 'community', component: CommunityComponent},
-  { path: 'assignTask', component: AssignTaskComponent}
+  { path: 'assignTask', component: AssignTaskComponent},
+  { path: 'taskList', component: TaskListComponent},
 ]
 
 @NgModule({

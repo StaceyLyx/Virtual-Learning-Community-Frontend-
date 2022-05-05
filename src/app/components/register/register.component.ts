@@ -11,8 +11,6 @@ import axios from "axios";
 })
 export class RegisterComponent implements OnInit {
 
-  url = "localhost:8181"
-
   infoForm: FormGroup = new FormGroup({
     username: new FormControl(''),
     email: new FormControl(''),
@@ -39,42 +37,40 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(): void{
-    if(this.usernameY && this.emailY && this.passwordY && this.passwordConfirmY){
-      axios({
-        method: 'post',
-        url: this.url + '/register/submit',
-        data: {
+    if(this.usernameY && this.emailY && this.passwordY && this.passwordConfirmY) {
+        axios.post(  'api/register',{
           username: this.infoForm.controls['username'].value,
           email: this.infoForm.controls['email'].value,
-          password: this.infoForm.controls['password'].value
-        }
-      }).then((response) =>{
-        if(response.status == 201){   // 注册成功，默认跳转
-          this.message.setOptions({ showClose: true })
-          this.message.success('注册成功，欢迎来到学习社区')
-          this.router.navigateByUrl("scene").then(r => {
-            if(r){
-              console.log("navigate to scene")
-            }else{
-              this.message.setOptions({ showClose: true })
-              this.message.error('跳转失败')
-              console.log("navigate failed")
-            }
-          })
-        }
-      }).catch((error) =>{
-        if(error.response.status == 400){
-          this.message.setOptions({ showClose: true })
-          this.message.error("注册失败")
-        }else{
-          this.message.setOptions({ showClose: true })
-          this.message.error("后端错误")
-        }
-      })
-    }else{
-      this.message.setOptions({ showClose: true })
-      this.message.error('注册失败，请修改注册信息')
-    }
+          password: this.infoForm.controls['password'].value,
+          phone_num: 123456,
+        }).then((response) =>{
+          if(response.status == 200){   // 注册成功，默认跳转
+            this.message.setOptions({ showClose: true })
+            this.message.success('注册成功，欢迎来到学习社区')
+            this.router.navigateByUrl("scene").then(r => {
+              if(r){
+                console.log("navigate to scene")
+              }else{
+                this.message.setOptions({ showClose: true })
+                this.message.error('跳转失败')
+                console.log("navigate failed")
+              }
+            })
+          }
+        }).catch((error) =>{
+          console.log(error)
+          if(error.response.status == 400){
+            this.message.setOptions({ showClose: true })
+            this.message.error("注册失败")
+          }else{
+            this.message.setOptions({ showClose: true })
+            this.message.error("后端错误")
+          }
+        })
+      }else{
+        this.message.setOptions({ showClose: true })
+        this.message.error('注册失败，请修改注册信息')
+      }
   }
 
   statusCtrl(item: string): string {
@@ -101,33 +97,32 @@ export class RegisterComponent implements OnInit {
     if (!control.value) {
       return { status: 'error', message: '账户是必填项' }
     }
+    this.usernameY = true;
 
-    let msg = ""
-    // 检查账户是否被注册过
-    axios({
-      method: 'post',
-      url: this.url + 'register/username',
-      data: {
-        username: this.infoForm.controls['username'].value
-      }
-    }).then((response) =>{
-      if(response.status == 200){
-        this.usernameY = true
-      }
-    }).catch((error) =>{
-      if(error.status == 400){
-        msg = "该用户名已被注册"
-      }else{
-        msg = error.data
-      }
-      this.usernameY = false
-    })
+    // let msg = ""
+    // // 检查账户是否被注册过
+    // axios.post(  'api/username',{
+    //     username: this.infoForm.controls['username'].value
+    // }).then((response) =>{
+    //   console.log("response ", response)
+    //   if(response.status == 200){
+    //     this.usernameY = true
+    //   }
+    // }).catch((error) =>{
+    //   console.log("error ", error);
+    //   if(error.status == 400){
+    //     msg = "该用户名已被注册"
+    //   }else{
+    //     msg = error.data
+    //   }
+    //   this.usernameY = false
+    // })
 
-    if(this.usernameY){
+    // if(this.usernameY){
       return { status: 'success' }
-    }else{
-      return { status: 'error', message: msg }
-    }
+    // }else{
+    //   return { status: 'error', message: msg }
+    // }
   }
 
   private emailCheck = (control: FormControl): any => {
@@ -135,28 +130,29 @@ export class RegisterComponent implements OnInit {
     let msg = ""
     if(control.value != ""){
       if (!mailReg.test(control.value)) {
+        this.emailY = false;
         return { status: 'error', message: '邮箱格式不正确' }
       }
-
+      this.emailY = true
       // 检查账户是否被注册过
-      axios({
-        method: 'post',
-        url: this.url + 'register/email',
-        data: {
-          email: this.infoForm.controls['email'].value
-        }
-      }).then((response) =>{
-        if(response.status == 200){
-          this.emailY = true
-        }
-      }).catch((error) =>{
-        if(error.status == 400){
-          msg = "该邮箱已被注册"
-        }else{
-          msg = error.data
-        }
-        this.emailY = false
-      })
+      // axios({
+      //   method: 'post',
+      //   url: 'api/register/email',
+      //   data: {
+      //     email: this.infoForm.controls['email'].value
+      //   }
+      // }).then((response) =>{
+      //   if(response.status == 200){
+      //     this.emailY = true
+      //   }
+      // }).catch((error) =>{
+      //   if(error.status == 400){
+      //     msg = "该邮箱已被注册"
+      //   }else{
+      //     msg = error.data
+      //   }
+      //   this.emailY = false
+      // })
     }else{
       this.emailY = true
     }
