@@ -1,0 +1,78 @@
+<nz-layout class="layout">
+  <nz-header>
+    <h1 [class.headerText]="header">Finish and Upload Your Task Here</h1>
+  </nz-header>
+  <div>
+    <ul class="menu" nz-menu nzMode="horizontal">
+      <li nz-menu-item>
+        <i nz-icon nzType="team" nzTheme="outline"></i>
+        前往社区
+      </li>
+      <li nz-menu-item style="float: right">
+        <i nz-icon nzType="home" nzTheme="outline"></i>
+        个人资料
+      </li>
+      <li nz-menu-item style="float: right">
+        <i nz-icon nzType="profile" nzTheme="outline"></i>
+        我的任务
+      </li>
+    </ul>
+  </div>
+
+  <nz-layout>
+    <nz-content class="inner-content">
+      <nz-descriptions nzTitle="{{ task.name }}">
+        <nz-descriptions-item nzTitle="任务截止日期">{{task.ddl}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务类型">{{task.optional | optionalTransformPipe}}
+          &emsp;&emsp;{{task.teamSize | teamSizeTransformPipe}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="完成经验值">{{task.ev}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务发布者">{{task.publisher}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务详情">{{task.description}}</nz-descriptions-item>
+      </nz-descriptions>
+
+      <nz-collapse>
+        <nz-collapse-panel
+          *ngFor="let panel of panels"
+          [nzHeader]="panel.name"
+          [nzActive]="panel.active"
+          [nzExpandedIcon]="panel.icon">
+          <span>
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+              <p>选择上传文件</p>
+
+              <button nz-button>
+                <i nz-icon nzType="upload"></i>
+                添加文件
+              </button>
+
+            </nz-upload>
+
+            <p> </p>
+            <textarea rows="4" nz-input placeholder="添加评论..." [(ngModel)]="inputValue"></textarea>
+
+            <button nz-button [nzType]="'primary'" [hidden]="score" (click)="showModal()">
+              <span>
+                给团队成员打分
+              </span>
+            </button>
+            <nz-modal [(nzVisible)]="isVisible" nzTitle="给你的团队成员分配贡献比例吧！请务必公平公正" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+              <ng-container *nzModalContent>
+                <p>Content one</p>
+                <p>Content two</p>
+                <p>Content three</p>
+              </ng-container>
+            </nz-modal>
+
+            <button nz-button [nzType]="'primary'"
+                    (click)="handleUpload()"
+                    [disabled]="fileList.length === 0"
+                    style="margin-top: 16px">
+              {{ fileList.length === 0 ? '暂无选择文件' : '提交任务' }}
+              </button>
+          </span>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </nz-content>
+    <app-footer></app-footer>
+  </nz-layout>
+</nz-layout>
