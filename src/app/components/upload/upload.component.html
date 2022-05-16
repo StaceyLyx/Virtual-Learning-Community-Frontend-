@@ -23,8 +23,8 @@
     <nz-content class="inner-content">
       <nz-descriptions nzTitle="{{ task.name }}">
         <nz-descriptions-item nzTitle="任务截止日期">{{task.ddl}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="任务类型">{{task.optional | optionalTransformPipe}}
-          &emsp;&emsp;{{task.teamSize | teamSizeTransformPipe}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务类型">{{task.optional | optionalTransform }}
+          &emsp;&emsp;{{task.teamSize | teamSizeTransform }}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="完成经验值">{{task.ev}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="任务发布者">{{task.publisher}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="任务详情">{{task.description}}</nz-descriptions-item>

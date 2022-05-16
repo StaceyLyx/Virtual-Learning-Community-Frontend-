@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'validityTransformPipe'
+  name: 'validityTransform'
 })
-export class ValidityTransformPipePipe implements PipeTransform {
+export class ValidityTransformPipe implements PipeTransform {
 
   transform(value: number): string {
     if (value === 0){

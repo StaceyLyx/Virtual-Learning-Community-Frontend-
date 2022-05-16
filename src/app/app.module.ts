@@ -23,6 +23,18 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import { TeamSizeTransformPipe } from './pipes/team-size-transform.pipe';
+import { ValidityTransformPipe } from './pipes/validity-transform.pipe';
+import { OptionalTransformPipe } from './pipes/optional-transform.pipe';
+import {UploadComponent} from "./components/upload/upload.component";
+import {NzMessageModule} from "ng-zorro-antd/message";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
+import {FooterComponent} from "./components/footer/footer.component";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
+import {NzMenuModule} from "ng-zorro-antd/menu";
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
@@ -34,6 +46,11 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     CommunityComponent,
     AssignTaskComponent,
     TaskListComponent,
+    UploadComponent,
+    FooterComponent,
+    TeamSizeTransformPipe,
+    ValidityTransformPipe,
+    OptionalTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -51,7 +68,15 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NzInputModule,
     NzButtonModule,
     NzDividerModule,
-    NzIconModule
+    NzIconModule,
+    NzMessageModule,
+    NzNotificationModule,
+    NzModalModule,
+    NzUploadModule,
+    NzCollapseModule,
+    NzDescriptionsModule,
+    NzMenuModule,
+    NzTableModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件

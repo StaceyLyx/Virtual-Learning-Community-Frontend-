@@ -6,6 +6,7 @@ import { SceneComponent } from "./components/scene/scene.component";
 import { CommunityComponent } from "./components/community/community.component";
 import { AssignTaskComponent } from "./components/assign-task/assign-task.component"
 import {TaskListComponent} from "./components/task-list/task-list.component";
+import {UploadComponent} from "./components/upload/upload.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'scene', component: SceneComponent},
   { path: 'community', component: CommunityComponent},
   { path: 'assignTask', component: AssignTaskComponent},
-  { path: 'taskList', component: TaskListComponent},
+  { path: 'tasks', component: TaskListComponent},
+  { path: 'tasks/upload/:taskId', component: UploadComponent},
 ]
 
 @NgModule({

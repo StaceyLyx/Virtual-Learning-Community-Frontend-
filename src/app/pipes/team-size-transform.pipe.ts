@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'teamSizeTransformPipe'
+  name: 'teamSizeTransform'
 })
-export class TeamSizeTransformPipePipe implements PipeTransform {
+export class TeamSizeTransformPipe implements PipeTransform {
 
   transform(value: number): string {
     if (value === 1){
@@ -12,5 +12,4 @@ export class TeamSizeTransformPipePipe implements PipeTransform {
       return "团队任务（" + value + "人）";
     }
   }
-
 }

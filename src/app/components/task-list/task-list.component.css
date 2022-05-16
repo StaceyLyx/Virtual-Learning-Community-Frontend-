@@ -6,6 +6,23 @@
   font-family: "Times New Roman";
   font-size: 20px;
 }
+nz-header{
+  background-image: url("../../../assets/img/taskboard.png");
+  height: 130px;
+  text-align: center;
+  line-height: 130px;
+}
+.headerText{
+  color: black;
+  margin: 0;
+  font-family: "Comic Sans MS";
+}
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 500px;
+}
+
 .table-expand {
   font-size: 0;
 }
