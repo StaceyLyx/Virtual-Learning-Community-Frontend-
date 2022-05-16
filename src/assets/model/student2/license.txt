@@ -1,0 +1,11 @@
+Model Information:
+* title:	Alfea's student
+* source:	https://sketchfab.com/3d-models/alfeas-student-8ef2f5050ec54d55a3bf81739fb1c2b1
+* author:	gloriatochii (https://sketchfab.com/gloriatochii)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Alfea's student" (https://sketchfab.com/3d-models/alfeas-student-8ef2f5050ec54d55a3bf81739fb1c2b1) by gloriatochii (https://sketchfab.com/gloriatochii) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

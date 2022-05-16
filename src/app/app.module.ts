@@ -15,6 +15,7 @@ import { CommunityComponent } from './components/community/community.component';
 import { AssignTaskComponent } from './components/assign-task/assign-task.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskListComponent } from './components/task-list/task-list.component';
+import { CommunitySceneComponent } from './components/community-scene/community-scene.component';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
@@ -23,7 +24,27 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzIconModule} from "ng-zorro-antd/icon";
-
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { PersonalSideComponent } from './components/personal-side/personal-side.component';
+import { PersonImageComponent } from './components/person-image/person-image.component';
+import { PersonTaskComponent } from './components/person-task/person-task.component';
+import { CheckComponent } from './components/check/check.component';
+import zh from '@angular/common/locales/zh';
+import {registerLocaleData} from '@angular/common';
+import { FreeTaskComponent } from './components/free-task/free-task.component';
+registerLocaleData(zh);
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
     AppComponent,
@@ -34,6 +55,14 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     CommunityComponent,
     AssignTaskComponent,
     TaskListComponent,
+    CommunitySceneComponent,
+    PersonalInfoComponent,
+    MenuComponent,
+    PersonalSideComponent,
+    PersonImageComponent,
+    PersonTaskComponent,
+    CheckComponent,
+    FreeTaskComponent,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -51,7 +80,18 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NzInputModule,
     NzButtonModule,
     NzDividerModule,
-    NzIconModule
+    NzIconModule,
+    NzListModule,
+    NzInputNumberModule,
+    NzRadioModule,
+    NzTabsModule,
+    NzMenuModule,
+    NzDescriptionsModule,
+    NzImageModule,
+    NzCardModule,
+    NzAvatarModule,
+    NzDatePickerModule,
+    NzSelectModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件

@@ -1,4 +1,4 @@
-.courseList {
+/* .courseList {
     padding: 2px;
     width: 300px;
     height: 450px;
@@ -16,8 +16,20 @@
     color: #999;
     font-size: 20px;
     text-decoration: none;
-}
+} */
 .courseList :hover {
     cursor: pointer;
     background-color: #d7e6ec;
+}
+.header{
+    text-align: center;
+    background-color: rgb(133, 160, 225);
+    height: 100px;
+    padding: 50px;
+    font-size: 40px;
+  }
+.footer{
+    background-color: white;
+    margin-bottom: 0px;
+    position: absolute;
 }
