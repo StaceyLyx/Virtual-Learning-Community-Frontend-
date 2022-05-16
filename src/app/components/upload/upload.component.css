@@ -1,10 +1,5 @@
-.header{
-  text-align: center;
-  background-color: cadetblue;
-  height: 100px;
-  padding: 50px;
-  font-family: "Times New Roman";
-  font-size: 20px;
+.layout {
+  min-height: 100vh;
 }
 nz-header{
   background-image: url("../../../assets/img/taskboard.png");
@@ -20,13 +15,9 @@ nz-header{
 .inner-content {
   padding: 24px;
   background: #fff;
-  min-height: 500px;
+  min-height: 360px;
 }
-
-.table-expand {
-  font-size: 0;
-}
-[nz-icon] {
-  margin-right: 6px;
-  font-size: 24px;
+button{
+  margin: 10px;
+  margin-left: 0;
 }

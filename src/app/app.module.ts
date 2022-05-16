@@ -24,6 +24,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzIconModule} from "ng-zorro-antd/icon";
+
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -45,6 +46,19 @@ import zh from '@angular/common/locales/zh';
 import {registerLocaleData} from '@angular/common';
 import { FreeTaskComponent } from './components/free-task/free-task.component';
 registerLocaleData(zh);
+
+import { TeamSizeTransformPipe } from './pipes/team-size-transform.pipe';
+import { ValidityTransformPipe } from './pipes/validity-transform.pipe';
+import { OptionalTransformPipe } from './pipes/optional-transform.pipe';
+import {UploadComponent} from "./components/upload/upload.component";
+import {NzMessageModule} from "ng-zorro-antd/message";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
+import {FooterComponent} from "./components/footer/footer.component";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+
+
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
     AppComponent,
@@ -63,6 +77,11 @@ registerLocaleData(zh);
     PersonTaskComponent,
     CheckComponent,
     FreeTaskComponent,
+    UploadComponent,
+    FooterComponent,
+    TeamSizeTransformPipe,
+    ValidityTransformPipe,
+    OptionalTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -92,6 +111,14 @@ registerLocaleData(zh);
     NzAvatarModule,
     NzDatePickerModule,
     NzSelectModule,
+    NzMessageModule,
+    NzNotificationModule,
+    NzModalModule,
+    NzUploadModule,
+    NzCollapseModule,
+    NzDescriptionsModule,
+    NzMenuModule,
+    NzTableModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
