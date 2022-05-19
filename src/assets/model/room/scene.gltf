@@ -1,0 +1,574 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1704,
+      "max": [
+        1.0499980449676514,
+        1.1072055101394653,
+        2.5504438877105713
+      ],
+      "min": [
+        -3.356673240661621,
+        -1.107291340827942,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 20448,
+      "componentType": 5126,
+      "count": 1704,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 2706,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 40896,
+      "componentType": 5126,
+      "count": 344,
+      "max": [
+        1.0,
+        1.0135142803192139,
+        1.75
+      ],
+      "min": [
+        -1.508913278579712,
+        -1.0135142803192139,
+        -0.75
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 45024,
+      "componentType": 5126,
+      "count": 344,
+      "max": [
+        1.0,
+        0.9805808067321777,
+        1.2824320947402157e-06
+      ],
+      "min": [
+        0.1961156725883484,
+        -0.9805808067321777,
+        -2.404559609203716e-06
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 10824,
+      "componentType": 5125,
+      "count": 528,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 49152,
+      "componentType": 5126,
+      "count": 2794,
+      "max": [
+        1.0499999523162842,
+        1.0338436365127563,
+        1.8346505165100098
+      ],
+      "min": [
+        -1.5752050876617432,
+        -1.0338436365127563,
+        -0.75
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 82680,
+      "componentType": 5126,
+      "count": 2794,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12936,
+      "componentType": 5125,
+      "count": 4380,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 116208,
+      "componentType": 5126,
+      "count": 55,
+      "max": [
+        1.25,
+        0.11249995231628418,
+        -0.75
+      ],
+      "min": [
+        1.0,
+        -0.11250008642673492,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 116868,
+      "componentType": 5126,
+      "count": 55,
+      "max": [
+        1.0,
+        0.9959744811058044,
+        1.0
+      ],
+      "min": [
+        -0.08963771909475327,
+        -0.9959744811058044,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 30456,
+      "componentType": 5125,
+      "count": 96,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 117528,
+      "componentType": 5126,
+      "count": 2493,
+      "max": [
+        1.0499980449676514,
+        1.0930639505386353,
+        2.5
+      ],
+      "min": [
+        -3.3566718101501465,
+        -1.0930639505386353,
+        -0.75
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 147444,
+      "componentType": 5126,
+      "count": 2493,
+      "max": [
+        1.0,
+        0.9999986290931702,
+        0.007038215175271034
+      ],
+      "min": [
+        -1.0,
+        -0.9999985694885254,
+        -0.19611608982086182
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 30840,
+      "componentType": 5125,
+      "count": 4482,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 177360,
+      "componentType": 5126,
+      "count": 2643,
+      "max": [
+        4.020999908447266,
+        0.6910000443458557,
+        0.05000000074505806
+      ],
+      "min": [
+        0.04000000283122063,
+        -0.009000000543892384,
+        -0.05000000074505806
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 209076,
+      "componentType": 5126,
+      "count": 2643,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 48768,
+      "componentType": 5125,
+      "count": 5112,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Jeff Harper Games (https://sketchfab.com/jeffharpergames)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/school-9ed8652352f24a56aba7f44ec4da2299",
+      "title": "School"
+    },
+    "generator": "Sketchfab-12.66.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 69216,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240792,
+      "byteOffset": 69216,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 310008,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "School_roof",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5885264,
+          0.1172888,
+          0.1240016,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.6
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "School_glass",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2587968,
+          0.6400000000000001,
+          0.6400000000000001,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.6
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "School_framestext",
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.6
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "School_stairs",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.12,
+          0.12,
+          0.12,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.6
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "School_main",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.178464,
+          0.2627952,
+          0.3360192,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.6
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "School_School_roof_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "School_School_glass_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "School_School_frames/text_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "School_School_stairs_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 10,
+            "POSITION": 9
+          },
+          "indices": 11,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "School_School_main_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12
+          },
+          "indices": 14,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "School Text_School_frames/text_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 16,
+            "POSITION": 15
+          },
+          "indices": 17,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "85103f96438b40c0ad05a274d7ee0d19.fbx"
+    },
+    {
+      "children": [
+        3,
+        9
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "matrix": [
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.6292067939183141e-06,
+        -9.999999999999869,
+        0.0,
+        0.0,
+        1.9999999999999736,
+        -3.2584135878366283e-07,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "School"
+    },
+    {
+      "mesh": 0,
+      "name": "School_School_roof_0"
+    },
+    {
+      "mesh": 1,
+      "name": "School_School_glass_0"
+    },
+    {
+      "mesh": 2,
+      "name": "School_School_frames/text_0"
+    },
+    {
+      "mesh": 3,
+      "name": "School_School_stairs_0"
+    },
+    {
+      "mesh": 4,
+      "name": "School_School_main_0"
+    },
+    {
+      "children": [
+        10
+      ],
+      "matrix": [
+        3.610944426365964e-08,
+        6.330037234672787e-24,
+        -0.47828409075736866,
+        0.0,
+        -3.610945185698826e-08,
+        0.4782840907573686,
+        -2.7261877700717262e-15,
+        0.0,
+        0.4782840907573673,
+        3.610945185698837e-08,
+        3.610944426365964e-08,
+        0.0,
+        2.1164286136627197,
+        0.6309871077537537,
+        0.9556711912155151,
+        1.0
+      ],
+      "name": "School Text"
+    },
+    {
+      "mesh": 5,
+      "name": "School Text_School_frames/text_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

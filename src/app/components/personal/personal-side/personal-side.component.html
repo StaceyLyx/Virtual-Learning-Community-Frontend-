@@ -1,0 +1,30 @@
+<div style="background-color: white;">
+  <ul nz-menu nzTheme="light" nzMode="inline">
+    <li nz-menu-item>
+      <a (click)="routerTo('personalInfo')">
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        基本信息
+      </a>
+    </li>
+    <li nz-menu-item>
+      <a (click)="routerTo('personalInfo/Task')">
+        <i nz-icon nzType="read" nzTheme="outline"></i>
+        我的任务
+      </a>
+    </li>
+    <li nz-menu-item>
+      <a (click)="routerTo('personalInfo/Image')">
+        <i nz-icon nzType="file-image" nzTheme="outline"></i>
+        我的个人形象
+      </a>
+    </li>
+    <li nz-menu-item>
+      <a>
+        <i nz-icon nzType="shop" nzTheme="outline"></i>
+        经验商城
+      </a>
+    </li>
+  </ul>
+</div>
+
+

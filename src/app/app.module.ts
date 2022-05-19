@@ -35,6 +35,23 @@ import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzCollapseModule} from "ng-zorro-antd/collapse";
 import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
 import {NzMenuModule} from "ng-zorro-antd/menu";
+import {CommunitySceneComponent} from "./components/community-scene/community-scene.component";
+import {PersonalInfoComponent} from "./components/personal/personal-info/personal-info.component";
+import {PersonalSideComponent} from "./components/personal/personal-side/personal-side.component";
+import {PersonImageComponent} from "./components/personal/person-image/person-image.component";
+import {PersonTaskComponent} from "./components/personal/person-task/person-task.component";
+import {MenuComponent} from "./components/personal/menu/menu.component";
+import {CheckComponent} from "./components/check/check.component";
+import {FreeTaskComponent} from "./components/free-task/free-task.component";
+import {NzCardModule} from "ng-zorro-antd/card";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NzAvatarModule} from "ng-zorro-antd/avatar";
+import {NzImageModule} from "ng-zorro-antd/image";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import {NzListModule} from "ng-zorro-antd/list";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
@@ -46,6 +63,14 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
     CommunityComponent,
     AssignTaskComponent,
     TaskListComponent,
+    CommunitySceneComponent,
+    PersonalInfoComponent,
+    MenuComponent,
+    PersonalSideComponent,
+    PersonImageComponent,
+    PersonTaskComponent,
+    CheckComponent,
+    FreeTaskComponent,
     UploadComponent,
     FooterComponent,
     TeamSizeTransformPipe,
@@ -69,6 +94,17 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
     NzButtonModule,
     NzDividerModule,
     NzIconModule,
+    NzListModule,
+    NzInputNumberModule,
+    NzRadioModule,
+    NzTabsModule,
+    NzMenuModule,
+    NzDescriptionsModule,
+    NzImageModule,
+    NzCardModule,
+    NzAvatarModule,
+    NzDatePickerModule,
+    NzSelectModule,
     NzMessageModule,
     NzNotificationModule,
     NzModalModule,

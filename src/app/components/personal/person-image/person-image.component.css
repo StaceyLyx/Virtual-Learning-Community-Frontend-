@@ -1,0 +1,16 @@
+.header{
+  text-align: center;
+  background-color: darkcyan;
+  height: 100px;
+  padding: 20px;
+}
+.headerText{
+  color: white;
+  font-family: "楷体";
+  height: 100px;
+}
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 500px;
+}

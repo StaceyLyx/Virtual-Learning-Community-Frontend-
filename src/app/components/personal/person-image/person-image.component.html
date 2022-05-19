@@ -1,0 +1,66 @@
+<nz-layout>
+  <nz-header class="header">
+    <h1 class="headerText">我的虚拟形象</h1>
+  </nz-header>
+
+  <app-menu></app-menu>
+
+  <nz-layout>
+    <nz-sider style="background-color: white;">
+      <app-personal-side></app-personal-side>
+    </nz-sider>
+
+    <nz-content class="inner-content">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="8">
+          <nz-card nzHoverable style="width:200px" [nzCover]="cover1">
+            <nz-card-meta nzTitle="Image 1" style="text-align: center;" nzDescription="   "></nz-card-meta>
+            <button nz-button nzType="default" nzShape="circle" style="margin-left: 50px;" (click)="select1()">
+              <i nz-icon nzType="check" nzTheme="outline"></i></button>
+          </nz-card>
+          <ng-template #cover1 >
+            <img nz-image width="200px"height="200px" nzSrc="assets/img/1.jpg"  alt="1"
+            />
+          </ng-template>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-card nzHoverable style="width:200px" [nzCover]="cover2">
+            <nz-card-meta nzTitle="Image 2" style="text-align: center;" nzDescription="   "></nz-card-meta>
+            <button nz-button nzType="default" nzShape="circle" style="margin-left: 50px;" (click)="select2()">
+              <i nz-icon nzType="check" nzTheme="outline"></i></button>
+
+          </nz-card>
+          <ng-template #cover2 >
+            <img nz-image width="200px"height="200px" nzSrc="assets/img/2.jpg"  alt="2" id="2"
+            />
+          </ng-template>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-card nzHoverable style="width:200px" [nzCover]="cover3">
+            <nz-card-meta nzTitle="Image 3" style="text-align: center;" nzDescription="   "></nz-card-meta>
+            <button nz-button nzType="default" nzShape="circle" style="margin-left: 50px;" (click)="select3()">
+              <i nz-icon nzType="check" nzTheme="outline"></i></button>
+          </nz-card>
+          <ng-template #cover3>
+            <img nz-image width="200px"height="200px" nzSrc="assets/img/3.jpg"  alt="3"
+            />
+          </ng-template>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-card nzHoverable style="width:200px" [nzCover]="cover4">
+            <nz-card-meta nzTitle="Image 4" style="text-align: center;" nzDescription="   "></nz-card-meta>
+            <button nz-button nzType="default" nzShape="circle" style="margin-left: 50px;" (click)="select4()" >
+              <i nz-icon nzType="check" nzTheme="outline"></i></button>
+          </nz-card>
+          <ng-template #cover4 >
+            <img nz-image width="200px"height="200px" nzSrc="assets/img/4.jpg"  alt="4"
+            />
+          </ng-template>
+        </div>
+
+      </div>
+    </nz-content>
+  </nz-layout>
+
+  <app-footer></app-footer>
+</nz-layout>

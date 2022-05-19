@@ -16,3 +16,10 @@
 .form-group{
     margin-top: 20px;
 }
+.header{
+    text-align: center;
+    background-color: rgb(133, 160, 225);
+    height: 100px;
+    padding: 50px;
+    font-size: 40px;
+  }
