@@ -62,12 +62,12 @@ export class RegisterComponent implements OnInit {
           }
         })
       }else{
-      Object.values(this.infoForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+        Object.values(this.infoForm.controls).forEach(control => {
+          if (control.invalid) {
+            control.markAsDirty();
+            control.updateValueAndValidity({ onlySelf: true });
+          }
+        });
       }
   }
 

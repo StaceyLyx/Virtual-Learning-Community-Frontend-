@@ -4,8 +4,8 @@ import {animate} from "@angular/animations";
 import * as THREE from 'three';
 import {Object3D, Raycaster, Scene, Vector2, WebGLRenderer} from "three";
 import {Router} from "@angular/router";
-import {ElMessageService} from "element-angular";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-scene',
@@ -28,10 +28,8 @@ export class SceneComponent implements OnInit {
   private plane = new THREE.Mesh( this.planeGeometry, this.planeMaterial );
   private CONTROLS = new OrbitControls(this.CAMERA, this.RENDERER.domElement);
 
-  show: Boolean = true;
-
   constructor(private router: Router,
-              private message: ElMessageService) { }
+              private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.canvasContainer?.nativeElement.append(this.RENDERER.domElement);
@@ -48,16 +46,14 @@ export class SceneComponent implements OnInit {
       let intersects = rayCaster.intersectObjects(this.SCENE.children, true);
       const intersect = intersects.filter(intersect => SceneComponent.task(intersect.object))[0];
       if(intersect != undefined){
-        // 先清除之前渲染的3D场景
-        while(this.SCENE.children.length > 0){
-          this.SCENE.remove(this.SCENE.children[0]);
-        }
-        this.RENDERER.setClearColor(0xFFFFFF, 1.0);
-        this.router.navigateByUrl("taskList").then(r => {
+        // 需要先移除three.js渲染的canvas标签
+        const div = document.getElementsByTagName('canvas')[0]
+        document.body.removeChild(div);
+
+        this.router.navigateByUrl("tasks").then(r => {
           if (r) {
             console.log("navigate to scene")
           } else {
-            this.message.setOptions({showClose: true})
             this.message.warning('跳转失败')
             console.log("navigate failed")
           }

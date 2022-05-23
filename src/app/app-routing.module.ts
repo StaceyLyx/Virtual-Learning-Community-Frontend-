@@ -12,7 +12,7 @@ import { PersonImageComponent } from './components/personal/person-image/person-
 import { PersonalInfoComponent } from './components/personal/personal-info/personal-info.component';
 import { CheckComponent } from './components/check/check.component';
 import { PersonTaskComponent } from './components/personal/person-task/person-task.component';
-import { FreeTaskComponent } from './components/free-task/free-task.component';
+import { FreeTaskComponent } from './components/personal/free-task/free-task.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -26,8 +26,8 @@ const routes: Routes = [
   { path: 'personalInfo', component: PersonalInfoComponent},
   { path: 'personalInfo/Image', component: PersonImageComponent},
   { path: 'personalInfo/Task', component: PersonTaskComponent},
+  { path: 'personalInfo/freeTask', component: FreeTaskComponent},
   { path: 'check', component: CheckComponent},
-  { path: 'freeTask', component: FreeTaskComponent},
 ]
 
 @NgModule({

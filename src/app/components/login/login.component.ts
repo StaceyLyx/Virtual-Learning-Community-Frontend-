@@ -30,40 +30,48 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    if(this.infoForm.valid) {
-        axios.post(  'login',{
-            username: this.infoForm.controls['username'].value,
-            password: this.infoForm.controls['password'].value,
-        }).then((response) =>{
-          console.log("response: ", response)
-          if(response.status === 200){
-            // 登录成功
-            sessionStorage.setItem("userId", response.data.userid)
-            sessionStorage.setItem("token", response.data.token)
-            this.message.create('success', '登陆成功！')
-            this.router.navigateByUrl("tasks").then(r => {
-              if(r){
-                console.log("navigate to scene")
-              }else{
-                this.message.create('warning', '跳转失败')
-                console.log("navigate failed")
-              }
-            })
-          }
-        }).catch((error) =>{
-          console.log(error);
-          if(error.response.status == 400){
-            this.message.create('error', "用户名与密码错误")
-          }
-        })
-      }else{
-        Object.values(this.infoForm.controls).forEach(control =>{
-          if(control.invalid){
-            control.markAsDirty();
-            control.updateValueAndValidity();
-          }
-        })
-      }
+    this.router.navigateByUrl("scene").then(r => {
+                if(r){
+                  console.log("navigate to scene")
+                }else{
+                  this.message.create('warning', '跳转失败')
+                  console.log("navigate failed")
+                }
+              })
+    // if(this.infoForm.valid) {
+    //     axios.post(  'login',{
+    //         username: this.infoForm.controls['username'].value,
+    //         password: this.infoForm.controls['password'].value,
+    //     }).then((response) =>{
+    //       console.log("response: ", response)
+    //       if(response.status === 200){
+    //         // 登录成功
+    //         sessionStorage.setItem("userId", response.data.userid)
+    //         sessionStorage.setItem("token", response.data.token)
+    //         this.message.create('success', '登陆成功！')
+    //         this.router.navigateByUrl("tasks").then(r => {
+    //           if(r){
+    //             console.log("navigate to scene")
+    //           }else{
+    //             this.message.create('warning', '跳转失败')
+    //             console.log("navigate failed")
+    //           }
+    //         })
+    //       }
+    //     }).catch((error) =>{
+    //       console.log(error);
+    //       if(error.response.status == 400){
+    //         this.message.create('error', "用户名与密码错误")
+    //       }
+    //     })
+    //   }else{
+    //     Object.values(this.infoForm.controls).forEach(control =>{
+    //       if(control.invalid){
+    //         control.markAsDirty();
+    //         control.updateValueAndValidity();
+    //       }
+    //     })
+    //   }
   }
 
 }

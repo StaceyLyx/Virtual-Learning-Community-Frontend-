@@ -9,8 +9,16 @@
       退出登录
     </li>
     <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
+      <i nz-icon nzType="home" nzTheme="outline"></i>
+      个人资料
+    </li>
+    <li nz-menu-item style="float: right" (click)="routerTo('personalInfo/freeTask')">
       <i nz-icon nzType="send" nzTheme="outline"></i>
-      发布任务
+      发布我的任务
+    </li>
+    <li nz-menu-item>
+      <i nz-icon nzType="shop" nzTheme="outline"></i>
+      经验商城
     </li>
   </ul>
 </div>

@@ -42,7 +42,7 @@ import {PersonImageComponent} from "./components/personal/person-image/person-im
 import {PersonTaskComponent} from "./components/personal/person-task/person-task.component";
 import {MenuComponent} from "./components/personal/menu/menu.component";
 import {CheckComponent} from "./components/check/check.component";
-import {FreeTaskComponent} from "./components/free-task/free-task.component";
+import {FreeTaskComponent} from "./components/personal/free-task/free-task.component";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
@@ -52,6 +52,13 @@ import {NzListModule} from "ng-zorro-antd/list";
 import {NzTabsModule} from "ng-zorro-antd/tabs";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzCascaderModule} from "ng-zorro-antd/cascader";
+import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+import {NzProgressModule} from "ng-zorro-antd/progress";
+registerLocaleData(zh);
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
@@ -113,6 +120,13 @@ import {NzSelectModule} from "ng-zorro-antd/select";
     NzDescriptionsModule,
     NzMenuModule,
     NzTableModule,
+    NzDividerModule,
+    NzStepsModule,
+    NzCascaderModule,
+    NzDatePickerModule,
+    NzTimePickerModule,
+    NzInputNumberModule,
+    NzProgressModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
