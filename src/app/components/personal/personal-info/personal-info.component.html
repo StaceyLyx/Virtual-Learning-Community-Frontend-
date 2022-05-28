@@ -1,4 +1,4 @@
-<nz-layout>
+<nz-layout style="min-height: calc(100vh)">
   <nz-header class="header">
     <h1 class="headerText">我的资料</h1>
   </nz-header>
@@ -11,20 +11,13 @@
     </nz-sider>
 
     <nz-content class="inner-content">
-      <nz-descriptions nzTitle="Basic Info"  style="text-align: center; " *ngFor="let Info of Info">
-        <nz-descriptions-item nzTitle="UserName">{{Info.username}}</nz-descriptions-item>
+      <nz-descriptions nzTitle="我的信息">
+        <nz-descriptions-item nzTitle="用户名">{{info.username}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="注册手机号码">{{info.phone_num}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="注册邮箱">{{info.email}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="经验值">{{info.ev}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="注册日期">{{info.register_date}}</nz-descriptions-item>
       </nz-descriptions>
-
-      <nz-descriptions  *ngFor="let Info of Info">
-        <nz-descriptions-item nzTitle="Email">{{Info.email}}</nz-descriptions-item>
-      </nz-descriptions>
-      <nz-descriptions  *ngFor="let Info of Info">
-        <nz-descriptions-item nzTitle="Phone">{{Info.phone}}</nz-descriptions-item>
-      </nz-descriptions>
-      <nz-descriptions  *ngFor="let Info of Info">
-        <nz-descriptions-item nzTitle="RegDate">{{Info.regDate}}</nz-descriptions-item>
-      </nz-descriptions>
-
     </nz-content>
   </nz-layout>
 

@@ -82,7 +82,10 @@
 
       <nz-divider nzText="确认任务提交" nzOrientation="left"></nz-divider>
 
-      <button nz-button [nzSize]="size" nzType="primary" (click)="onSubmit()">提交任务</button>
+      <button nz-button [hidden]="!status.hidden" [nzSize]="size" nzType="primary" (click)="onSubmit()">提交任务</button>
+      <nz-result [hidden]="status.hidden"
+                 [nzStatus]="status.status" [nzTitle]="status.title" [nzSubTitle]="status.subTitle">
+      </nz-result>
     </nz-content>
   </nz-layout>
   <app-footer></app-footer>

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.router.navigateByUrl("scene").then(r => {
+    this.router.navigateByUrl("class").then(r => {
                 if(r){
                   console.log("navigate to scene")
                 }else{

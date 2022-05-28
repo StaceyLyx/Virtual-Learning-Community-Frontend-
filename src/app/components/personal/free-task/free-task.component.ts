@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ElMessageService } from 'element-angular';
 import {NzCascaderOption} from "ng-zorro-antd/cascader";
 import {NzButtonSize} from "ng-zorro-antd/button";
+import {Router} from "@angular/router";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-free-task',
@@ -12,7 +14,9 @@ import {NzButtonSize} from "ng-zorro-antd/button";
 })
 export class FreeTaskComponent implements OnInit {
 
-  constructor( @Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder, private message: ElMessageService) { }
+  constructor( @Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
+               private message: NzMessageService,
+               private router: Router) { }
 
   task: FormGroup = new FormGroup({
     name: new FormControl(null),    // 任务名称
@@ -70,15 +74,6 @@ export class FreeTaskComponent implements OnInit {
       this.typeOptions = this.types;
     }, 100)
 
-    // window.addEventListener("keyup", () => {
-    //   let temp = 0
-    //   Object.values(this.task.controls).forEach(control => {
-    //     if (control.valid) {
-    //       temp += 16.5
-    //     }
-    //   });
-    //   this.percent = temp;
-    // })
     window.addEventListener("mousemove", () => {
       let temp = 0
       Object.values(this.task.controls).forEach(control => {
@@ -90,15 +85,23 @@ export class FreeTaskComponent implements OnInit {
     })
   }
 
+  status: any = {
+    hidden: true,
+    status: null,
+    title: null,
+    subTitle: null,
+  }
   onSubmit(){
-    console.log(this.task.value)
+    this.status.status = "success";
+    this.status.title = "任务发布成功！去课堂列表中查看你的任务吧！";
+    this.status.subTitle = "任务名：高级Web 任务号：1";
+    this.status.hidden = false;
     // axios.post( 'http://localhost:8081/createFreeTask',{
     //    task: this.freeTask.controls['content'].value,
     //    ex:this.freeTask.controls['taskExp'].value,
     //    userId:0
     // }).then((response) =>{
     //   if(response.status == 200){
-    //     this.message.setOptions({ showClose: true })
     //     this.message.success('任务布置成功')
     //   }
     // }).catch((error) =>{

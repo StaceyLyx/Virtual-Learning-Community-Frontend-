@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ElMessageService} from "element-angular";
 import axios from "axios";
 import {NzMessageService} from "ng-zorro-antd/message";
 
@@ -44,7 +43,7 @@ export class RegisterComponent implements OnInit {
         }).then((response) =>{
           if(response.status == 200){   // 注册成功，默认跳转
             this.message.success('注册成功，欢迎来到学习社区')
-            this.router.navigateByUrl("scene").then(r => {
+            this.router.navigateByUrl("class").then(r => {
               if(r){
                 console.log("navigate to scene")
               }else{

@@ -58,6 +58,7 @@ import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {NzProgressModule} from "ng-zorro-antd/progress";
+import {NzResultModule} from "ng-zorro-antd/result";
 registerLocaleData(zh);
 
 @NgModule({
@@ -127,6 +128,7 @@ registerLocaleData(zh);
     NzTimePickerModule,
     NzInputNumberModule,
     NzProgressModule,
+    NzResultModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件

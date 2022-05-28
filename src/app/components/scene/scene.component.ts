@@ -50,7 +50,7 @@ export class SceneComponent implements OnInit {
         const div = document.getElementsByTagName('canvas')[0]
         document.body.removeChild(div);
 
-        this.router.navigateByUrl("tasks").then(r => {
+        this.router.navigateByUrl("class/tasks").then(r => {
           if (r) {
             console.log("navigate to scene")
           } else {

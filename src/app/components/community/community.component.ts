@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseListService } from 'src/app/course-list.service'
+import { CourseListService } from 'src/app/services/course-list.service'
 import { ActivatedRoute } from '@angular/router';
 import {Router} from "@angular/router";
 import axios from 'axios'
