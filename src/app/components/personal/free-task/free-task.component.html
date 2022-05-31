@@ -1,0 +1,92 @@
+<nz-layout style="min-height: calc(100vh);">
+  <nz-header class="header">
+    <h1 class="headerText">发布你的任务吧！</h1>
+  </nz-header>
+
+  <app-menu></app-menu>
+
+  <nz-layout>
+    <nz-content class="inner-content">
+      <nz-progress [nzPercent]="percent"
+                   [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
+                   nzStatus="active"></nz-progress>
+
+      <form nz-form [formGroup]="task">
+        <nz-divider nzText="任务基本信息" nzOrientation="left"></nz-divider>
+        <div nz-row [nzGutter]="20">
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="name">任务名称</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="任务名称是必填项">
+                <input style="text-align: center"
+                  [placeholder]="nameDefault" nz-input formControlName="name" id="name" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="class">所属课堂</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="所属课堂是必选项">
+                <nz-cascader formControlName="class" id="class"
+                             [nzOptions]="classOptions"
+                             [nzShowSearch]="true"></nz-cascader>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="ddl">截止时间</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="截止时间是必选项">
+                <nz-date-picker formControlName="ddl" id="ddl" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                  ngModel></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="20">
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="type">任务类型</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="任务类型是必选项">
+                <nz-cascader formControlName="type" id="type"
+                             [nzOptions]="typeOptions"
+                             [nzShowSearch]="true"></nz-cascader>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="type">完成任务经验值</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="经验值是必填项">
+                <nz-input-number formControlName="ev" id="ev"
+                                 style="text-align: center"
+                                 [nzPlaceHolder]="evDefault"
+                                 [nzMin]="1" [nzMax]="10"
+                                 [nzStep]="1"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <nz-divider nzText="任务详细描述" nzOrientation="left"></nz-divider>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-textarea-count [nzMaxCharacterCount]="200">
+              <textarea rows="4" formControlName="description" nz-input></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+
+      <nz-divider nzText="确认任务提交" nzOrientation="left"></nz-divider>
+
+      <button nz-button [hidden]="!status.hidden" [nzSize]="size" nzType="primary" (click)="onSubmit()">提交任务</button>
+      <nz-result [hidden]="status.hidden"
+                 [nzStatus]="status.status" [nzTitle]="status.title" [nzSubTitle]="status.subTitle">
+      </nz-result>
+    </nz-content>
+  </nz-layout>
+  <app-footer></app-footer>
+</nz-layout>

@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import {ElMessageService} from "element-angular";
+import {NzMessageService} from "ng-zorro-antd/message";
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.css']
 })
 export class PersonalInfoComponent implements OnInit {
-   Info:any
-  constructor(private message: ElMessageService) { }
+  constructor(private message: NzMessageService) { }
 
-  ngOnInit(): void {
-    this.getInfo()
+  info: any = {
+    username: "廖妍昕",
+    email: "outlook.com",
+    phone_num: 123,
+    ev: 1,
+    register_date:"2021-1-2",
   }
 
-  getInfo() {
+  ngOnInit(): void {
     // axios.get('retrieveTasks/user', {
     //   params: {
     //     userId: 0
@@ -37,4 +41,5 @@ export class PersonalInfoComponent implements OnInit {
     //   }
     // })
   }
+
 }

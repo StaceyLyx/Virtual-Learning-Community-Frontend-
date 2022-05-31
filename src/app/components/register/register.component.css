@@ -1,24 +1,21 @@
 .header{
   text-align: center;
   background-color: darkcyan;
-  height: 100px;
-  padding: 20px;
+  height: 110px;
+  padding: 35px;
 }
 .headerText{
   color: white;
   font-family: "Lucida Handwriting";
-  height: 100px;
 }
 .inner-content {
   text-align: center;
   vertical-align: middle;
-  padding: 24px;
   background: #fff;
-  min-height: 550px;
 }
 .form{
   margin-top: 150px;
-  margin-left: 20%;
+  margin-left: 25%;
   max-width: 800px;
 }
 .register-area{

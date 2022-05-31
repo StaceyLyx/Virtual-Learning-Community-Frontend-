@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseListService } from 'src/app/course-list.service'
+import { CourseListService } from 'src/app/services/course-list.service'
 import { ActivatedRoute } from '@angular/router';
 import {Router} from "@angular/router";
 import axios from 'axios'
-
-
 import {ElMessageService} from "element-angular";
 import { CommunitySceneComponent } from '../community-scene/community-scene.component';
 import { from } from 'rxjs';
@@ -29,11 +27,11 @@ export class CommunityComponent implements OnInit {
     this.getCourse();
   }
 
-  
+
 
   getCourse() {
     axios.get('https://www.fastmock.site/mock/aefaf6d191fd75512768a9b71ca2fea4/study/getCourse', {
-      
+
     }).then((res) =>{
       console.log(res)
       if(res.status == 200){

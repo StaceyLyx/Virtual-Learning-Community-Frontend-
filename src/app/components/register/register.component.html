@@ -1,10 +1,9 @@
-<nz-layout>
+<nz-layout style="min-height: calc(100vh)">
   <nz-header class="header">
     <h1 class="headerText">Virtual Community</h1>
   </nz-header>
 
   <nz-content class="inner-content">
-    <p>一些欢迎balabala</p>
     <form class="form" nz-form [formGroup]="infoForm" (ngSubmit)="submit()">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>

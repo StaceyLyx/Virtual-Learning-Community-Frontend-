@@ -30,8 +30,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(private router: Router,
               private notification: NzNotificationService,
-              private message: NzMessageService,
-              private takeService: TaskServiceService) { }
+              private message: NzMessageService) { }
 
   tableData: any = []
 

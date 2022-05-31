@@ -44,8 +44,6 @@ import { PersonTaskComponent } from './components/person-task/person-task.compon
 import { CheckComponent } from './components/check/check.component';
 import zh from '@angular/common/locales/zh';
 import {registerLocaleData} from '@angular/common';
-import { FreeTaskComponent } from './components/free-task/free-task.component';
-registerLocaleData(zh);
 
 import { TeamSizeTransformPipe } from './pipes/team-size-transform.pipe';
 import { ValidityTransformPipe } from './pipes/validity-transform.pipe';
@@ -58,7 +56,14 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzCollapseModule} from "ng-zorro-antd/collapse";
 
+import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzCascaderModule} from "ng-zorro-antd/cascader";
+import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
 
+import {NzProgressModule} from "ng-zorro-antd/progress";
+import {NzResultModule} from "ng-zorro-antd/result";
+import {FreeTaskComponent} from "./components/personal/free-task/free-task.component";
+registerLocaleData(zh);
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
@@ -120,6 +125,14 @@ import {NzCollapseModule} from "ng-zorro-antd/collapse";
     NzDescriptionsModule,
     NzMenuModule,
     NzTableModule,
+    NzDividerModule,
+    NzStepsModule,
+    NzCascaderModule,
+    NzDatePickerModule,
+    NzTimePickerModule,
+    NzInputNumberModule,
+    NzProgressModule,
+    NzResultModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件

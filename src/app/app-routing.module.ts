@@ -12,27 +12,32 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
 import { PersonImageComponent } from './components/person-image/person-image.component';
 import { PersonTaskComponent } from './components/person-task/person-task.component';
 import { CheckComponent } from './components/check/check.component';
-import { FreeTaskComponent } from './components/free-task/free-task.component';
+import {FreeTaskComponent} from "./components/personal/free-task/free-task.component";
 import {UploadComponent} from "./components/upload/upload.component";
 
 const routes: Routes = [
+  // 登陆注册
   { path: '', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'scene', component: SceneComponent},
-  { path: 'tasks', component: TaskListComponent},
-  { path: 'tasks/upload/:taskId', component: UploadComponent},
+  // 社区
   { path: 'community', component: CommunityComponent},
   { path: 'assignTask', component: AssignTaskComponent},
   { path: 'communityScene', component: CommunitySceneComponent},
+  // 虚拟课堂
+  { path: 'class', component: SceneComponent},
+  { path: 'class/tasks', component: TaskListComponent},
+  { path: 'tasks/upload/:taskId', component: UploadComponent},
+  // 个人资料
   { path: 'personalInfo', component: PersonalInfoComponent},
   { path: 'personalInfo/Image', component: PersonImageComponent},
   { path: 'personalInfo/Task', component: PersonTaskComponent},
+  //{ path: 'personalInfo/freeTask', component: FreeTaskComponent},
+
   { path: 'check', component: CheckComponent},
-  { path: 'freeTask', component: FreeTaskComponent},
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload', enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

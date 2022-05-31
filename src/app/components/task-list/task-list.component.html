@@ -1,11 +1,11 @@
-<nz-layout>
+<nz-layout style="min-height: calc(100vh)">
   <nz-header>
     <h1 [class.headerText]="header">高级web&emsp;TASKBOARD</h1>
   </nz-header>
 
   <div>
     <ul class="menu" nz-menu nzMode="horizontal">
-      <li nz-menu-item>
+      <li nz-menu-item (click)="routerTo('class')">
         <i nz-icon nzType="left" nzTheme="outline"></i>
         返回课堂
       </li>

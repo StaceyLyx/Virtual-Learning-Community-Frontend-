@@ -23,8 +23,7 @@ export class MenuComponent implements OnInit {
       if (r) {
         console.log("navigate successfully")
       } else {
-        this.message.create('error', '跳转失败');
-        console.log("navigate failed")
+        console.log("local index")
       }
     })
   }

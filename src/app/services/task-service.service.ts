@@ -9,11 +9,6 @@ export class TaskServiceService {
   constructor() { }
   tableData: any = []
 
-  getTasksByClass(): any{
-
-    return this.tableData
-  }
-
   getTasksByUser(): any{
     axios.get('retrieveTasks/user', {
       params: {

@@ -1,0 +1,23 @@
+.header{
+  text-align: center;
+  background-color: darkcyan;
+  height: 100px;
+  padding: 20px;
+}
+.headerText{
+  color: white;
+  font-family: "楷体";
+  height: 100px;
+}
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  text-align: center;
+}
+nz-date-picker{
+  margin: 0 8px 12px 0;
+}
+nz-input-number{
+  width: 200px;
+}
+
