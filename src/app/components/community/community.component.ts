@@ -3,7 +3,7 @@ import { CourseListService } from 'src/app/course-list.service'
 import { ActivatedRoute } from '@angular/router';
 import {Router} from "@angular/router";
 import axios from 'axios'
-import {loader,renderer,scene,ambient,camera,controls, animate,onWindowResize,initControls} from '../community-scene/application'
+
 
 import {ElMessageService} from "element-angular";
 import { CommunitySceneComponent } from '../community-scene/community-scene.component';

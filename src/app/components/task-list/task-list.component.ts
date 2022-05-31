@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import axios from "axios";
-import {ElMessageService} from "element-angular";
 import {Router} from "@angular/router";
 import {TaskServiceService} from "../../services/task-service.service";
 import {NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
@@ -31,10 +30,37 @@ export class TaskListComponent implements OnInit {
 
   constructor(private router: Router,
               private notification: NzNotificationService,
-              private taskService: TaskServiceService) { }
+              private message: NzMessageService,
+              private takeService: TaskServiceService) { }
+
+  tableData: any = []
+
+  ngOnInit(): void {
+    axios.get('retrieveTasks/class', {
+      params: {
+        classId: 1
+      }
+    }).then((response) =>{
+      console.log("response", response)
+      if(response.status == 200){
+        for(let i = 0; i < response.data.result.length; ++i){
+          this.tableData = [...this.tableData,{
+            id: response.data.result[i].id,
+            name: response.data.result[i].name,
+            ddl: response.data.result[i].ddl,
+            optional: response.data.result[i].optional,
+            validity: response.data.result[i].validity,
+            teamSize: 1,
+            description: response.data.result[i].description
+          }]
+        }
+      }
+    }).catch((error) =>{
+      console.log("error: ", error)
+    })
+  }
 
   expandSet = new Set<number>();
-  tableData: any = []
   listOfColumns: ColumnItem[] = [
     {
       name: '任务名称',
@@ -79,31 +105,50 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.getTaskList();
-  }
-
-  getTaskList() {
-    this.tableData = this.taskService.getTasks()
-  }
-
   disabled(value: number): boolean{
     return value !== 1;
   }
 
   acceptTasks(taskId: number, teamSize: number){
     if(teamSize == 1){
-      this.notification.create(
-        'success',
-        '接受个人任务',
-        '去“我的任务”里完成任务吧！'
-      )
+      axios.post('personalTaskOn', {
+        taskId: taskId,
+        userId: 9
+      }).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.notification.create(
+            'success',
+            '接受个人任务',
+            '去“我的任务”里查看任务吧！'
+          )
+        }
+      }).catch(error => {
+        console.log("error: ", error)
+        this.notification.create(
+          'error',
+          'Oops！',
+          error.message
+        )
+      })
     }else{
+      // TODO: 团队任务websocket
       this.notification.create(
         'success',
         '接受团队任务',
         '去“我的任务”查看任务进展情况吧！'
       )
     }
+  }
+
+  routerTo(path: string){
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        this.message.create('error', '跳转失败');
+        console.log("navigate failed")
+      }
+    })
   }
 }

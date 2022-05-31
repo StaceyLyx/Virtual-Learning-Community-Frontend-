@@ -1,19 +1,32 @@
-.menu{
+.header{
   text-align: center;
-  margin-top: 90px;
-  margin-bottom: 50px;
-  margin-left: 40%;
-  margin-right: 40%;
+  background-color: darkcyan;
+  height: 100px;
+  padding: 20px;
 }
-.form{
-  vertical-align: center;
-  text-align: center;
-  width: 70%;
-  margin-left: 10%;
+.headerText{
+  color: white;
+  font-family: "Lucida Handwriting";
+  height: 100px;
 }
 .img{
   width: 350px;
   height: 500px;
-  margin-top: 50px;
+  margin-top: 20px;
   margin-left: 20%;
+}
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 550px;
+}
+.login-card {
+  margin-left: 20%;
+  margin-top: 20%;
+  width: 300px;
+  height: 300px;
+  text-align: center;
+}
+.login-button {
+  width: 100%;
 }

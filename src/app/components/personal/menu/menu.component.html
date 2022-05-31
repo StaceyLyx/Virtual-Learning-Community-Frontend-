@@ -1,0 +1,16 @@
+<div>
+  <ul class="menu" nz-menu nzMode="horizontal">
+    <li nz-menu-item (click)="routerTo('community')">
+      <i nz-icon nzType="team" nzTheme="outline"></i>
+      前往社区
+    </li>
+    <li nz-menu-item style="float: right" (click)="routerTo('logout')">
+      <i nz-icon nzType="logout" nzTheme="outline"></i>
+      退出登录
+    </li>
+    <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
+      <i nz-icon nzType="send" nzTheme="outline"></i>
+      发布任务
+    </li>
+  </ul>
+</div>

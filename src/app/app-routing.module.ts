@@ -19,19 +19,16 @@ const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'scene', component: SceneComponent},
-  { path: 'community', component: CommunityComponent},
-  { path: 'assignTask', component: AssignTaskComponent},
-
-  { path: 'taskList', component: TaskListComponent},
-  {path:'communityScene',component:CommunitySceneComponent},
-  {path:'personalInfo',component:PersonalInfoComponent},
-  {path:'personalImage',component:PersonImageComponent},
-{path:'personalTaskInfo',component:PersonTaskComponent},
-{path:'check',component:CheckComponent},
-{path:'freeTask',component:FreeTaskComponent},
   { path: 'tasks', component: TaskListComponent},
   { path: 'tasks/upload/:taskId', component: UploadComponent},
-
+  { path: 'community', component: CommunityComponent},
+  { path: 'assignTask', component: AssignTaskComponent},
+  { path: 'communityScene', component: CommunitySceneComponent},
+  { path: 'personalInfo', component: PersonalInfoComponent},
+  { path: 'personalInfo/Image', component: PersonImageComponent},
+  { path: 'personalInfo/Task', component: PersonTaskComponent},
+  { path: 'check', component: CheckComponent},
+  { path: 'freeTask', component: FreeTaskComponent},
 ]
 
 @NgModule({

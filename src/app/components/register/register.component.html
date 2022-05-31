@@ -1,49 +1,63 @@
-<app-top-bar></app-top-bar>
-<div class="div">
-  <div el-container>
-    <div el-aside width="700px">
-      <img src="assets/img/index.jpg" class="img">
-    </div>
-    <div el-main>
-      <div class="menu">
-        <el-menu mode="horizontal"
-                 active-text-color="#ffd04b">
-          <a routerLink="">
-            <el-menu-item index="1">登录</el-menu-item>
-          </a>
-          <a routerLink="/register">
-            <el-menu-item index="2">注册</el-menu-item>
-          </a>
-        </el-menu>
-      </div>
+<nz-layout>
+  <nz-header class="header">
+    <h1 class="headerText">Virtual Community</h1>
+  </nz-header>
 
-      <div class="form">
-        <el-form [formGroup]="infoForm" label-width="100px" [show-icon]="true"
-                 [show-message]="true" [show-icon]="true">
-          <el-form-item label="账户" [required]="true"
-                        [status]="statusCtrl('username')" [error]="messageCtrl('username')">
-            <el-input formControlName="username" type="text"></el-input>
-          </el-form-item>
+  <nz-content class="inner-content">
+    <p>一些欢迎balabala</p>
+    <form class="form" nz-form [formGroup]="infoForm" (ngSubmit)="submit()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不得为空">
+          <input nz-input formControlName="username" id="username" />
+        </nz-form-control>
+      </nz-form-item>
 
-          <el-form-item label="邮箱" [status]="statusCtrl('email')" [error]="messageCtrl('email')">
-            <el-input formControlName="email" native-type="text"></el-input>
-          </el-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不得为空">
+          <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()"/>
+        </nz-form-control>
+      </nz-form-item>
 
-          <el-form-item label="密码" [required]="true"
-                        [status]="statusCtrl('password')" [error]="messageCtrl('password')">
-            <el-input formControlName="password" native-type="password"></el-input>
-          </el-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="passwordConfirm" nzRequired>确认密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+          <input nz-input type="password" formControlName="passwordConfirm" id="passwordConfirm" />
+          <ng-template #errorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">确认密码不得为空</ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">
+              两次密码输入不一致
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
 
-          <el-form-item label="确认密码" [required]="true"
-                        [status]="statusCtrl('passwordConfirm')" [error]="messageCtrl('passwordConfirm')">
-            <el-input formControlName="passwordConfirm" native-type="password"></el-input>
-          </el-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="邮箱格式不正确">
+          <input nz-input formControlName="email" id="email" />
+        </nz-form-control>
+      </nz-form-item>
 
-          <el-form-item>
-            <el-button [plain]="true" type="primary" (click)="submit()">注册</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
-  </div>
-</div>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>电话号码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="infoForm.controls['phone']"
+          nzErrorTip="请输入注册手机号码">
+          <input formControlName="phone" id="phone" nz-input />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">注&emsp;册</button>
+          <p></p>
+          已有帐户？
+          <a routerLink="">去登陆吧！</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-content>
+
+  <app-footer></app-footer>
+</nz-layout>
