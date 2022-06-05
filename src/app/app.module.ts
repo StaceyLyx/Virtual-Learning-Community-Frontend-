@@ -4,13 +4,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';    // 解析浏览器
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ElModule } from "element-angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { SceneComponent } from './components/scene/scene.component';
+import { ClassComponent } from './components/class/class.component';
 import { CommunityComponent } from './components/community/community.component';
 import { AssignTaskComponent } from './components/assign-task/assign-task.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -59,15 +58,17 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {NzProgressModule} from "ng-zorro-antd/progress";
 import {NzResultModule} from "ng-zorro-antd/result";
+import { GroupRoomComponent } from './components/group-room/group-room.component';
+import {NzCommentModule} from "ng-zorro-antd/comment";
+import {NzPopoverModule} from "ng-zorro-antd/popover";
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
     AppComponent,
-    TopBarComponent,
     LoginComponent,
     RegisterComponent,
-    SceneComponent,
+    ClassComponent,
     CommunityComponent,
     AssignTaskComponent,
     TaskListComponent,
@@ -84,6 +85,7 @@ registerLocaleData(zh);
     TeamSizeTransformPipe,
     ValidityTransformPipe,
     OptionalTransformPipe,
+    GroupRoomComponent,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -129,6 +131,9 @@ registerLocaleData(zh);
     NzInputNumberModule,
     NzProgressModule,
     NzResultModule,
+    NzAvatarModule,
+    NzCommentModule,
+    NzPopoverModule,
   ],
   providers: [],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件

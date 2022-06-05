@@ -10,36 +10,29 @@ import {NzMessageService} from "ng-zorro-antd/message";
 export class PersonalInfoComponent implements OnInit {
   constructor(private message: NzMessageService) { }
 
-  info: any = {
-    username: "廖妍昕",
-    email: "outlook.com",
-    phone_num: 123,
-    ev: 1,
-    register_date:"2021-1-2",
-  }
+  info: any;
 
   ngOnInit(): void {
-    // axios.get('retrieveTasks/user', {
-    //   params: {
-    //     userId: 0
-    //   }
-    // }).then((res) =>{
-    //   console.log(res)
-    //   if(res.status == 200){
-    //     this.Info = res.data.data
-    //     console.log(this.Info)
-    //   }else{
-    //     console.log(res);
-    //   }
-    // }).catch((error) =>{
-    //   if(error.status == 400){
-    //     this.message.setOptions({showClose: true});
-    //     this.message.error("个人信息未查询到");
-    //     console.log(error);
-    //   }else{
-    //     console.log(error);
-    //   }
-    // })
+    axios.get('retrieveUserInfo', {
+      params: {
+        userId: 3
+      }
+    }).then((res) =>{
+      console.log(res)
+      if(res.status == 200){
+        this.info = res.data
+        console.log(this.info)
+      }else{
+        console.log(res);
+      }
+    }).catch((error) =>{
+      if(error.status == 400){
+        this.message.error("未查询到个人信息");
+        console.log(error);
+      }else{
+        console.log(error);
+      }
+    })
   }
 
 }

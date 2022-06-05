@@ -5,22 +5,21 @@ import * as THREE from 'three';
 import {Object3D, Raycaster, Scene, Vector2, WebGLRenderer} from "three";
 import {Router} from "@angular/router";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-scene',
-  templateUrl: './scene.component.html',
-  styleUrls: ['./scene.component.css']
+  templateUrl: './class.component.html',
+  styleUrls: ['./class.component.css']
 })
-export class SceneComponent implements OnInit {
+export class ClassComponent implements OnInit {
   @ViewChild('canvasFrame') canvasContainer: ElementRef | undefined;
 
   private SCENE = new Scene();
   private CAMERA = new THREE.PerspectiveCamera(75,
     window.innerWidth / window.innerHeight, 0.1, 1000);
   private RENDERER = new WebGLRenderer();
-  // 辅助（后期删去）坐标系
-  private axes = new THREE.AxesHelper(300);
   private Light = new THREE.PointLight(0xFFFAFA, 0.8);
   private ambient = new THREE.AmbientLight(0xFFEBCD, 0.5);
   private planeGeometry = new THREE.BoxGeometry(400, 400);
@@ -29,9 +28,16 @@ export class SceneComponent implements OnInit {
   private CONTROLS = new OrbitControls(this.CAMERA, this.RENDERER.domElement);
 
   constructor(private router: Router,
+              private notification: NzNotificationService,
               private message: NzMessageService) { }
 
   ngOnInit(): void {
+
+    this.notification.blank(
+        '欢迎来到课堂',
+        '点击白板来查看该课堂的任务吧！'
+      );
+
     this.canvasContainer?.nativeElement.append(this.RENDERER.domElement);
     this.init();
     this.initModel();
@@ -44,15 +50,15 @@ export class SceneComponent implements OnInit {
       const rayCaster = new Raycaster();
       rayCaster.setFromCamera(pointer, this.CAMERA);
       let intersects = rayCaster.intersectObjects(this.SCENE.children, true);
-      const intersect = intersects.filter(intersect => SceneComponent.task(intersect.object))[0];
+      const intersect = intersects.filter(intersect => ClassComponent.task(intersect.object))[0];
       if(intersect != undefined){
         // 需要先移除three.js渲染的canvas标签
-        const div = document.getElementsByTagName('canvas')[0]
-        document.body.removeChild(div);
+        // const div = document.getElementsByTagName('canvas')[0]
+        // document.body.removeChild(div);
 
         this.router.navigateByUrl("class/tasks").then(r => {
           if (r) {
-            console.log("navigate to scene")
+            console.log("navigate to class")
           } else {
             this.message.warning('跳转失败')
             console.log("navigate failed")
@@ -71,9 +77,6 @@ export class SceneComponent implements OnInit {
     this.RENDERER.setSize(window.innerWidth, window.innerHeight);
     this.RENDERER.shadowMap.enabled = true;
     document.body.appendChild(this.RENDERER.domElement);
-
-    this.axes.position.set(0, 10, 0);
-    this.SCENE.add(this.axes)
 
     this.Light.position.set(0, 100, 0);
     this.Light.castShadow = true;
@@ -124,15 +127,11 @@ export class SceneComponent implements OnInit {
   initModel(){
     // 教室椅子
     this.loadModel("chair", 'assets/model/plastic_chair_1/scene.gltf', [40, 40, 40], [80, 0, 0], 0.5 * Math.PI);
-    this.loadModel("chair", 'assets/model/plastic_chair_1/scene.gltf', [40, 40, 40], [-90, 0, 20], -0.5 * Math.PI);
-    this.loadModel("chair", 'assets/model/white_chair/scene.gltf', [50, 50, 50], [-90, 0, -50], Math.PI);
-    this.loadModel("chair", 'assets/model/white_chair/scene.gltf', [50, 50, 50], [0, 0, 100], 0.5 * Math.PI);
+    this.loadModel("chair", 'assets/model/plastic_chair_1/scene.gltf', [40, 40, 40], [-90, 0, -20], -0.5 * Math.PI);
     // 教室白板
     this.loadModel("whiteboard", 'assets/model/whiteboard/scene.gltf', [5, 5, 5], [50, 0, 130], 180);
     // 教室门
     this.loadModel("door", 'assets/model/door/scene.gltf', [50, 50, 50], [-200, 0, 150], 0.5 * Math.PI);
-    // 教室桌子
-    this.loadModel("desk", 'assets/model/table/scene.gltf', [120, 100, 120], [0, 0, 0], 0);
     // 窗子
     this.loadModel("window", 'assets/model/window/scene.gltf', [1, 1, 1], [130, 50, -30], 0.5 * Math.PI);
     this.loadModel("window", 'assets/model/window/scene.gltf', [1, 1, 1], [130, 50, 130], 0.5 * Math.PI);
@@ -155,7 +154,10 @@ export class SceneComponent implements OnInit {
         this.SCENE.add(gltf.scene);
         this.render();
       })
-    })
+    },
+      function (xhr){
+      console.log("xhr", (xhr.loaded / xhr.total) * 100 + "% loaded")
+      })
   }
 
   private static task(object: Object3D): any{

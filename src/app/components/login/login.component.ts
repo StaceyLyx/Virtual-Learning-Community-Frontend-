@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.router.navigateByUrl("class").then(r => {
+    this.router.navigateByUrl("communityScene").then(r => {
                 if(r){
-                  console.log("navigate to scene")
+                  console.log("navigate to community")
                 }else{
                   this.message.create('warning', '跳转失败')
                   console.log("navigate failed")
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     //         this.message.create('success', '登陆成功！')
     //         this.router.navigateByUrl("tasks").then(r => {
     //           if(r){
-    //             console.log("navigate to scene")
+    //             console.log("navigate to class")
     //           }else{
     //             this.message.create('warning', '跳转失败')
     //             console.log("navigate failed")

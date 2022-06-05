@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import {ElMessageService} from "element-angular";
-import {TaskServiceService} from "../../../services/task-service.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-person-task',
@@ -12,12 +11,88 @@ import {NzMessageService} from "ng-zorro-antd/message";
 export class PersonTaskComponent implements OnInit {
 
   constructor(private message: NzMessageService,
-              private taskService: TaskServiceService) { }
+              private router: Router) { }
 
-  tableData: any = []
+  initial: any = []
+  tableData: any = [{
+    id: 1,
+    name: '高级web',
+    optional: 1,
+    teamSize: 4,
+    ddl: '2021-2-1',
+  },{
+    id: 2,
+    name: '图形学',
+    optional: 1,
+    teamSize: 1,
+    ddl: '2021-2-1',
+  }]
+
+  selectedValue: string = 'personal';
+  groupHidden: boolean = this.selectedValue == 'personal';
+  expandSet = new Set<number>();
 
   ngOnInit(): void {
-    this.tableData = this.taskService.getTasksByUser();
+    // axios.get('retrieveTasks/user', {
+    //   params: {
+    //     userId: 3
+    //   }
+    // }).then((res) =>{
+    //   console.log(res)
+    //   if(res.status == 200){
+    //     this.initial = res.data;
+    //     this.tableData = res.data.personal;
+    //   }else{
+    //     console.log(res);
+    //   }
+    // }).catch((error) =>{
+    //   if(error.status == 400){
+    //     this.message.error("获取个人任务失败");
+    //     console.log(error);
+    //   }else{
+    //     console.log(error);
+    //   }
+    // })
+  }
+
+  changeTask(){
+    if(this.selectedValue === 'group'){
+      this.tableData = this.initial.group;
+      this.groupHidden = false;
+    }else{
+      this.tableData = this.initial.personal;
+      this.groupHidden = true;
+    }
+  }
+
+  onExpandChange(id: number, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
+
+  uploadTask(id: number, teamSize: number){
+    // 小组任务
+    if(teamSize === 1){
+      this.router.navigate(['tasks/upload'], {
+        queryParams: {
+          taskId: id,
+        }
+      }).then(r => {
+        console.log(r);
+      })
+    }else{
+      // 团队任务
+      this.router.navigate(['tasks/group'], {
+        queryParams: {
+          groupId: id,
+        }
+      }).then(r => {
+        console.log(r);
+      })
+    }
   }
 
 }

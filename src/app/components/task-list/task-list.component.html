@@ -55,7 +55,17 @@
             <td>{{ data.validity | validityTransform }}</td>
           </tr>
           <tr [nzExpand]="expandSet.has(data.id)">
-            <span>{{ data.description }}</span>
+            <nz-descriptions nzTitle="任务详情">
+              <nz-descriptions-item nzTitle="任务名称">{{data.name}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务类型">{{data.optional | optionalTransform}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务经验值">{{data.ev}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务发布者">{{data.publisherName}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="发布者联系电话">{{data.publisherPhone}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="发布者联系邮箱">{{data.publisherEmail}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务状态">{{data.validity | validityTransform}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务截止日期">{{data.ddl | date}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="任务描述">{{data.description}}</nz-descriptions-item>
+            </nz-descriptions>
           </tr>
         </ng-container>
         </tbody>

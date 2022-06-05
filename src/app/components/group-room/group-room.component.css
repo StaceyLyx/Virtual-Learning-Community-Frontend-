@@ -1,0 +1,23 @@
+.layout {
+  min-height: 100vh;
+}
+nz-header{
+  background-image: url("../../../assets/img/taskboard.png");
+  height: 130px;
+  text-align: center;
+  line-height: 130px;
+}
+.headerText{
+  color: black;
+  margin: 0;
+  font-family: "Comic Sans MS";
+}
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}
+button{
+  margin: 10px;
+  margin-left: 0;
+}

@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
             this.message.success('注册成功，欢迎来到学习社区')
             this.router.navigateByUrl("class").then(r => {
               if(r){
-                console.log("navigate to scene")
+                console.log("navigate to class")
               }else{
                 this.message.error('跳转失败')
                 console.log("navigate failed")

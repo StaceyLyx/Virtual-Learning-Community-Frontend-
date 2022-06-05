@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import axios from "axios";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-upload',
@@ -11,26 +12,16 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
 })
 export class UploadComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
-
-  header: Boolean = true;
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private message: NzMessageService) { }
 
   taskId: number | undefined
   userId: number | undefined
 
-  task: any = {
-    id: 1,
-    name: "高级Web",
-    optional: 1,
-    teamSize: 5,
-    ddl: "2022-3-17",
-    description: "A组",
-    ev: 1,
-    publisher: 1,
-    validity: 2, // 0未审核 1审核通过 2已过期
-  }
+  task: any = [];
 
-  score: boolean = this.task.teamSize == 1
+  score: boolean | undefined;
   isVisible = false;
 
   panels = [{
@@ -49,26 +40,23 @@ export class UploadComponent implements OnInit {
 
   ngOnInit(): void {
     // 获取任务id
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.taskId = params['taskId'];
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      this.taskId = queryParams['taskId'];
     })
     // 获取用户id
-    this.userId = 1
+    this.userId = 3
 
     // 获取任务
-    //   axios.get('api?????', {
-    //     params: {
-    //       taskId: this.taskId
-    //     }
-    //   }).then((response) =>{
-    //     console.log("response: ", response)
-    //     if(response.status == 200){
-    //       console.log("获取任务: ", this.taskId)
-    //     }
-    //   }).catch((error) =>{
-    //     console.log("error: ", error)
-    //   })
-    // }
+    axios.get('retrieveTask/' + this.taskId
+    ).then((response) =>{
+      console.log("response: ", response)
+      if(response.status == 200){
+        this.task = response.data;
+        this.score = this.task.teamSize === 1;    // 一定要在这里面设置，否则会出现回调的问题
+      }
+    }).catch((error) =>{
+      console.log("error: ", error)
+    })
   }
 
   handleUpload(): void {
@@ -76,7 +64,23 @@ export class UploadComponent implements OnInit {
     this.fileList.forEach((file: any) => {
       formData.append('files[]', file);
     });
-    // axios.post()
+
+    console.log(this.fileList);
+    console.log(formData);
+
+    axios.put('submitPersonalTask', {
+      taskId: this.taskId,
+      userId: 3,
+      file: this.fileList[0],
+    }).then(response => {
+      console.log("response: ", response)
+      if(response.status === 200){
+        this.message.success("任务提交成功！");
+      }
+    }).catch(error => {
+      console.log("error: ", error.message)
+      this.message.error("任务提交失败");
+    })
   }
 
   showModal(): void {
@@ -91,6 +95,16 @@ export class UploadComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+  }
+
+  routerTo(path: string){
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        console.log("local index")
+      }
+    })
   }
 
 }

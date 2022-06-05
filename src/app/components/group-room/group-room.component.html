@@ -1,0 +1,72 @@
+<nz-layout class="layout">
+  <nz-header>
+    <h1 class="headerText">Private Group Room For You, Just Communicate Free Here!</h1>
+  </nz-header>
+  <div>
+    <ul class="menu" nz-menu nzMode="horizontal">
+      <li nz-menu-item>
+        <i nz-icon nzType="team" nzTheme="outline" (click)="routerTo('communityScene')"></i>
+        前往社区
+      </li>
+      <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
+        <i nz-icon nzType="home" nzTheme="outline"></i>
+        个人资料
+      </li>
+      <li nz-menu-item style="float: right" (click)="routerTo('personalInfo/Task')">
+        <i nz-icon nzType="profile" nzTheme="outline"></i>
+        我的任务
+      </li>
+    </ul>
+  </div>
+
+  <nz-layout>
+    <nz-content class="inner-content">
+      <nz-descriptions nzTitle="{{ task.name }}">
+        <nz-descriptions-item nzTitle="任务截止日期">{{task.ddl | date}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务类型">{{task.optional | optionalTransform }}
+          &emsp;&emsp;{{task.teamSize | teamSizeTransform }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="完成经验值">{{task.ev}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务发布者">{{task.publisherName}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务详情">{{task.description}}</nz-descriptions-item>
+      </nz-descriptions>
+
+      <nz-avatar-group>
+        <nz-avatar nzText="L"
+                   nz-popover nzPopoverTitle="当前状态" nzPopoverContent="离线"></nz-avatar>
+        <nz-avatar nzText="S"
+                   nz-popover nzPopoverTitle="当前状态" nzPopoverContent="离线"></nz-avatar>
+        <nz-avatar nzText="L"
+                   nz-popover nzPopoverTitle="Liao Yanxin" nzPopoverContent="离线"></nz-avatar>
+        <nz-avatar nzText="D"
+                   nz-popover nzPopoverTitle="当前状态" nzPopoverContent="离线"></nz-avatar>
+      </nz-avatar-group>
+
+      <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+        <ng-template #item let-item>
+          <nz-comment [nzAuthor]="item.author">
+            <nz-avatar nz-comment-avatar [nzText]="item.author.charAt(0)"></nz-avatar>
+            <nz-comment-content>
+              <p>{{ item.content }}</p>
+            </nz-comment-content>
+          </nz-comment>
+        </ng-template>
+      </nz-list>
+
+      <nz-comment>
+        <nz-avatar nz-comment-avatar nzText="L"></nz-avatar>
+        <nz-comment-content>
+          <nz-form-item>
+            <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+          </nz-form-item>
+          <nz-form-item>
+            <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+              Add Comment
+            </button>
+          </nz-form-item>
+        </nz-comment-content>
+      </nz-comment>
+
+    </nz-content>
+    <app-footer></app-footer>
+  </nz-layout>
+</nz-layout>
