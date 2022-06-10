@@ -61,6 +61,7 @@ import {NzResultModule} from "ng-zorro-antd/result";
 import { GroupRoomComponent } from './components/group-room/group-room.component';
 import {NzCommentModule} from "ng-zorro-antd/comment";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
+import {SocketServiceService} from "./services/socket-service.service";
 registerLocaleData(zh);
 
 @NgModule({
@@ -134,8 +135,9 @@ registerLocaleData(zh);
     NzAvatarModule,
     NzCommentModule,
     NzPopoverModule,
+    NzRadioModule,
   ],
-  providers: [],      // 定义的服务
+  providers: [SocketServiceService],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
 })
 

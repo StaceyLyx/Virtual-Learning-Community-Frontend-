@@ -2,12 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from 'three';
-import { Object3D, Raycaster, Scene, Vector2, WebGLRenderer } from "three";
+import {Object3D, Raycaster, Scene, Vector2, Vector3, WebGLRenderer} from "three";
 import { Router } from "@angular/router";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import io from 'socket.io-client';
-import {Observable} from "rxjs";
 import {SocketServiceService} from "../../services/socket-service.service";
 
 @Component({
@@ -17,12 +15,10 @@ import {SocketServiceService} from "../../services/socket-service.service";
 })
 export class CommunitySceneComponent implements OnInit {
 
-  @ViewChild('canvasFrame', { static: true }) canvasContainer: ElementRef | undefined;
   private scene = new Scene();
   private camera = new THREE.PerspectiveCamera(75,
     window.innerWidth / window.innerHeight, 0.1, 1000);
   private renderer = new WebGLRenderer();
-  // 辅助（后期删去）坐标系
 
   private Light = new THREE.PointLight(0xFFFAFA, 0.8);
   private ambient = new THREE.AmbientLight(0xFFEBCD, 0.5);
@@ -33,7 +29,16 @@ export class CommunitySceneComponent implements OnInit {
 
   show: Boolean = true;
 
-  private connection: any;
+  isVisible = false;
+
+  classes: any = [{
+    id:1,
+    name: "高级web"
+  },{
+    id: 2,
+    name: "图形学"
+  }];
+
   constructor(private router: Router,
               private notification: NzNotificationService,
               private socketService: SocketServiceService) { }
@@ -46,44 +51,65 @@ export class CommunitySceneComponent implements OnInit {
     this.animate();
 
     // 发送登录信息
-    this.socketService.socketSend(1);
-
-    // 接受登录消息
-    this.connection = this.socketService.socketGet(1).subscribe(data =>{
-      console.log(data);
-    })
+    this.socketService.socketSend(1, 150, -80).subscribe(
+      raw => {
+        let data = JSON.parse(raw);
+        console.log("message data: " + data);
+        if(data["id"] !== "1" && data["status"] === true){     // id不等于当前登录用户id则绘制形象
+          let x = parseFloat(data["positionX"]);
+          let y = parseFloat(data["positionY"]);
+          this.loadModel("student" + data["id"],
+            'assets/model/student2/scene.gltf',
+            [20, 20, 20],
+            [x, 0, y], 0);
+        }else if(data["id"] !== "1" && data["status"] === false){
+          // 用户下线，移除形象
+          let children = this.scene.children;
+          for(let i = 0; i < children.length; ++i){
+            if(children[i].name === ("student" + data["id"])){
+              this.scene.remove(children[i]);
+              break;
+            }
+          }
+        }
+      }
+    );
 
     window.addEventListener("mousedown", (event) => {
-      event.preventDefault();//阻止默认
+      event.preventDefault();  // 阻止默认
       const x = (event.clientX / window.innerWidth) * 2 - 1;
       const y = - (event.offsetY / window.innerHeight) * 2 + 1;
+
       const pointer = new Vector2(x, y);
       const rayCaster = new Raycaster();
       rayCaster.setFromCamera(pointer,  this.camera);
       let intersects = rayCaster.intersectObjects( this.scene.children, true);
 
       // 点击跳转到课堂
-      this.connection.unsubscribe();
       const intersectClass = intersects.filter(intersect => CommunitySceneComponent.getClassroom(intersect.object))[0];
       if (intersectClass != undefined) {
         // 通过移除挂载dom节点删除
-        const div = document.getElementsByTagName('canvas')[0];
-        document.body.removeChild(div);
-
-        //关于携带参数的问题
-        this.router.navigate(["class"], { queryParams: {} }).then(r => {
-          if (r) {
-            console.log("navigate to class")
-          } else {
-            console.log("navigate failed")
-          }
-        })
+        this.isVisible = true;
       }
 
       // 点击查看用户信息
       const intersectStudent = intersects.filter(intersect => CommunitySceneComponent.getStudent(intersect.object))[0];
       if (intersectStudent != undefined) {
         this.notification.blank("用户信息", "student");
+      }
+    })
+  }
+
+  routeToClassroom(id: number){
+    const div = document.getElementsByTagName('canvas')[0];
+    document.body.removeChild(div);
+
+    //关于携带参数的问题
+    this.router.navigate(["class"], { queryParams: {id} }).then(r => {
+      if (r) {
+        console.log("navigate to class")
+      } else {
+        console.log("navigate failed")
       }
     })
   }
@@ -148,7 +174,7 @@ export class CommunitySceneComponent implements OnInit {
 
   initModel() {
     this.loadModel("classroom", 'assets/model/classroom/scene.gltf', [20, 20, 20], [50, 0, -150], 0);
-    this.loadModel("student", 'assets/model/student/scene.gltf', [20, 20, 20], [20, 0, 100], 0);
+    this.loadModel("student1", 'assets/model/student2/scene.gltf', [20, 20, 20], [100, 0, 80], 0);
     // this.loadModel("student", 'assets/model/student2/scene.gltf', [15, 15, 15], [50, 0, -20], 135);
   }
 
@@ -187,7 +213,7 @@ export class CommunitySceneComponent implements OnInit {
 
   private static getStudent(object: Object3D): any {
     do {
-      if (object.name == "student") {
+      if (object.name.includes("student")){
         return true;
       }
       if (object.parent) {
@@ -199,11 +225,15 @@ export class CommunitySceneComponent implements OnInit {
     return false;
   }
 
-  get(object: any): any {
-    return object.id
-  }
-
   render() {
     this.renderer.render( this.scene,  this.camera);
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }

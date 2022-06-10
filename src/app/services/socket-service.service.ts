@@ -1,31 +1,33 @@
 import { Injectable } from '@angular/core';
-import io from "socket.io-client";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketServiceService {
 
-  private baseURL = 'ws://localhost:8081/api/websocket/';
-  private socket: any;
-
   constructor() { }
 
-  socketSend(id: number){
-    this.socket = io(this.baseURL + id);     // 关联用户ID
-    this.socket.emit('position', {position: [150, 0, 50]});
-  }
-
-  socketGet(id: number): Observable<any>{
-    return new Observable(observer => {
-      this.socket = io(this.baseURL + id, {withCredentials: true});
-      this.socket.on('message', (data: any) => {
-        observer.next(data);
-      });
-      return ()=>{
-        this.socket.disconnect();
-      }
-    })
+  socketSend(id: number, x: number, y: number): Observable<any>{
+    let ws = new WebSocket('ws://localhost:8081/api/ws/community/' + id + "/" + x + "/" + y);
+    if('WebSocket' in window){
+      return new Observable(observer => {
+        ws.onopen = function (event){
+          console.log("open:" + event);
+        }
+        ws.onmessage = function (event){
+          observer.next(event.data);
+        }
+        ws.onerror = event => {
+          console.log("websocket异常:" + event);
+        };
+        ws.onclose = event => {
+          console.log("服务器关闭了链接" + event);
+        };
+      })
+    }else{
+      console.log("浏览器不支持websocket");
+      return new Observable<any>();
+    }
   }
 }
