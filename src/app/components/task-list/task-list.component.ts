@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import axios from "axios";
 import {Router} from "@angular/router";
-import {TaskServiceService} from "../../services/task-service.service";
 import {NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzNotificationService} from "ng-zorro-antd/notification";
@@ -42,17 +41,7 @@ export class TaskListComponent implements OnInit {
     }).then((response) =>{
       console.log("response", response)
       if(response.status == 200){
-        for(let i = 0; i < response.data.result.length; ++i){
-          this.tableData = [...this.tableData,{
-            id: response.data.result[i].id,
-            name: response.data.result[i].name,
-            ddl: response.data.result[i].ddl,
-            optional: response.data.result[i].optional,
-            validity: response.data.result[i].validity,
-            teamSize: 1,
-            description: response.data.result[i].description
-          }]
-        }
+        this.tableData = response.data.result;
       }
     }).catch((error) =>{
       console.log("error: ", error)
@@ -112,7 +101,7 @@ export class TaskListComponent implements OnInit {
     if(teamSize == 1){
       axios.post('personalTaskOn', {
         taskId: taskId,
-        userId: 9
+        userId: 3
       }).then(response => {
         console.log("response: ", response)
         if(response.status === 200){
@@ -131,12 +120,26 @@ export class TaskListComponent implements OnInit {
         )
       })
     }else{
-      // TODO: 团队任务websocket
-      this.notification.create(
-        'success',
-        '接受团队任务',
-        '去“我的任务”查看任务进展情况吧！'
-      )
+      axios.post('groupTaskOn',{
+        taskId:taskId,
+        userId:3
+      }).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.notification.create(
+            'success',
+            '接受团队任务',
+            '去“我的任务”里查看任务吧！'
+          )
+        }
+      }).catch(error => {
+        console.log("error: ", error)
+        this.notification.create(
+          'error',
+          'Oops！',
+          error.message
+        )
+      })
     }
   }
 

@@ -1,8 +1,8 @@
 .header{
+  background-image: url("../../../assets/img/header.png");
+  height: 150px;
   text-align: center;
-  background-color: darkcyan;
-  height: 110px;
-  padding: 35px;
+  line-height: 150px;
 }
 .headerText{
   color: white;

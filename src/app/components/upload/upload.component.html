@@ -1,18 +1,18 @@
 <nz-layout class="layout">
   <nz-header>
-    <h1 [class.headerText]="header">Finish and Upload Your Task Here</h1>
+    <h1 class="headerText">Finish and Upload Your Task Here</h1>
   </nz-header>
   <div>
     <ul class="menu" nz-menu nzMode="horizontal">
       <li nz-menu-item>
-        <i nz-icon nzType="team" nzTheme="outline"></i>
+        <i nz-icon nzType="team" nzTheme="outline" (click)="routerTo('communityScene')"></i>
         前往社区
       </li>
-      <li nz-menu-item style="float: right">
+      <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
         <i nz-icon nzType="home" nzTheme="outline"></i>
         个人资料
       </li>
-      <li nz-menu-item style="float: right">
+      <li nz-menu-item style="float: right" (click)="routerTo('personalInfo/Task')">
         <i nz-icon nzType="profile" nzTheme="outline"></i>
         我的任务
       </li>
@@ -22,11 +22,11 @@
   <nz-layout>
     <nz-content class="inner-content">
       <nz-descriptions nzTitle="{{ task.name }}">
-        <nz-descriptions-item nzTitle="任务截止日期">{{task.ddl}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务截止日期">{{task.ddl | date}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="任务类型">{{task.optional | optionalTransform }}
           &emsp;&emsp;{{task.teamSize | teamSizeTransform }}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="完成经验值">{{task.ev}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="任务发布者">{{task.publisher}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务发布者">{{task.publisherName}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="任务详情">{{task.description}}</nz-descriptions-item>
       </nz-descriptions>
 
@@ -50,7 +50,7 @@
             <p> </p>
             <textarea rows="4" nz-input placeholder="添加评论..." [(ngModel)]="inputValue"></textarea>
 
-            <button nz-button [nzType]="'primary'" [hidden]="score" (click)="showModal()">
+            <button [disabled]="score" nz-button [nzType]="'primary'" (click)="showModal()">
               <span>
                 给团队成员打分
               </span>
