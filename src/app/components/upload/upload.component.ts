@@ -30,7 +30,6 @@ export class UploadComponent implements OnInit {
     icon: 'double-right',
   }]
 
-  inputValue?: string;
   fileList: NzUploadFile[] = [];
 
   beforeUpload = (file: NzUploadFile): boolean => {
@@ -44,11 +43,10 @@ export class UploadComponent implements OnInit {
       this.taskId = queryParams['taskId'];
     })
     // 获取用户id
-    this.userId = 3
+    this.userId = parseInt(<string>sessionStorage.getItem("userId"));
 
     // 获取任务
-    axios.get('retrieveTask/' + this.taskId
-    ).then((response) =>{
+    axios.get('retrieveTask/' + this.taskId).then((response) =>{
       console.log("response: ", response)
       if(response.status == 200){
         this.task = response.data;
@@ -61,18 +59,19 @@ export class UploadComponent implements OnInit {
 
   handleUpload(): void {
     const formData = new FormData();
+    formData.append('userId', <string>sessionStorage.getItem("userId"));
+    formData.append('taskId', <string><unknown>this.taskId);
     this.fileList.forEach((file: any) => {
-      formData.append('files[]', file);
+      formData.append('file', file);
     });
 
-    console.log(this.fileList);
-    console.log(formData);
-
-    axios.put('submitPersonalTask', {
-      taskId: this.taskId,
-      userId: 3,
-      file: this.fileList[0],
-    }).then(response => {
+    axios.put('submitPersonalTask', formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }
+    ).then(response => {
       console.log("response: ", response)
       if(response.status === 200){
         this.message.success("任务提交成功！");

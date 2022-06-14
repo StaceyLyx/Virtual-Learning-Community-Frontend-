@@ -16,8 +16,10 @@ export class MenuComponent implements OnInit {
 
   routerTo(path: string){
     if(path === "logout"){
-      // TODO:登出
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
       path = '';
+      this.message.info("登出成功");
     }
     this.router.navigateByUrl(path).then(r => {
       if (r) {

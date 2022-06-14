@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import axios from "axios";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzNotificationService} from "ng-zorro-antd/notification";
@@ -27,16 +27,28 @@ interface ColumnItem {
 export class TaskListComponent implements OnInit {
   @ViewChild("table", {static: true}) table : any
 
-  constructor(private router: Router,
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private notification: NzNotificationService,
               private message: NzMessageService) { }
 
   tableData: any = []
+  isVisible = false;
+  className: string = "";
+  classId: number = 0;
 
   ngOnInit(): void {
+
+    // 获取课堂id
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      this.classId = queryParams['classId'];
+      this.className = queryParams['className'];
+    })
+
+    // 获取课堂任务
     axios.get('retrieveTasks/class', {
       params: {
-        classId: 1
+        classId: this.classId,
       }
     }).then((response) =>{
       console.log("response", response)
@@ -97,11 +109,13 @@ export class TaskListComponent implements OnInit {
     return value !== 1;
   }
 
-  acceptTasks(taskId: number, teamSize: number){
+  groups: any = [];
+  acceptTask(taskId: number, teamSize: number){
     if(teamSize == 1){
+      // 接受个人任务
       axios.post('personalTaskOn', {
         taskId: taskId,
-        userId: 3
+        userId: sessionStorage.getItem("userId"),
       }).then(response => {
         console.log("response: ", response)
         if(response.status === 200){
@@ -116,27 +130,84 @@ export class TaskListComponent implements OnInit {
         this.notification.create(
           'error',
           'Oops！',
-          error.message
+          "已经接受过该任务，前往“我的任务”去查看吧！"
         )
       })
     }else{
-      // TODO: 团队任务websocket
-      this.notification.create(
-        'success',
-        '接受团队任务',
-        '去“我的任务”查看任务进展情况吧！'
-      )
+      // 接收团队任务
+      // 获得当前团队
+      axios.post('groupTaskList', {
+        taskId: taskId,
+        userId: sessionStorage.getItem("userId"),
+      }).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.groups = response.data.result;
+          this.isVisible = true;
+        }
+      }).catch(error => {
+        console.log("error: ", error);
+      })
     }
   }
 
-  routerTo(path: string){
-    this.router.navigateByUrl(path).then(r => {
-      if (r) {
-        console.log("navigate successfully")
-      } else {
-        this.message.create('error', '跳转失败');
-        console.log("navigate failed")
+  acceptGroupTask(groupId: number){
+    axios.post('groupTaskOn', {
+      groupId: groupId,
+      userId: sessionStorage.getItem("userId"),
+    }).then(response => {
+      console.log("response: ", response)
+      if(response.status === 200){
+        this.notification.create(
+          'success',
+          '接受团队任务',
+          '去“我的任务”查看任务组队情况吧！'
+        )
+      }
+    }).catch(error => {
+      console.log("error: ", error)
+      if(error.status === 400){
+        this.notification.create(
+          'error',
+          'Oops！',
+          "该小组已满员啦，选择一个新的小组吧！"
+        )
       }
     })
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  routerTo(path: string){
+    if(path === 'class'){
+      this.router.navigate(["class"], {
+        queryParams: {
+          classId: this.classId,
+          className: this.className,
+        }
+      }).then(r => {
+        if (r) {
+          console.log("navigate to class")
+        } else {
+          this.message.create('error', '跳转失败');
+          console.log("navigate failed")
+        }
+      })
+    }else{
+      this.router.navigateByUrl(path).then(r => {
+        if (r) {
+          console.log("navigate successfully")
+        } else {
+          this.message.create('error', '跳转失败');
+          console.log("navigate failed");
+        }
+      })
+    }
   }
 }

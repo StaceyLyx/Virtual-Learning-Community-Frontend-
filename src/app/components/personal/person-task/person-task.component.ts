@@ -33,26 +33,26 @@ export class PersonTaskComponent implements OnInit {
   expandSet = new Set<number>();
 
   ngOnInit(): void {
-    // axios.get('retrieveTasks/user', {
-    //   params: {
-    //     userId: 3
-    //   }
-    // }).then((res) =>{
-    //   console.log(res)
-    //   if(res.status == 200){
-    //     this.initial = res.data;
-    //     this.tableData = res.data.personal;
-    //   }else{
-    //     console.log(res);
-    //   }
-    // }).catch((error) =>{
-    //   if(error.status == 400){
-    //     this.message.error("获取个人任务失败");
-    //     console.log(error);
-    //   }else{
-    //     console.log(error);
-    //   }
-    // })
+    axios.get('retrieveTasks/user', {
+      params: {
+        userId: parseInt(<string>sessionStorage.getItem("userId")),
+      }
+    }).then((res) =>{
+      console.log(res)
+      if(res.status == 200){
+        this.initial = res.data;
+        this.tableData = res.data.personal;
+      }else{
+        console.log(res);
+      }
+    }).catch((error) =>{
+      if(error.status == 400){
+        this.message.error("获取个人任务失败");
+        console.log(error);
+      }else{
+        console.log(error);
+      }
+    })
   }
 
   changeTask(){
@@ -84,10 +84,10 @@ export class PersonTaskComponent implements OnInit {
         console.log(r);
       })
     }else{
-      // 团队任务
+      // 团队任务，进入团队空间
       this.router.navigate(['tasks/group'], {
         queryParams: {
-          groupId: id,
+          taskId: id,
         }
       }).then(r => {
         console.log(r);

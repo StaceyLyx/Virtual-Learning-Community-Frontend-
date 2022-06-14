@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { ClassComponent } from "./components/class/class.component";
-import { CommunityComponent } from "./components/community/community.component";
 import { AssignTaskComponent } from "./components/assign-task/assign-task.component";
 import { TaskListComponent} from "./components/task-list/task-list.component";
 import { UploadComponent} from "./components/upload/upload.component";
@@ -20,7 +19,6 @@ const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   // 社区
-  { path: 'community', component: CommunityComponent},
   { path: 'assignTask', component: AssignTaskComponent},
   { path: 'communityScene', component: CommunitySceneComponent},
   // 虚拟课堂

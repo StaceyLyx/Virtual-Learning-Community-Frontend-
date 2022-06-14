@@ -4,8 +4,8 @@
   </nz-header>
   <div>
     <ul class="menu" nz-menu nzMode="horizontal">
-      <li nz-menu-item>
-        <i nz-icon nzType="team" nzTheme="outline" (click)="routerTo('communityScene')"></i>
+      <li nz-menu-item (click)="routerTo('communityScene')">
+        <i nz-icon nzType="team" nzTheme="outline"></i>
         前往社区
       </li>
       <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
@@ -15,6 +15,10 @@
       <li nz-menu-item style="float: right" (click)="routerTo('personalInfo/Task')">
         <i nz-icon nzType="profile" nzTheme="outline"></i>
         我的任务
+      </li>
+      <li nz-menu-item style="float: right" (click)="routerTo('tasks/upload')">
+        <i nz-icon nzType="send" nzTheme="outline"></i>
+        组长前往提交任务
       </li>
     </ul>
   </div>
@@ -46,7 +50,7 @@
           <nz-comment [nzAuthor]="item.author">
             <nz-avatar nz-comment-avatar [nzText]="item.author.charAt(0)"></nz-avatar>
             <nz-comment-content>
-              <p>{{ item.content }}</p>
+              <p>{{ item.message }}</p>
             </nz-comment-content>
           </nz-comment>
         </ng-template>

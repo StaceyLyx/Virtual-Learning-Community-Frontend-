@@ -1,1 +1,10 @@
-<div #canvasFrame></div>
+<nz-modal [(nzVisible)]="isVisibleUser" nzTitle="用户信息" (nzOnCancel)="Cancel()" (nzOnOk)="Ok()">
+  <ng-container *nzModalContent>
+    <nz-descriptions nzTitle="{{user.username}}">
+      <nz-descriptions-item nzTitle="性别">{{user.gender | genderTransform}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="经验值">{{user.ev}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="状态">{{user.status}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="注册日期">{{user.registerDate | date}}</nz-descriptions-item>
+    </nz-descriptions>
+  </ng-container>
+</nz-modal>

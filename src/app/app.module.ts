@@ -10,7 +10,6 @@ import { ElModule } from "element-angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClassComponent } from './components/class/class.component';
-import { CommunityComponent } from './components/community/community.component';
 import { AssignTaskComponent } from './components/assign-task/assign-task.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskListComponent } from './components/task-list/task-list.component';
@@ -61,7 +60,10 @@ import {NzResultModule} from "ng-zorro-antd/result";
 import { GroupRoomComponent } from './components/group-room/group-room.component';
 import {NzCommentModule} from "ng-zorro-antd/comment";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
-import {SocketServiceService} from "./services/socket-service.service";
+import {CommunityWSService} from "./services/CommunityWS.service";
+import {RoomWSService} from "./services/room-ws.service";
+import { GenderTransformPipe } from './pipes/gender-transform.pipe';
+import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
 registerLocaleData(zh);
 
 @NgModule({
@@ -70,7 +72,6 @@ registerLocaleData(zh);
     LoginComponent,
     RegisterComponent,
     ClassComponent,
-    CommunityComponent,
     AssignTaskComponent,
     TaskListComponent,
     CommunitySceneComponent,
@@ -87,6 +88,8 @@ registerLocaleData(zh);
     ValidityTransformPipe,
     OptionalTransformPipe,
     GroupRoomComponent,
+    GenderTransformPipe,
+    GroupNameTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -137,7 +140,10 @@ registerLocaleData(zh);
     NzPopoverModule,
     NzRadioModule,
   ],
-  providers: [SocketServiceService],      // 定义的服务
+  providers: [
+    CommunityWSService,
+    RoomWSService,
+  ],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
 })
 

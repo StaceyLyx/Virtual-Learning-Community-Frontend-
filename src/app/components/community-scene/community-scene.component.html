@@ -1,15 +1,26 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="课堂列表" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisibleClass" nzTitle="课堂列表" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <ul nz-list [nzDataSource]="classes" nzBordered nzSize="large">
       <nz-list-header>选择一个课堂前往学习吧！</nz-list-header>
       <li nz-list-item *ngFor="let item of classes" nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <a (click)="routeToClassroom(item.id)">前往课堂</a>
+            <a (click)="routeToClassroom(item.id, item.courseName)">前往课堂</a>
           </nz-list-item-action>
         </ul>
-        {{ item.name }}
+        {{ item.courseName }}
       </li>
     </ul>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleUser" nzTitle="用户信息" (nzOnCancel)="Cancel()" (nzOnOk)="Ok()">
+  <ng-container *nzModalContent>
+    <nz-descriptions nzTitle="{{user.username}}">
+      <nz-descriptions-item nzTitle="性别">{{user.gender | genderTransform}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="经验值">{{user.ev}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="状态">{{user.status}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="注册日期">{{user.registerDate | date}}</nz-descriptions-item>
+    </nz-descriptions>
   </ng-container>
 </nz-modal>
