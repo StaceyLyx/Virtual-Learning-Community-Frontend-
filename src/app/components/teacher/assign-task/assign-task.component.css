@@ -1,0 +1,25 @@
+.container{
+    
+    width:100%;
+    margin-top:50px
+}
+.button{
+    width: 100px;
+    height:40px;
+    font-family: cursive;
+    border-radius: 10px;
+    background-color: rgb(240, 247, 253);
+    text-decoration: antiquewhite;
+    margin-left: 30%;
+    margin-top: 20px;
+}
+.form-group{
+    margin-top: 20px;
+}
+.header{
+    text-align: center;
+    background-color: rgb(133, 160, 225);
+    height: 100px;
+    padding: 50px;
+    font-size: 40px;
+  }

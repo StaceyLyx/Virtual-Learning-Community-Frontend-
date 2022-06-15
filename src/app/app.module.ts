@@ -9,7 +9,6 @@ import { ElModule } from "element-angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClassComponent } from './components/class/class.component';
-import { CommunityComponent } from './components/community/community.component';
 import { AssignTaskComponent } from './components/teacher/assign-task/assign-task.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskListComponent } from './components/task-list/task-list.component';
@@ -60,36 +59,38 @@ import {NzResultModule} from "ng-zorro-antd/result";
 import { GroupRoomComponent } from './components/group-room/group-room.component';
 import {NzCommentModule} from "ng-zorro-antd/comment";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
-
-import {SocketServiceService} from "./services/socket-service.service";
 import { CheckFinishedComponent } from './components/teacher/check-finished/check-finished.component';
+import {CommunityWSService} from "./services/CommunityWS.service";
+import {RoomWSService} from "./services/room-ws.service";
+import { GenderTransformPipe } from './pipes/gender-transform.pipe';
+import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [     // 自定义组件在此引入配置
-  AppComponent,
-  LoginComponent,
-  RegisterComponent,
-  ClassComponent,
-  CommunityComponent,
-  AssignTaskComponent,
-  TaskListComponent,
-  CommunitySceneComponent,
-  PersonalInfoComponent,
-  MenuComponent,
-  PersonalSideComponent,
-  PersonImageComponent,
-  PersonTaskComponent,
-  CheckComponent,
-  FreeTaskComponent,
-  UploadComponent,
-  FooterComponent,
-  TeamSizeTransformPipe,
-  ValidityTransformPipe,
-  OptionalTransformPipe,
-  GroupRoomComponent,
-  CheckFinishedComponent,
-  
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    ClassComponent,
+    AssignTaskComponent,
+    TaskListComponent,
+    CommunitySceneComponent,
+    PersonalInfoComponent,
+    MenuComponent,
+    PersonalSideComponent,
+    PersonImageComponent,
+    PersonTaskComponent,
+    CheckComponent,
+    CheckFinishedComponent,
+    FreeTaskComponent,
+    UploadComponent,
+    FooterComponent,
+    TeamSizeTransformPipe,
+    ValidityTransformPipe,
+    OptionalTransformPipe,
+    GroupRoomComponent,
+    GenderTransformPipe,
+    GroupNameTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -140,7 +141,10 @@ registerLocaleData(zh);
     NzPopoverModule,
     NzRadioModule,
   ],
-  providers: [SocketServiceService],      // 定义的服务
+  providers: [
+    CommunityWSService,
+    RoomWSService,
+  ],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
 })
 

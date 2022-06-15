@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketServiceService {
+export class ClassWSService {
 
   constructor() { }
 
-  socketSend(id: number, x: number, y: number): Observable<any>{
-    let ws = new WebSocket('ws://localhost:8081/api/ws/community/' + id + "/" + x + "/" + y);
+  socketSend(classId: number, x: number, y: number): Observable<any>{
+    let userId = parseInt(<string>sessionStorage.getItem("userId"));
+    let ws = new WebSocket('ws://localhost:8081/api/ws/class/' + userId + "/" + classId + "/" + x + "/" + y);
     if('WebSocket' in window){
       return new Observable(observer => {
         ws.onopen = function (event){

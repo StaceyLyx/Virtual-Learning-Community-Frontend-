@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-personal-side',
@@ -9,8 +8,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 })
 export class PersonalSideComponent implements OnInit {
 
-  constructor(private router: Router,
-              private message: NzMessageService) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {}
 

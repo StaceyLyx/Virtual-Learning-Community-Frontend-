@@ -4,8 +4,8 @@
   </nz-header>
   <div>
     <ul class="menu" nz-menu nzMode="horizontal">
-      <li nz-menu-item>
-        <i nz-icon nzType="team" nzTheme="outline" (click)="routerTo('communityScene')"></i>
+      <li nz-menu-item (click)="routerTo('communityScene')">
+        <i nz-icon nzType="team" nzTheme="outline"></i>
         前往社区
       </li>
       <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
@@ -48,7 +48,6 @@
             </nz-upload>
 
             <p> </p>
-            <textarea rows="4" nz-input placeholder="添加评论..." [(ngModel)]="inputValue"></textarea>
 
             <button [disabled]="score" nz-button [nzType]="'primary'" (click)="showModal()">
               <span>

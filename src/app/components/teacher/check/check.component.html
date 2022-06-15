@@ -1,0 +1,81 @@
+
+<div el-header class="header" style="font-family: cursive;">老师与助教</div>
+<app-menu></app-menu>
+<nz-layout>
+  <nz-sider style="background-color: white;">
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-menu-item  >
+        <i nz-icon nzType="audit" nzTheme="outline"></i>
+      <span><a href="check"></a>审核发布的任务</span>
+      </li>
+      <li nz-menu-item  >
+        <i nz-icon nzType="audit" nzTheme="outline"></i>
+      <span><a href="checkFinished"></a>审核完成的任务</span>
+      </li>
+      <li nz-menu-item>
+          <i nz-icon nzType="read" nzTheme="outline"></i>
+        <span> <a href="assignTask"></a>发布任务</span>
+      </li>
+      </ul>
+  </nz-sider>
+  <nz-content style="background-color: white;">
+  
+    <nz-table nzTableLayout="fixed" #borderedTable nzBordered [nzData]="tableDataGroup">
+        <thead>
+        <tr>
+          <th>任务名称</th>
+          <th>任务类型</th>
+          <th>任务所属课程</th>
+          <th>任务经验值</th>
+          <th>截止日期</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of tableDataGroup, let i = index">
+            <td>{{ data.name }}</td>
+            <td>{{ data.type}}</td>
+            <td>{{ data.class}}</td>
+            <td>{{ data.ev}}</td>
+            <td>{{ data.ddl }}</td>
+            <td>
+              <button nz-button nzType="default" (click)="checkFree(data.id,data.name,data.description)">查看</button>
+              
+                <button nz-button nzType="default" (click)="passGroup(data.id,data.name)">通过</button></td>
+          </tr>
+          <nz-modal [(nzVisible)]="isVisible" nzTitle="内容"  (nzOnOk)="handleOk()" [nzCancelText]=null>
+            <ng-container  *ngFor="let data of tableDataGroup, let i = index">
+                <p>{{data.description}}</p>
+            </ng-container>
+          </nz-modal>
+          
+        </tbody>
+      </nz-table>
+    
+      
+<!--       
+        <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataPerson">
+            <thead>
+            <tr>
+              <th>任务名称</th>
+              <th>任务类型</th>
+              <th>截止日期</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tableDataPerson, let i = index">
+                <td>{{ data.name }}</td>
+                <td>{{ data.optional }}</td>
+                <td>{{ data.ddl }}</td>
+                <td>
+                    <button nz-button nzType="default" (click)="passPerson(data.id,data.name)">通过</button></td>
+              </tr>
+              
+            </tbody>
+          </nz-table> -->
+       
+  </nz-content>
+
+
+</nz-layout>

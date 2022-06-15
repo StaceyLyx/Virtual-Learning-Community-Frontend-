@@ -15,7 +15,7 @@ export class PersonalInfoComponent implements OnInit {
   ngOnInit(): void {
     axios.get('retrieveUserInfo', {
       params: {
-        userId: 3
+        userId: parseInt(<string>sessionStorage.getItem("userId")),
       }
     }).then((res) =>{
       console.log(res)

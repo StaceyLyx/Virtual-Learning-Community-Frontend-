@@ -3,10 +3,12 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {animate} from "@angular/animations";
 import * as THREE from 'three';
 import {Object3D, Raycaster, Scene, Vector2, WebGLRenderer} from "three";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {ClassWSService} from "../../services/class-ws.service";
+import axios from "axios";
 
 @Component({
   selector: 'app-scene',
@@ -27,16 +29,64 @@ export class ClassComponent implements OnInit {
   private plane = new THREE.Mesh( this.planeGeometry, this.planeMaterial );
   private CONTROLS = new OrbitControls(this.CAMERA, this.RENDERER.domElement);
 
-  constructor(private router: Router,
+  user: any;
+  isVisibleUser = false;
+
+  onlineDraw = false;
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private notification: NzNotificationService,
-              private message: NzMessageService) { }
+              private message: NzMessageService,
+              private classService: ClassWSService) { }
 
   ngOnInit(): void {
+    let classId = 0;
+    let className = '';
+
+    // 获取课堂信息
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      classId = queryParams['classId'];
+      className = queryParams['className'];
+    })
 
     this.notification.blank(
-        '欢迎来到课堂',
-        '点击白板来查看该课堂的任务吧！'
+        '欢迎来到 ' + className + ' 课堂',
+        '点击白板来查看该课堂的任务吧！',
+      { nzDuration: 0 }
       );
+
+    // 发送进入房间信息
+    this.classService.socketSend(classId
+      , 100 + parseInt(<string>sessionStorage.getItem("userId")) * 2
+      , 80 + parseInt(<string>sessionStorage.getItem("userId"))).subscribe(
+      raw => {
+
+        let data = JSON.parse(raw);
+        console.log(data);
+        if(!this.onlineDraw){
+          let onlines = data['onLineIds'];
+          for(let i = 0; i < onlines.length; ++i){
+            this.drawStudentById(onlines[i]);
+          }
+          this.onlineDraw = true;
+        }else{
+          if(data["sid"] !== sessionStorage.getItem("userId") && data["message"] === "online"){     // id不等于当前登录用户id则绘制形象
+            // 根据性别加载用户形象
+            this.drawStudentById(data['sid']);
+          }else if(data["sid"] !== sessionStorage.getItem("userId") && data["status"] === "offline"){
+            // 用户下线，移除形象
+            let children = this.SCENE.children;
+            for(let i = 0; i < children.length; ++i){
+              if(children[i].name === ("student" + data["sid"])){
+                this.SCENE.remove(children[i]);
+                break;
+              }
+            }
+          }
+        }
+      }
+    );
 
     this.canvasContainer?.nativeElement.append(this.RENDERER.domElement);
     this.init();
@@ -50,21 +100,47 @@ export class ClassComponent implements OnInit {
       const rayCaster = new Raycaster();
       rayCaster.setFromCamera(pointer, this.CAMERA);
       let intersects = rayCaster.intersectObjects(this.SCENE.children, true);
+
+      // 点击前往课堂任务
       const intersect = intersects.filter(intersect => ClassComponent.task(intersect.object))[0];
       if(intersect != undefined){
         // 需要先移除three.js渲染的canvas标签
-        // const div = document.getElementsByTagName('canvas')[0]
-        // document.body.removeChild(div);
+        const div = document.getElementsByTagName('canvas')[0]
+        document.body.removeChild(div);
 
-        this.router.navigateByUrl("class/tasks").then(r => {
+        this.router.navigate(["class/tasks"], {
+          queryParams: {
+            classId: classId,
+            className: className,
+          }
+        }).then(r => {
           if (r) {
-            console.log("navigate to class")
+            console.log("navigate to tasks of class");
           } else {
-            this.message.warning('跳转失败')
-            console.log("navigate failed")
+            this.message.warning('跳转失败');
+            console.log("navigate failed");
           }
         })
       }
+
+      // 点击查看用户信息
+      const intersectStudent = intersects.filter(intersect => ClassComponent.student(intersect.object))[0];
+      if (intersectStudent != undefined) {
+        axios.get("retrieveUserInfo", {
+          params: {
+            userId: parseInt(<string>sessionStorage.getItem("userId")),
+          }
+        }).then(response => {
+          console.log("response: ", response);
+          if(response.status === 200){
+            this.user = response.data;
+            this.isVisibleUser = true;
+          }
+        }).catch(error => {
+          console.log("error: ", error);
+        })
+      }
+
     });
   }
 
@@ -172,9 +248,51 @@ export class ClassComponent implements OnInit {
     return false;
   }
 
+  private static student(object: Object3D): any {
+    do {
+      if (object.name.includes("student")){
+        return true;
+      }
+      if (object.parent) {
+        object = object.parent;
+      } else {
+        break;
+      }
+    } while (true);
+    return false;
+  }
+
+  drawStudentById(userId: number){
+    axios.get("retrieveUserInfo", {
+      params: {
+        userId: userId,
+      }
+    }).then(response => {
+      console.log("response: ", response);
+      if(response.status === 200){
+        if(response.data.gender === "man"){
+          this.loadModel("student" + userId,
+            'assets/model/student/scene.gltf', [30, 30, 30], [userId * 7, 0, userId * 5], Math.PI);
+        }else{
+          this.loadModel("student" + userId,
+            'assets/model/student2/scene.gltf', [30, 30, 30], [userId * 7, 0, userId * 5], Math.PI);
+        }
+      }
+    }).catch(error => {
+      console.log("error: ", error);
+    })
+  }
+
   // 渲染
   render(){
     this.RENDERER.render(this.SCENE, this.CAMERA);
   }
 
+  Ok(): void {
+    this.isVisibleUser = false;
+  }
+
+  Cancel(): void {
+    this.isVisibleUser = false;
+  }
 }

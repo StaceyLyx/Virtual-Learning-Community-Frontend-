@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from 'three';
@@ -6,7 +6,8 @@ import {Object3D, Raycaster, Scene, Vector2, Vector3, WebGLRenderer} from "three
 import { Router } from "@angular/router";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {SocketServiceService} from "../../services/socket-service.service";
+import {CommunityWSService} from "../../services/CommunityWS.service";
+import axios from "axios";
 
 @Component({
   selector: 'app-community-scene',
@@ -29,21 +30,26 @@ export class CommunitySceneComponent implements OnInit {
 
   show: Boolean = true;
 
-  isVisible = false;
+  isVisibleClass = false;
+  isVisibleUser = false;
 
-  classes: any = [{
-    id:1,
-    name: "高级web"
-  },{
-    id: 2,
-    name: "图形学"
-  }];
+  classes: any = [];
+  user: any;
+  clickUser: any;
+
+  onlineDraw = false;
 
   constructor(private router: Router,
               private notification: NzNotificationService,
-              private socketService: SocketServiceService) { }
+              private socketService: CommunityWSService) { }
 
   ngOnInit(): void {
+    this.notification.blank(
+      "欢迎来到虚拟学习社区",
+      "在这里你可以与伙伴们一同选择喜欢的课堂进行学习，点击你面前的教学楼，查看当前的课堂吧！",
+      { nzDuration: 0 }
+    );
+
     this.init();
     this.initSky();
     this.initModel();
@@ -51,24 +57,32 @@ export class CommunitySceneComponent implements OnInit {
     this.animate();
 
     // 发送登录信息
-    this.socketService.socketSend(1, 150, -80).subscribe(
+    this.socketService.socketSend( parseInt(<string>sessionStorage.getItem("userId")) * 7
+      , 80 + parseInt(<string>sessionStorage.getItem("userId"))).subscribe(
       raw => {
         let data = JSON.parse(raw);
-        console.log("message data: " + data);
-        if(data["id"] !== "1" && data["status"] === true){     // id不等于当前登录用户id则绘制形象
-          let x = parseFloat(data["positionX"]);
-          let y = parseFloat(data["positionY"]);
-          this.loadModel("student" + data["id"],
-            'assets/model/student2/scene.gltf',
-            [20, 20, 20],
-            [x, 0, y], 0);
-        }else if(data["id"] !== "1" && data["status"] === false){
-          // 用户下线，移除形象
-          let children = this.scene.children;
-          for(let i = 0; i < children.length; ++i){
-            if(children[i].name === ("student" + data["id"])){
-              this.scene.remove(children[i]);
-              break;
+        console.log(data);
+
+        // 登录初次绘制
+        if(!this.onlineDraw){
+          let onlines = data['onLineIds'];
+          for(let i = 0; i < onlines.length; ++i){
+            this.drawStudentById(onlines[i]);
+          }
+          this.onlineDraw = true;
+        }else{
+          if(data["sid"] !== sessionStorage.getItem("userId") && data["message"] === "online"){     // id不等于当前登录用户id则绘制形象
+
+            // 根据性别加载用户形象
+            this.drawStudentById(data['sid']);
+          }else if(data["sid"] !== sessionStorage.getItem("userId") && data["status"] === "offline"){
+            // 用户下线，移除形象
+            let children = this.scene.children;
+            for(let i = 0; i < children.length; ++i){
+              if(children[i].name === ("student" + data["sid"])){
+                this.scene.remove(children[i]);
+                break;
+              }
             }
           }
         }
@@ -88,24 +102,51 @@ export class CommunitySceneComponent implements OnInit {
       // 点击跳转到课堂
       const intersectClass = intersects.filter(intersect => CommunitySceneComponent.getClassroom(intersect.object))[0];
       if (intersectClass != undefined) {
-        // 通过移除挂载dom节点删除
-        this.isVisible = true;
+        this.isVisibleClass = true;
       }
 
       // 点击查看用户信息
-      const intersectStudent = intersects.filter(intersect => CommunitySceneComponent.getStudent(intersect.object))[0];
+      const intersectStudent = intersects.filter(intersect => this.getStudent(intersect.object))[0];
       if (intersectStudent != undefined) {
-        this.notification.blank("用户信息", "student");
+        axios.get("retrieveUserInfo", {
+          params: {
+            userId: parseInt(this.clickUser),
+          }
+        }).then(response => {
+          console.log("response: ", response);
+          if(response.status === 200){
+            this.user = response.data;
+            this.isVisibleUser = true;
+          }
+        }).catch(error => {
+          console.log("error: ", error);
+        })
       }
+    })
+
+    // 获取课堂列表
+    axios.get('retrieveClasses', {}).then(response => {
+      console.log("response: ", response)
+      if(response.status === 200){
+        this.classes = response.data.result;
+      }
+    }).catch(error => {
+      console.log("error: ", error);
     })
   }
 
-  routeToClassroom(id: number){
+  routeToClassroom(id: number, name: string){
+    // 通过移除挂载dom节点删除
     const div = document.getElementsByTagName('canvas')[0];
     document.body.removeChild(div);
 
     //关于携带参数的问题
-    this.router.navigate(["class"], { queryParams: {id} }).then(r => {
+    this.router.navigate(["class"], {
+      queryParams: {
+        classId: id,
+        className: name,
+      }
+    }).then(r => {
       if (r) {
         console.log("navigate to class")
       } else {
@@ -145,7 +186,7 @@ export class CommunitySceneComponent implements OnInit {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.minDistance = 100;
-    this.controls.maxDistance = 200;
+    this.controls.maxDistance = 300;
     this.controls.maxPolarAngle = Math.PI / 2.2;
     this.controls.addEventListener('change', () => {
       this.renderer.render( this.scene,  this.camera);
@@ -153,7 +194,7 @@ export class CommunitySceneComponent implements OnInit {
   }
 
   init() {
-    this.camera.position.set(0, 70, 200);
+    this.camera.position.set(0, 70, 300);
     this.camera.lookAt(this.scene.position);
     this.scene.add(this.camera);
 
@@ -174,8 +215,6 @@ export class CommunitySceneComponent implements OnInit {
 
   initModel() {
     this.loadModel("classroom", 'assets/model/classroom/scene.gltf', [20, 20, 20], [50, 0, -150], 0);
-    this.loadModel("student1", 'assets/model/student2/scene.gltf', [20, 20, 20], [100, 0, 80], 0);
-    // this.loadModel("student", 'assets/model/student2/scene.gltf', [15, 15, 15], [50, 0, -20], 135);
   }
 
   loadModel(name: string, path: string, scale: Array<number>, position: Array<number>,
@@ -211,9 +250,10 @@ export class CommunitySceneComponent implements OnInit {
     return false;
   }
 
-  private static getStudent(object: Object3D): any {
+  private getStudent(object: Object3D): any {
     do {
       if (object.name.includes("student")){
+        this.clickUser = object.name.substring(7, object.name.length);
         return true;
       }
       if (object.parent) {
@@ -225,15 +265,44 @@ export class CommunitySceneComponent implements OnInit {
     return false;
   }
 
+  drawStudentById(userId: number){
+    axios.get("retrieveUserInfo", {
+      params: {
+        userId: userId,
+      }
+    }).then(response => {
+      console.log("response: ", response);
+      if(response.status === 200){
+        if(response.data.gender === "man"){
+          this.loadModel("student" + userId,
+            'assets/model/student/scene.gltf', [20, 20, 20], [userId * 7, 0, 80 + userId], 0);
+        }else{
+          this.loadModel("student" + userId,
+            'assets/model/student2/scene.gltf', [20, 20, 20], [userId * 7, 0, 80 + userId], 0);
+        }
+      }
+    }).catch(error => {
+      console.log("error: ", error);
+    })
+  }
+
   render() {
     this.renderer.render( this.scene,  this.camera);
   }
 
   handleOk(): void {
-    this.isVisible = false;
+    this.isVisibleClass = false;
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisibleClass = false;
+  }
+
+  Ok(): void {
+    this.isVisibleUser = false;
+  }
+
+  Cancel(): void {
+    this.isVisibleUser = false;
   }
 }
