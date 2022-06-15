@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClassComponent } from './components/class/class.component';
 import { CommunityComponent } from './components/community/community.component';
-import { AssignTaskComponent } from './components/assign-task/assign-task.component';
+import { AssignTaskComponent } from './components/teacher/assign-task/assign-task.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import {NzTableModule} from "ng-zorro-antd/table";
@@ -39,7 +39,7 @@ import {PersonalSideComponent} from "./components/personal/personal-side/persona
 import {PersonImageComponent} from "./components/personal/person-image/person-image.component";
 import {PersonTaskComponent} from "./components/personal/person-task/person-task.component";
 import {MenuComponent} from "./components/personal/menu/menu.component";
-import {CheckComponent} from "./components/check/check.component";
+import {CheckComponent} from "./components/teacher/check/check.component";
 import {FreeTaskComponent} from "./components/personal/free-task/free-task.component";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
@@ -61,6 +61,8 @@ import { GroupRoomComponent } from './components/group-room/group-room.component
 import {NzCommentModule} from "ng-zorro-antd/comment";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
 
+import {SocketServiceService} from "./services/socket-service.service";
+import { CheckFinishedComponent } from './components/teacher/check-finished/check-finished.component';
 registerLocaleData(zh);
 
 @NgModule({
@@ -86,6 +88,7 @@ registerLocaleData(zh);
   ValidityTransformPipe,
   OptionalTransformPipe,
   GroupRoomComponent,
+  CheckFinishedComponent,
   
   ],
   imports: [          // 项目依赖模块
@@ -135,8 +138,9 @@ registerLocaleData(zh);
     NzAvatarModule,
     NzCommentModule,
     NzPopoverModule,
+    NzRadioModule,
   ],
-  providers: [],      // 定义的服务
+  providers: [SocketServiceService],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
 })
 

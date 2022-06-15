@@ -4,16 +4,17 @@ import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { ClassComponent } from "./components/class/class.component";
 import { CommunityComponent } from "./components/community/community.component";
-import { AssignTaskComponent } from "./components/assign-task/assign-task.component";
+import { AssignTaskComponent } from "./components/teacher/assign-task/assign-task.component";
 import { TaskListComponent} from "./components/task-list/task-list.component";
 import { UploadComponent} from "./components/upload/upload.component";
 import { CommunitySceneComponent} from "./components/community-scene/community-scene.component";
 import { PersonImageComponent } from './components/personal/person-image/person-image.component';
 import { PersonalInfoComponent } from './components/personal/personal-info/personal-info.component';
-import { CheckComponent } from './components/check/check.component';
+import { CheckComponent } from './components/teacher/check/check.component';
 import { PersonTaskComponent } from './components/personal/person-task/person-task.component';
 import { FreeTaskComponent } from './components/personal/free-task/free-task.component';
 import { GroupRoomComponent } from './components/group-room/group-room.component';
+import { CheckFinishedComponent } from './components/teacher/check-finished/check-finished.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   // 社区
   { path: 'community', component: CommunityComponent},
-  { path: 'assignTask', component: AssignTaskComponent},
+ 
   { path: 'communityScene', component: CommunitySceneComponent},
   // 虚拟课堂
   { path: 'class', component: ClassComponent},
@@ -35,8 +36,10 @@ const routes: Routes = [
   // 完成任务
   { path: 'tasks/upload', component: UploadComponent},
   { path: 'tasks/group', component: GroupRoomComponent},
-
+  //老师与助教部分
   { path: 'check', component: CheckComponent},
+  { path: 'assignTask', component: AssignTaskComponent},
+  {path:'checkFinished',component:CheckFinishedComponent}
 
 ]
 

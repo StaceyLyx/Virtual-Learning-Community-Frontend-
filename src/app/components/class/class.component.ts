@@ -112,6 +112,7 @@ export class ClassComponent implements OnInit {
     this.CONTROLS.minDistance = 100;
     this.CONTROLS.maxDistance = 200;
     this.CONTROLS.maxPolarAngle = Math.PI / 2.2;
+
     this.CONTROLS.addEventListener('change', () =>{
       this.RENDERER.render(this.SCENE, this.CAMERA);
     })
@@ -154,10 +155,7 @@ export class ClassComponent implements OnInit {
         this.SCENE.add(gltf.scene);
         this.render();
       })
-    },
-      function (xhr){
-      console.log("xhr", (xhr.loaded / xhr.total) * 100 + "% loaded")
-      })
+    })
   }
 
   private static task(object: Object3D): any{
