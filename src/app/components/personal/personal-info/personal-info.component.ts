@@ -12,6 +12,8 @@ export class PersonalInfoComponent implements OnInit {
 
   info: any;
 
+  status: string = "";
+
   ngOnInit(): void {
     axios.get('retrieveUserInfo', {
       params: {
@@ -31,6 +33,30 @@ export class PersonalInfoComponent implements OnInit {
         console.log(error);
       }else{
         console.log(error);
+      }
+    })
+  }
+
+  statusConfirm(){
+    const formData = new FormData();
+    formData.append('userId', <string>sessionStorage.getItem("userId"));
+    formData.append('status', this.status);
+
+    axios.post('changeStatus', formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }
+    ).then(response => {
+      console.log("response: ", response)
+      if (response.status === 200) {
+        this.message.success("设置成功");
+      }
+    }).catch(error => {
+      console.log(error.response);
+      if(error.response.status === 400){
+        this.message.error("设置失败");
       }
     })
   }

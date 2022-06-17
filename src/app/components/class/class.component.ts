@@ -323,4 +323,24 @@ export class ClassComponent implements OnInit {
   Cancel(): void {
     this.isVisibleUser = false;
   }
+
+  routerTo(path: string){
+    // 通过移除挂载dom节点删除
+    const div = document.getElementsByTagName('canvas')[0];
+    document.body.removeChild(div);
+
+    if(path === "logout"){
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      path = '';
+      this.message.info("登出成功");
+    }
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        console.log("local index")
+      }
+    })
+  }
 }

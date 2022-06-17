@@ -8,6 +8,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {CommunityWSService} from "../../services/CommunityWS.service";
 import axios from "axios";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-community-scene',
@@ -39,9 +40,14 @@ export class CommunitySceneComponent implements OnInit {
 
   onlineDraw = false;
 
+  isVisibleStatus = true;
+
+  status: string = "";
+
   constructor(private router: Router,
               private notification: NzNotificationService,
-              private socketService: CommunityWSService) { }
+              private socketService: CommunityWSService,
+              private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.notification.blank(
@@ -304,5 +310,25 @@ export class CommunitySceneComponent implements OnInit {
 
   Cancel(): void {
     this.isVisibleUser = false;
+  }
+
+  routerTo(path: string){
+    // 通过移除挂载dom节点删除
+    const div = document.getElementsByTagName('canvas')[0];
+    document.body.removeChild(div);
+
+    if(path === "logout"){
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      path = '';
+      this.message.info("登出成功");
+    }
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        console.log("local index")
+      }
+    })
   }
 }

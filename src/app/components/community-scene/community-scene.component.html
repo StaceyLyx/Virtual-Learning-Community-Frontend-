@@ -1,3 +1,20 @@
+<div>
+  <ul class="menu" nz-menu nzMode="horizontal">
+    <li nz-menu-item (click)="routerTo('communityScene')">
+      <i nz-icon nzType="team" nzTheme="outline"></i>
+      前往社区
+    </li>
+    <li nz-menu-item style="float: right" (click)="routerTo('logout')">
+      <i nz-icon nzType="logout" nzTheme="outline"></i>
+      退出登录
+    </li>
+    <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
+      <i nz-icon nzType="home" nzTheme="outline"></i>
+      个人资料
+    </li>
+  </ul>
+</div>
+
 <nz-modal [(nzVisible)]="isVisibleClass" nzTitle="课堂列表" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <ul nz-list [nzDataSource]="classes" nzBordered nzSize="large">

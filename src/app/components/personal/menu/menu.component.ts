@@ -14,6 +14,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  value: string = "";
+
   routerTo(path: string){
     if(path === "logout"){
       sessionStorage.removeItem("userId");
