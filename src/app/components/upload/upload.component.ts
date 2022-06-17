@@ -158,14 +158,10 @@ export class UploadComponent implements OnInit {
 
     // 提交经验值分配
     if(sum === 1){
-      let temp = {
-      "3": 0.2,
-      "4": 0.2,
-      "5": 0.2,
-      "6": 0.2,
-    };
+      var temp = {};
       // for(let i = 0; i < this.groupScore.length; ++i) {
-      //   temp.set(String(this.members[i].id), this.groupScore[i].value);
+      //   var demo = 'a';
+      //   temp[demo] = this.groupScore[i].value;
       // }
       console.log(temp);
       axios.put('submitGroupTask/exp',

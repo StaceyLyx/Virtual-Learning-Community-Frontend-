@@ -100,19 +100,19 @@ export class GroupRoomComponent implements OnInit {
     })
 
     // 获取团队房间的留言板信息
-    // this.roomService.socketSend(this.roomId).subscribe(
-    //   raw => {
-    //     let data = JSON.parse(raw);
-    //     console.log("message data: " + data);
-    //     this.data = [
-    //       ...this.data,
-    //       {
-    //         username: data['susername'],
-    //         message: data['message'],
-    //       }
-    //     ]
-    //   }
-    // );
+    this.roomService.socketSend(this.roomId).subscribe(
+      raw => {
+        let data = JSON.parse(raw);
+        console.log("message data: " + data);
+        this.data = [
+          ...this.data,
+          {
+            username: data['susername'],
+            message: data['message'],
+          }
+        ]
+      }
+    );
   }
 
   handleSubmit(): void {
