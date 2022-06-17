@@ -64,6 +64,8 @@ import {CommunityWSService} from "./services/CommunityWS.service";
 import {RoomWSService} from "./services/room-ws.service";
 import { GenderTransformPipe } from './pipes/gender-transform.pipe';
 import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
+import { StatusTransformPipe } from './pipes/status-transform.pipe';
+import {NzCheckboxComponent, NzCheckboxModule} from "ng-zorro-antd/checkbox";
 registerLocaleData(zh);
 
 @NgModule({
@@ -91,6 +93,7 @@ registerLocaleData(zh);
     GroupRoomComponent,
     GenderTransformPipe,
     GroupNameTransformPipe,
+    StatusTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -140,6 +143,7 @@ registerLocaleData(zh);
     NzCommentModule,
     NzPopoverModule,
     NzRadioModule,
+    NzCheckboxModule,
   ],
   providers: [
     CommunityWSService,

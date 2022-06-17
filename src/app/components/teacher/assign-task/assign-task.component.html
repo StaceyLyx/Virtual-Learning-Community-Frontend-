@@ -1,326 +1,222 @@
+<nz-layout style="min-height: calc(100vh)">
 
-<div el-header class="header" style="font-family: cursive;">老师与助教</div>
-<app-menu></app-menu>
-<nz-layout>
-  <nz-sider style="background-color: white;">
-    <ul nz-menu nzTheme="light" nzMode="inline">
-      <li nz-menu-item  >
-        <i nz-icon nzType="audit" nzTheme="outline"></i>
-      <span><a href="check"></a>审核发布的任务</span>
-      </li>
-      <li nz-menu-item  >
-        <i nz-icon nzType="audit" nzTheme="outline"></i>
-      <span><a href="checkFinished"></a>审核完成的任务</span>
-      </li>
-      <li nz-menu-item>
-          <i nz-icon nzType="read" nzTheme="outline"></i>
-        <span> <a href="assignTask"></a>发布任务</span>
-      </li>
+  <nz-header class="header">
+    <h1 class="headerText">学习社区管理</h1>
+  </nz-header>
+
+  <nz-layout>
+    <nz-sider style="background-color: white;">
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/check')">
+            <i nz-icon nzType="audit" nzTheme="outline"></i>
+            审核发布的任务
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/checkFinished')">
+            <i nz-icon nzType="audit" nzTheme="outline"></i>
+            审核完成的任务
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/assignTask')">
+            <i nz-icon nzType="read" nzTheme="outline"></i>
+            发布任务
+          </a>
+        </li>
       </ul>
-  </nz-sider>
-  
-  <nz-content style="background-color: white;">
-<nz-tabset nzType="card" nzSize="large" nzCentered="true" >
-<nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="个人任务"  >
-<div class="container">
-    <!-- <form [formGroup]="taskFormPerson" >
-        <div class="form-group">
-            <label style="font-family: cursive;">任务名称： </label>
-            <input type="text" formControlName="taskName" class="form-control" id="taskName" [(ngModel)]="taskInfo1.taskName"
-             required>
-             <div *ngIf="taskFormPerson.get('taskName').invalid && (taskFormPerson.get('taskName').dirty || taskFormPerson.get('taskName').touched)" class="alert alert-danger">
-                     <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskName').errors.required">任务名称不能为空</div> 
-             </div>
-        </div>
-        <div class="form-group">
-            <label style="font-family: cursive;">任务课程： </label>
-            <input type="text" formControlName="taskClass" class="form-control" id="taskClass" [(ngModel)]="taskInfo.taskClass"
-                 required>
-                <div *ngIf="taskFormPerson.get('taskClass').invalid && (taskFormPerson.get('taskClass').dirty || taskFormPerson.get('taskClass').touched)" class="alert alert-danger">
-                    <div style="font-family: cursive;color:tomato;"  *ngIf="taskFormPerson.get('taskClass').errors.required">任务课程不能为空</div>
-        </div>
-                </div> 
-        <div class="form-group">
-            <label style="font-family: cursive;">分配经验值：</label>
-            <input type="number" min="1" max="10000" formControlName="taskExp" class="form-control" id="taskExp" [(ngModel)]="taskInfo1.taskExp"
-                required>
-                <div *ngIf="taskFormPerson.get('taskExp').invalid && (taskFormPerson.get('taskExp').dirty || taskFormPerson.get('taskExp').touched)" class="alert alert-danger">
-                    <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskExp').errors.required">任务经验值不能为空</div>
-        </div>
-                </div>
-        <div class="form-group">
-            <label style="font-family: cursive;">任务完成时间： </label>
-            <input type="number" min="1" max="10000" id="taskTime" formControlName="taskTime" [(ngModel)]="taskInfo1.taskTime"
-                required>
-                <div *ngIf="taskFormPerson.get('taskTime').invalid && (taskFormPerson.get('taskTime').dirty || taskFormPerson.get('taskTime').touched)" class="alert alert-danger">
-                    <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskTime').errors.required">任务完成时间不能为空</div>
-        </div>
-                </div>
-     
-        <div class="form-group">
-            <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="1" [(ngModel)]="taskInfo1.taskNecessity"
-               >
-            <span class="radio-text" style="font-family: cursive;">可选</span>
-            <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="2" [(ngModel)]="taskInfo1.taskNecessity"
-                >
-            <span class="radio-text" style="font-family: cursive;">必选</span>
-            <div *ngIf="taskFormPerson.get('taskNecessity').invalid && (taskFormPerson.get('taskNecessity').dirty || taskFormPerson.get('taskNecessity').touched)" class="alert alert-danger">
-                <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskNecessity').errors.required">不能为空</div>
-    </div>
-        </div>
-        <button  type="submit" class="button" (click)="onSubmitPerson()">提交</button>
-    </form> -->
-    <form nz-form [formGroup]="taskFormPerson" (ngSubmit)="onSubmitPerson()">
-      <div nz-row [nzGutter]="24">
-        <div nz-col [nzSpan]="8">  
-      <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzRequired>任务名称</nz-form-label>
-          <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务名称" >
-            <input nz-input formControlName="taskName" placeholder="请输入任务名称" />
-          </nz-form-control>
-        </nz-form-item>
-        </div>
+    </nz-sider>
 
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="class">所属课堂</nz-form-label>
-            <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="所属课堂是必选项">
-              <nz-cascader formControlName="taskClass" id="class"
-                           [nzOptions]="classOptions"
-                           [nzShowSearch]="true"></nz-cascader>
-            </nz-form-control>
-          </nz-form-item>
-          </div>
-          
-          <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>任务时间</nz-form-label>
-            <nz-form-control [nzSm]="16" [nzXs]="24">
-                <nz-date-picker formControlName="taskTime"></nz-date-picker>
-            </nz-form-control>
-          </nz-form-item>
-          </div>
-</div>
-          <div nz-row [nzGutter]="24">
-          <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="7" nzRequired>任务经验值</nz-form-label>
-            <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入任务经验值">
-                <nz-input-number formControlName="taskExp" [nzMin]="1" [nzMax]="10000" [nzStep]="1"></nz-input-number>
-            </nz-form-control>
-          </nz-form-item>
-          </div>
+    <nz-content style="background-color: white;">
+      <nz-tabset nzType="card" nzSize="large" nzCentered="true" >
+        <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="个人任务"  >
+          <div class="container">
+            <!-- <form [formGroup]="taskFormPerson" >
+                <div class="form-group">
+                    <label style="font-family: cursive;">任务名称： </label>
+                    <input type="text" formControlName="taskName" class="form-control" id="taskName" [(ngModel)]="taskInfo1.taskName"
+                     required>
+                     <div *ngIf="taskFormPerson.get('taskName').invalid && (taskFormPerson.get('taskName').dirty || taskFormPerson.get('taskName').touched)" class="alert alert-danger">
+                             <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskName').errors.required">任务名称不能为空</div>
+                     </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-family: cursive;">任务课程： </label>
+                    <input type="text" formControlName="taskClass" class="form-control" id="taskClass" [(ngModel)]="taskInfo.taskClass"
+                         required>
+                        <div *ngIf="taskFormPerson.get('taskClass').invalid && (taskFormPerson.get('taskClass').dirty || taskFormPerson.get('taskClass').touched)" class="alert alert-danger">
+                            <div style="font-family: cursive;color:tomato;"  *ngIf="taskFormPerson.get('taskClass').errors.required">任务课程不能为空</div>
+                </div>
+                        </div>
+                <div class="form-group">
+                    <label style="font-family: cursive;">分配经验值：</label>
+                    <input type="number" min="1" max="10000" formControlName="taskExp" class="form-control" id="taskExp" [(ngModel)]="taskInfo1.taskExp"
+                        required>
+                        <div *ngIf="taskFormPerson.get('taskExp').invalid && (taskFormPerson.get('taskExp').dirty || taskFormPerson.get('taskExp').touched)" class="alert alert-danger">
+                            <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskExp').errors.required">任务经验值不能为空</div>
+                </div>
+                        </div>
+                <div class="form-group">
+                    <label style="font-family: cursive;">任务完成时间： </label>
+                    <input type="number" min="1" max="10000" id="taskTime" formControlName="taskTime" [(ngModel)]="taskInfo1.taskTime"
+                        required>
+                        <div *ngIf="taskFormPerson.get('taskTime').invalid && (taskFormPerson.get('taskTime').dirty || taskFormPerson.get('taskTime').touched)" class="alert alert-danger">
+                            <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskTime').errors.required">任务完成时间不能为空</div>
+                </div>
+                        </div>
 
-          <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzRequired>任务性质</nz-form-label>
-            <nz-form-control [nzSpan]="12" nzHasFeedback>
-              <nz-cascader formControlName="taskNecessity" 
-              [nzOptions]="taskOptional"
-              [nzShowSearch]="true"></nz-cascader>
-            </nz-form-control>
-          </nz-form-item>
-          </div>
-          <nz-divider nzOrientation="left"></nz-divider>
- 
-        <nz-form-item>
-          <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <button nz-button nzType="primary" [disabled]="!taskFormPerson.valid">Submit</button>
-          </nz-form-control>
-        </nz-form-item>
-        </div>
-      </form>
-</div> 
-</nz-tab>
-<nz-tab  nzTitle="团队任务" >
-    <div class="container">
-        <form nz-form [formGroup]="taskFormGroup" (ngSubmit)="onSubmitTeam()">
-          <div nz-row [nzGutter]="24">
-            <div nz-col [nzSpan]="8">  
-          <nz-form-item>
-              <nz-form-label [nzSpan]="6" nzRequired>任务名称</nz-form-label>
-              <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务名称" >
-                <input nz-input formControlName="taskName" placeholder="请输入任务名称" />
-              </nz-form-control>
-            </nz-form-item>
+                <div class="form-group">
+                    <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="1" [(ngModel)]="taskInfo1.taskNecessity"
+                       >
+                    <span class="radio-text" style="font-family: cursive;">可选</span>
+                    <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="2" [(ngModel)]="taskInfo1.taskNecessity"
+                        >
+                    <span class="radio-text" style="font-family: cursive;">必选</span>
+                    <div *ngIf="taskFormPerson.get('taskNecessity').invalid && (taskFormPerson.get('taskNecessity').dirty || taskFormPerson.get('taskNecessity').touched)" class="alert alert-danger">
+                        <div style="font-family: cursive;color:tomato"  *ngIf="taskFormPerson.get('taskNecessity').errors.required">不能为空</div>
             </div>
-    
-            <div nz-col [nzSpan]="8">
-              <nz-form-item>
-                <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="class">所属课堂</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="所属课堂是必选项">
-                  <nz-cascader formControlName="taskClass" id="class"
-                               [nzOptions]="classOptions"
-                               [nzShowSearch]="true"></nz-cascader>
-                </nz-form-control>
-              </nz-form-item>
-              </div>
-              
-              <div nz-col [nzSpan]="8">
-              <nz-form-item>
-                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>任务时间</nz-form-label>
-                <nz-form-control [nzSm]="16" [nzXs]="24">
-                    <nz-date-picker formControlName="taskTime"></nz-date-picker>
-                </nz-form-control>
-              </nz-form-item>
-              </div>
-    </div>
+                </div>
+                <button  type="submit" class="button" (click)="onSubmitPerson()">提交</button>
+            </form> -->
+            <form nz-form [formGroup]="taskFormPerson" (ngSubmit)="onSubmitPerson()">
               <div nz-row [nzGutter]="24">
-              <div nz-col [nzSpan]="8">
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>任务经验值</nz-form-label>
-                <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入任务经验值">
-                    <nz-input-number formControlName="taskExp" [nzMin]="1" [nzMax]="10000" [nzStep]="1"></nz-input-number>
-                </nz-form-control>
-              </nz-form-item>
-              </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzRequired>任务名称</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务名称" >
+                      <input nz-input formControlName="taskName" placeholder="请输入任务名称" />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
 
-        
-              <div nz-col [nzSpan]="8">
-              <nz-form-item>
-                <nz-form-label [nzSpan]="6" nzRequired>任务性质</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzHasFeedback>
-                  <nz-cascader formControlName="taskNecessity" 
-                  [nzOptions]="taskOptional"
-                  [nzShowSearch]="true"></nz-cascader>
-                </nz-form-control>
-              </nz-form-item>
-              </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="class">所属课堂</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="所属课堂是必选项">
+                      <nz-cascader formControlName="taskClass" id="class"
+                                   [nzOptions]="classOptions"
+                                   [nzShowSearch]="true"></nz-cascader>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
 
-              <div nz-col [nzSpan]="8">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>任务时间</nz-form-label>
+                    <nz-form-control [nzSm]="16" [nzXs]="24">
+                      <nz-date-picker formControlName="taskTime"></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>任务经验值</nz-form-label>
+                    <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入任务经验值">
+                      <nz-input-number formControlName="taskExp" [nzMin]="1" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzRequired>任务性质</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback>
+                      <nz-cascader formControlName="taskNecessity"
+                                   [nzOptions]="taskOptional"
+                                   [nzShowSearch]="true"></nz-cascader>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <nz-divider nzOrientation="left"></nz-divider>
+
                 <nz-form-item>
-                  <nz-form-label [nzSpan]="6" nzRequired>任务人数</nz-form-label>
-                  <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务人数">
-                      <nz-input-number formControlName="taskNum" [nzMin]="2" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+                  <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                    <button nz-button nzType="primary" [disabled]="!taskFormPerson.valid">Submit</button>
                   </nz-form-control>
                 </nz-form-item>
+              </div>
+            </form>
+          </div>
+        </nz-tab>
+        <nz-tab  nzTitle="团队任务" >
+          <div class="container">
+            <form nz-form [formGroup]="taskFormGroup" (ngSubmit)="onSubmitTeam()">
+              <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzRequired>任务名称</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务名称" >
+                      <input nz-input formControlName="taskName" placeholder="请输入任务名称" />
+                    </nz-form-control>
+                  </nz-form-item>
                 </div>
-    
-              <nz-divider nzOrientation="left"></nz-divider>
-     
-            <nz-form-item>
-              <nz-form-control [nzOffset]="7" [nzSpan]="12">
-                <button nz-button nzType="primary" [disabled]="!taskFormGroup.valid">Submit</button>
-              </nz-form-control>
-            </nz-form-item>
-            </div>
-          </form>
-       <!--  <form [formGroup]="taskFormGroup" >
-            <div class="form-group">
-                <label style="font-family: cursive;">任务名称： </label>
-                <input type="text" formControlName="taskName" class="form-control" id="taskName" [(ngModel)]="taskInfo2.taskName"
-                 required>
-                 <div *ngIf="taskFormGroup.get('taskName').invalid && (taskFormGroup.get('taskName').dirty || taskFormGroup.get('taskName').touched)" class="alert alert-danger">
-                         <div style="font-family: cursive;color:tomato"  *ngIf="taskFormGroup.get('taskName').errors.required">任务名称不能为空</div>
-                        
-                 </div>
-            </div>
-           <div class="form-group">
-                <label style="font-family: cursive;">任务课程： </label>
-                <input type="text" formControlName="taskClass" class="form-control" id="taskClass" [(ngModel)]="taskInfo2.taskClass"
-                     required>
-                    <div *ngIf="taskFormGroup.get('taskClass').invalid && (taskFormGroup.get('taskClass').dirty || taskFormGroup.get('taskClass').touched)" class="alert alert-danger">
-                        <div style="font-family: cursive;color:tomato;"  *ngIf="taskFormGroup.get('taskClass').errors.required">任务课程不能为空</div>
-            </div>
-                    </div> 
-            <div class="form-group">
-                <label style="font-family: cursive;">分配经验值：</label>
-                <input type="number" min="1" max="10000" formControlName="taskExp" class="form-control" id="taskExp" [(ngModel)]="taskInfo2.taskExp"
-                    required>
-                    <div *ngIf="taskFormGroup.get('taskExp').invalid && (taskFormGroup.get('taskExp').dirty || taskFormGroup.get('taskExp').touched)" class="alert alert-danger">
-                        <div style="font-family: cursive;color:tomato"  *ngIf="taskFormGroup.get('taskExp').errors.required">任务经验值不能为空</div>
-            </div>
-            <div class="form-group">
-                <label style="font-family: cursive;">团队人数：</label>
-                <input type="number" min="2" max="10000" formControlName="taskNum" class="form-control" id="taskNum" [(ngModel)]="taskInfo2.taskNum"
-                    required>
-                    <div *ngIf="taskFormGroup.get('taskExp').invalid && (taskFormGroup.get('taskNum').dirty || taskFormGroup.get('taskNum').touched)" class="alert alert-danger">
-                        <div style="font-family: cursive;color:tomato"  *ngIf="taskFormGroup.get('taskNum').errors.required">任务经验值不能为空</div>
-            </div>
-            </div>
-                    </div>
-            <div class="form-group">
-                <label style="font-family: cursive;">任务完成时间： </label>
-                <input type="number" min="1" max="10000" id="taskTime" formControlName="taskTime" [(ngModel)]="taskInfo2.taskTime"
-                    required>
-                    <div *ngIf="taskFormGroup.get('taskTime').invalid && (taskFormGroup.get('taskTime').dirty || taskFormGroup.get('taskTime').touched)" class="alert alert-danger">
-                        <div style="font-family: cursive;color:tomato"  *ngIf="taskFormGroup.get('taskTime').errors.required">任务完成时间不能为空</div>
-            </div>
-                    </div>
-        
-            <div class="form-group">
-                <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="1" [(ngModel)]="taskInfo2.taskNecessity"
-                   >
-                <span class="radio-text" style="font-family: cursive;">可选</span>
-                <input type="radio" formControlName="taskNecessity" class="radio2" name="taskNecessity" value="2" [(ngModel)]="taskInfo2.taskNecessity"
-                    >
-                <span class="radio-text" style="font-family: cursive;">必选</span>
-                <div *ngIf="taskFormGroup.get('taskNecessity').invalid && (taskFormGroup.get('taskNecessity').dirty || taskFormGroup.get('taskNecessity').touched)" class="alert alert-danger">
-                    <div style="font-family: cursive;color:tomato"  *ngIf="taskFormGroup.get('taskNecessity').errors.required">不能为空</div>
-        </div>
-            </div>
-            <button  type="submit" class="button" (click)="onSubmitTeam()">提交</button>
-        </form> -->
-    </div> 
-    </nz-tab>
-</nz-tabset>
-</nz-content>
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="class">所属课堂</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="所属课堂是必选项">
+                      <nz-cascader formControlName="taskClass" id="class"
+                                   [nzOptions]="classOptions"
+                                   [nzShowSearch]="true"></nz-cascader>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>任务时间</nz-form-label>
+                    <nz-form-control [nzSm]="16" [nzXs]="24">
+                      <nz-date-picker formControlName="taskTime"></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>任务经验值</nz-form-label>
+                    <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入任务经验值">
+                      <nz-input-number formControlName="taskExp" [nzMin]="1" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzRequired>任务性质</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback>
+                      <nz-cascader formControlName="taskNecessity"
+                                   [nzOptions]="taskOptional"
+                                   [nzShowSearch]="true"></nz-cascader>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzRequired>任务人数</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="请输入任务人数">
+                      <nz-input-number formControlName="taskNum" [nzMin]="2" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <nz-divider nzOrientation="left"></nz-divider>
+
+                <nz-form-item>
+                  <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                    <button nz-button nzType="primary" [disabled]="!taskFormGroup.valid">Submit</button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </form>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </nz-content>
+  </nz-layout>
 </nz-layout>
-
-<!-- <div class="container">
-<form nz-form [formGroup]="taskForm" class="form-group" (ngSubmit)="onSubmit()">
-    <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskName" style="font-family: cursive;">任务名称</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入任务名称">
-            <input nz-input id="taskName" class="form-control" formControlName="taskName" [(ngModel)]="taskInfo.taskName" />
-          </nz-form-control>
-      </nz-form-item>
-
-    <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskClass" style="font-family: cursive;">任务课程</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入任务所属课程名称">
-            <input nz-input id="taskClass" class="form-control" formControlName="taskClass" [(ngModel)]="taskInfo.taskClass" />
-          </nz-form-control>
-      </nz-form-item>
-
-
-    <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskTime" style="font-family: cursive;">任务完成时间</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入任务时间">
-            <nz-input-number id="taskTime" class="form-control" [(ngModel)]="taskInfo.taskTime" [nzMin]="1" [nzMax]="30" [nzStep]="1"></nz-input-number> 
-          </nz-form-control>
-      </nz-form-item>
-      
-    <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskExp" style="font-family: cursive;">任务经验值</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入任务经验值">
-            <nz-input-number id="taskExp" class="form-control" [(ngModel)]="taskInfo.taskExp" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number> 
-          </nz-form-control>
-      </nz-form-item>
-      
-    <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskProperty" style="font-family: cursive;">任务性质</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="选择任务性质">
-            <nz-radio-group  id="taskProperty" class="form-control" [(ngModel)]="taskInfo.taskProperty" >
-                <label nz-radio nzValue="A"  style="font-family: cursive;">个人任务</label>
-                <label nz-radio nzValue="B"  style="font-family: cursive;">团队任务</label>
-              </nz-radio-group>
-          </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label  nzRequired nzFor="taskNecessity" style="font-family: cursive;">任务性质</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="选择任务性质">
-            <nz-radio-group  id="taskNecessity" class="form-control" [(ngModel)]="taskInfo.taskNecessity" >
-                <label nz-radio nzValue="A"  style="font-family: cursive;">可选</label>
-                <label nz-radio nzValue="B"  style="font-family: cursive;">必选</label>
-              </nz-radio-group>
-          </nz-form-control>
-      </nz-form-item>
-      
-        <nz-form-control>
-            <button nz-button nzType="primary" [disabled]="!taskForm.valid" >Log in</button>
-          </nz-form-control>
-    
-</form>
-</div> -->

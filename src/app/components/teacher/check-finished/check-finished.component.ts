@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AnyForUntypedForms } from '@angular/forms';
 import axios from 'axios';
-import { ElMessageService } from 'element-angular';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from "ng-zorro-antd/notification";
+import {Router} from "@angular/router";
+import {NzMessageService} from "ng-zorro-antd/message";
+
 @Component({
   selector: 'app-check',
   templateUrl: './check-finished.component.html',
@@ -12,7 +13,10 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 export class CheckFinishedComponent implements OnInit {
   isVisible = false;
 
-  constructor(private message: ElMessageService, private notification: NzNotificationService,private modal: NzModalService) { }
+  constructor(private message: NzMessageService,
+              private notification: NzNotificationService,
+              private modal: NzModalService,
+              private router: Router) { }
 
   expandSet = new Set<number>();
   tableDataGroup: any = [{
@@ -69,7 +73,6 @@ export class CheckFinishedComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("无任务");
         console.log(error);
       } else {
@@ -79,8 +82,6 @@ export class CheckFinishedComponent implements OnInit {
   }
 
   getTaskPerson() {
-    //store的USERID AUTHORITYID
-    //http://localhost:8081/admin/retrieveTasks/unfinishedGroup
     axios.get('http://localhost:8081/admin/retrieveTasks/unfinishedPersonal', {
       params: {
         userId: 0,
@@ -100,7 +101,6 @@ export class CheckFinishedComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("无任务");
         console.log(error);
       } else {
@@ -148,7 +148,6 @@ export class CheckFinishedComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("审核通过失败");
         console.log(error);
         this.notification.create(
@@ -163,7 +162,7 @@ export class CheckFinishedComponent implements OnInit {
   }
 
   passPerson(id: any, name: string) {
-    //delete 
+    //delete
     this.tableDataPerson = this.tableDataPerson.filter((d: { id: any; }) => d.id !== id);
     console.log(id)
     axios.post('http://localhost:8081/admin/checkCompletion/personTask', {
@@ -184,7 +183,6 @@ export class CheckFinishedComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("审核通过失败");
         console.log(error);
         this.notification.create(
@@ -218,7 +216,6 @@ export class CheckFinishedComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("审核通过失败");
         console.log(error);
         this.notification.create(
@@ -242,10 +239,19 @@ export class CheckFinishedComponent implements OnInit {
     });
   }
 
-  
-
   handleOk(): void {
     console.log('Button ok clicked!');
     this.isVisible = false;
+  }
+
+  routerTo(path: string){
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        this.message.create('error', '跳转失败');
+        console.log("navigate failed");
+      }
+    })
   }
 }

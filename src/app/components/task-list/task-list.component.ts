@@ -37,6 +37,8 @@ export class TaskListComponent implements OnInit {
   className: string = "";
   classId: number = 0;
 
+  acceptedTask: any = [];
+
   ngOnInit(): void {
 
     // 获取课堂id
@@ -54,6 +56,35 @@ export class TaskListComponent implements OnInit {
       console.log("response", response)
       if(response.status == 200){
         this.tableData = response.data.result;
+
+        // 获取该用户接受过的任务
+        axios.get('retrieveTasks/user', {
+          params: {
+            userId: sessionStorage.getItem("userId"),
+          }
+        }).then((res) =>{
+          console.log(res)
+          if(res.status == 200){
+            this.acceptedTask = res.data;
+
+            // 查看是否有用户接受过的任务
+            for(let i = 0; i < this.tableData.length; ++i){
+              let taskId = this.tableData[i].id;
+              for(let j = 0; j < this.acceptedTask.length; ++j){
+                if(this.acceptedTask[j].id === taskId){
+                  // 接受过
+                  this.tableData[i].validity = 4;
+                  break;
+                }
+              }
+            }
+
+          }else{
+            console.log(res);
+          }
+        }).catch((error) =>{
+          console.log("error: " + error);
+        })
       }
     }).catch((error) =>{
       console.log("error: ", error)
@@ -127,11 +158,19 @@ export class TaskListComponent implements OnInit {
         }
       }).catch(error => {
         console.log("error: ", error)
-        this.notification.create(
-          'error',
-          'Oops！',
-          "已经接受过该任务，前往“我的任务”去查看吧！"
-        )
+        if(error.response.status === 400){
+          this.notification.create(
+            'error',
+            'Oops！',
+            "已经接受过该任务，前往“我的任务”去查看吧！"
+          )
+        }else{
+          this.notification.create(
+            'error',
+            'Oops！',
+            "其他错误"
+          )
+        }
       })
     }else{
       // 接收团队任务
@@ -146,7 +185,19 @@ export class TaskListComponent implements OnInit {
           this.isVisible = true;
         }
       }).catch(error => {
-        console.log("error: ", error);
+        if(error.response.status === 400){
+          this.notification.create(
+            'error',
+            'Oops！',
+            "已经接受过该任务，前往“我的任务”去查看吧！"
+          )
+        }else{
+          this.notification.create(
+            'error',
+            'Oops！',
+            "其他错误"
+          )
+        }
       })
     }
   }
@@ -166,11 +217,17 @@ export class TaskListComponent implements OnInit {
       }
     }).catch(error => {
       console.log("error: ", error)
-      if(error.status === 400){
+      if(error.response.status === 400){
         this.notification.create(
           'error',
           'Oops！',
-          "该小组已满员啦，选择一个新的小组吧！"
+          "该小组已满员啦！去看看是否你已经在该小组中或重新选择一个小组吧"
+        )
+      }else{
+        this.notification.create(
+          'error',
+          'Oops！',
+          "其他错误"
         )
       }
     })

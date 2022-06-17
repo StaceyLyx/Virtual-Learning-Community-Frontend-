@@ -8,6 +8,10 @@
         <i nz-icon nzType="team" nzTheme="outline"></i>
         前往社区
       </li>
+      <li nz-menu-item style="float: right" (click)="routerTo('group')" [hidden]="score">
+        <i nz-icon nzType="right" nzTheme="outline"></i>
+        回到团队房间
+      </li>
       <li nz-menu-item style="float: right" (click)="routerTo('personalInfo')">
         <i nz-icon nzType="home" nzTheme="outline"></i>
         个人资料
@@ -56,9 +60,28 @@
             </button>
             <nz-modal [(nzVisible)]="isVisible" nzTitle="给你的团队成员分配贡献比例吧！请务必公平公正" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
               <ng-container *nzModalContent>
-                <p>Content one</p>
-                <p>Content two</p>
-                <p>Content three</p>
+               <ul nz-list [nzDataSource]="groupScore" nzBordered nzSize="large">
+                  <li nz-list-item *ngFor="let item of groupScore" nzNoFlex>
+                    <ul nz-list-item-actions>
+                      <nz-list-item-action>
+                        <nz-input-number
+                          [(ngModel)]="item.value"
+                          [nzMin]="0"
+                          [nzMax]="1"
+                          [nzStep]="0.1"
+                          [nzPlaceHolder]="'Digital'"
+                        ></nz-input-number>
+                      </nz-list-item-action>
+                    </ul>
+                    {{ item.key }}
+                  </li>
+               </ul>
+
+                <button nz-button [nzType]="'primary'"
+                        (click)="groupExp()"
+                        style="margin-top: 16px;margin-left: 40%">
+                  提交打分
+                </button>
               </ng-container>
             </nz-modal>
 
@@ -67,7 +90,7 @@
                     [disabled]="fileList.length === 0"
                     style="margin-top: 16px">
               {{ fileList.length === 0 ? '暂无选择文件' : '提交任务' }}
-              </button>
+            </button>
           </span>
         </nz-collapse-panel>
       </nz-collapse>

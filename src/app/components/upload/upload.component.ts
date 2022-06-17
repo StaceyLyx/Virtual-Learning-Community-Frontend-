@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import axios from "axios";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import {NzNotificationService} from "ng-zorro-antd/notification";
+import {KeyValue} from "@angular/common";
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
+
 export class UploadComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -18,8 +19,14 @@ export class UploadComponent implements OnInit {
 
   taskId: number | undefined
   userId: number | undefined
+  roomId: number | undefined
+  groupId: number | undefined
+  members: any = [];
 
   task: any = [];
+
+  // 分配经验值
+  groupScore: any = [];
 
   score: boolean | undefined;
   isVisible = false;
@@ -55,6 +62,59 @@ export class UploadComponent implements OnInit {
     }).catch((error) =>{
       console.log("error: ", error)
     })
+
+    // 获取roomId
+    axios.get("task/getRoomId",{
+      params: {
+        userId: sessionStorage.getItem("userId"),
+        taskId: this.taskId,
+      }
+    }).then(response => {
+      console.log("roomId: ", response);
+      if(response.status == 200){
+        this.roomId = response.data;
+
+        // 获取团队成员信息
+        axios.get("retrieveGroupUsers",{
+          params: {
+            roomId: this.roomId,
+          }
+        }).then(response => {
+          console.log("group members: ", response);
+          if(response.status == 200){
+            this.members = response.data;
+
+            let that = this;
+            for(let i = 0; i < this.members.length; ++i){
+              let temp = new class implements KeyValue<number, number> {
+                key: any = that.members[i].username;
+                value: number = 0;
+              }
+              this.groupScore.push(temp);
+            }
+          }
+        }).catch((error) =>{
+          console.log("error: ", error);
+        })
+      }
+    }).catch((error) =>{
+      console.log("error: ", error);
+    })
+
+    // 获取groupId
+    axios.get('task/getGroupId', {
+      params: {
+        taskId: this.taskId,
+        userId: sessionStorage.getItem("userId"),
+      }
+    }).then((response) =>{
+      console.log("response: ", response);
+      if(response.status == 200){
+        this.groupId = response.data;
+      }
+    }).catch((error) =>{
+      console.log("error: ", error);
+    })
   }
 
   handleUpload(): void {
@@ -82,28 +142,80 @@ export class UploadComponent implements OnInit {
     })
   }
 
+  // 分配经验值
+  groupExp(){
+    let sum = 0;
+    for(let i = 0; i < this.groupScore.length; ++i){
+      sum += this.groupScore[i].value;
+    }
+
+    // 查看任务总值
+    if(sum > 1){
+      this.message.error("分配失败，小组成员分配比例总和不可大于1");
+    }else if(sum < 1){
+      this.message.warning("小组成员分配比例总和小于1");
+    }
+
+    // 提交经验值分配
+    if(sum === 1){
+      let temp = {
+      "3": 0.2,
+      "4": 0.2,
+      "5": 0.2,
+      "6": 0.2,
+    };
+      // for(let i = 0; i < this.groupScore.length; ++i) {
+      //   temp.set(String(this.members[i].id), this.groupScore[i].value);
+      // }
+      console.log(temp);
+      axios.put('submitGroupTask/exp',
+        {
+          groupId: this.groupId,
+          score: temp,
+          userId: sessionStorage.getItem("userId"),
+        }
+      ).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.message.success("小组成员贡献分配成功！");
+        }
+      }).catch(error => {
+        console.log("error: ", error.response)
+        this.message.error("分配失败，请重试！");
+      })
+    }
+  }
+
   showModal(): void {
     this.isVisible = true;
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!');
     this.isVisible = false;
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
   }
 
   routerTo(path: string){
-    this.router.navigateByUrl(path).then(r => {
-      if (r) {
-        console.log("navigate successfully")
-      } else {
-        console.log("local index")
-      }
-    })
+    if(path === "group"){
+      this.router.navigate(['tasks/group'], {
+        queryParams: {
+          taskId: this.taskId,
+        }
+      }).then(r => {
+        console.log(r);
+      })
+    }else{
+      this.router.navigateByUrl(path).then(r => {
+        if (r) {
+          console.log("navigate successfully")
+        } else {
+          console.log("local index")
+        }
+      })
+    }
   }
 
 }

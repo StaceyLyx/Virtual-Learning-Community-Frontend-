@@ -52,7 +52,7 @@ export class ClassComponent implements OnInit {
 
     this.notification.blank(
         '欢迎来到 ' + className + ' 课堂',
-        '点击白板来查看该课堂的任务吧！',
+        '点击白板来查看该课堂的任务吧！点击教室门也可以回到社区哦',
       { nzDuration: 0 }
       );
 
@@ -123,6 +123,24 @@ export class ClassComponent implements OnInit {
         })
       }
 
+      // 点击回到社区
+      const intersectDoor = intersects.filter(intersect => ClassComponent.door(intersect.object))[0];
+      if(intersectDoor != undefined){
+        // 需要先移除three.js渲染的canvas标签
+        const div = document.getElementsByTagName('canvas')[0]
+        document.body.removeChild(div);
+
+        this.router.navigate(["communityScene"], {
+        }).then(r => {
+          if (r) {
+            console.log("navigate to community");
+          } else {
+            this.message.warning('跳转失败');
+            console.log("navigate failed");
+          }
+        })
+      }
+
       // 点击查看用户信息
       const intersectStudent = intersects.filter(intersect => ClassComponent.student(intersect.object))[0];
       if (intersectStudent != undefined) {
@@ -167,7 +185,6 @@ export class ClassComponent implements OnInit {
     this.plane.rotateX(-0.5 * Math.PI);
     this.SCENE.add( this.plane );
 
-
     for(let i = 0; i < 4; ++i){
       let wallGeometry = new THREE.BoxGeometry(400, 400, 400);
       let wallMaterial = new THREE.MeshLambertMaterial({color: 0xFFFAF0} );
@@ -202,9 +219,6 @@ export class ClassComponent implements OnInit {
   }
 
   initModel(){
-    // 教室椅子
-    this.loadModel("chair", 'assets/model/plastic_chair_1/scene.gltf', [40, 40, 40], [80, 0, 0], 0.5 * Math.PI);
-    this.loadModel("chair", 'assets/model/plastic_chair_1/scene.gltf', [40, 40, 40], [-90, 0, -20], -0.5 * Math.PI);
     // 教室白板
     this.loadModel("whiteboard", 'assets/model/whiteboard/scene.gltf', [5, 5, 5], [50, 0, 130], 180);
     // 教室门
@@ -251,6 +265,20 @@ export class ClassComponent implements OnInit {
   private static student(object: Object3D): any {
     do {
       if (object.name.includes("student")){
+        return true;
+      }
+      if (object.parent) {
+        object = object.parent;
+      } else {
+        break;
+      }
+    } while (true);
+    return false;
+  }
+
+  private static door(object: Object3D): any {
+    do {
+      if (object.name === "door"){
         return true;
       }
       if (object.parent) {

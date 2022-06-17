@@ -1,56 +1,65 @@
+<nz-layout style="min-height: calc(100vh)">
+  <nz-header class="header">
+    <h1 class="headerText">学习社区管理</h1>
+  </nz-header>
 
-<div el-header class="header" style="font-family: cursive;">老师与助教</div>
-<app-menu></app-menu>
-<nz-layout>
-  <nz-sider style="background-color: white;">
-    <ul nz-menu nzTheme="light" nzMode="inline">
-      <li nz-menu-item  >
-        <i nz-icon nzType="audit" nzTheme="outline"></i>
-      <span><a href="check"></a>审核发布的任务</span>
-      </li>
-      <li nz-menu-item  >
-        <i nz-icon nzType="audit" nzTheme="outline"></i>
-      <span><a href="checkFinished"></a>审核完成的任务</span>
-      </li>
-      <li nz-menu-item>
-          <i nz-icon nzType="read" nzTheme="outline"></i>
-        <span> <a href="assignTask"></a>发布任务</span>
-      </li>
+  <nz-layout>
+    <nz-sider style="background-color: white;">
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/check')">
+            <i nz-icon nzType="audit" nzTheme="outline"></i>
+            审核发布的任务
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/checkFinished')">
+            <i nz-icon nzType="audit" nzTheme="outline"></i>
+            审核完成的任务
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a (click)="routerTo('admin/assignTask')">
+            <i nz-icon nzType="read" nzTheme="outline"></i>
+            发布任务
+          </a>
+        </li>
       </ul>
-  </nz-sider>
-  <nz-content style="background-color: white;">
-    <nz-tabset nzType="card" nzSize="large" nzCentered="true">
-    <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="团队任务">
-    
-        <nz-table nzTableLayout="fixed" #borderedTable nzBordered [nzData]="tableDataGroup">
+    </nz-sider>
+
+    <nz-content style="background-color: white;">
+      <nz-tabset nzType="card" nzSize="large" nzCentered="true">
+        <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="团队任务">
+
+          <nz-table nzTableLayout="fixed" #borderedTable nzBordered [nzData]="tableDataGroup">
             <thead>
             <tr>
               <th>任务名称</th>
               <th>任务类型</th>
               <th>任务人数</th>
               <th>截止日期</th>
-              
+
               <th>操作</th>
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of tableDataGroup, let i = index">
-                <td>{{ data.name }}</td>
-                <td>{{ data.optional |optionalTransform}}</td>
-                <td>{{ data.teamSize|teamSizeTransform }}</td>
-                <td>{{ data.ddl }}</td>
-                <td>
-                    <button nz-button nzType="default" (click)="checkFile(data.id,data.name)">查看</button>
-               
-                    <button nz-button nzType="default" (click)="passGroup(data.id,data.name)">通过</button></td>
-              </tr>
-              
+            <tr *ngFor="let data of tableDataGroup, let i = index">
+              <td>{{ data.name }}</td>
+              <td>{{ data.optional |optionalTransform}}</td>
+              <td>{{ data.teamSize|teamSizeTransform }}</td>
+              <td>{{ data.ddl }}</td>
+              <td>
+                <button nz-button nzType="default" (click)="checkFile(data.id,data.name)">查看</button>
+
+                <button nz-button nzType="default" (click)="passGroup(data.id,data.name)">通过</button></td>
+            </tr>
+
             </tbody>
           </nz-table>
-      </nz-tab>
-      
-      <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="个人任务">
-        <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataPerson">
+        </nz-tab>
+
+        <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="个人任务">
+          <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataPerson">
             <thead>
             <tr>
               <th>任务名称</th>
@@ -60,19 +69,19 @@
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of tableDataPerson, let i = index">
-                <td>{{ data.name }}</td>
-                <td>{{ data.optional|optionalTransform }}</td>
-                <td>{{ data.ddl|teamSizeTransform}}</td>
-                <td>
-                    <button nz-button nzType="default" (click)="passPerson(data.id,data.name)">通过</button></td>
-              </tr>
-              
+            <tr *ngFor="let data of tableDataPerson, let i = index">
+              <td>{{ data.name }}</td>
+              <td>{{ data.optional|optionalTransform }}</td>
+              <td>{{ data.ddl|teamSizeTransform}}</td>
+              <td>
+                <button nz-button nzType="default" (click)="passPerson(data.id,data.name)">通过</button></td>
+            </tr>
+
             </tbody>
           </nz-table>
-           </nz-tab>
-      <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="自由任务">
-        <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataFree">
+        </nz-tab>
+        <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="自由任务">
+          <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataFree">
             <thead>
             <tr>
               <th>任务名称</th>
@@ -84,26 +93,26 @@
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of tableDataFree, let i = index">
-                <td>{{ data.name }}</td>
-                <td>{{ data.ev }}</td>
-                <td>{{data.class}}</td>
-                <td>{{data.type}}</td>
-                <td>{{ data.ddl}}</td>
-                <td>
-                    <button nz-button nzType="default" (click)="checkFree(data.id,data.name,data.description)">查看</button>
-                    <button nz-button nzType="default" (click)="passFree(data.id,data.name)">通过</button></td>
-                    <nz-modal [(nzVisible)]="isVisible" nzTitle="内容"  (nzOnOk)="handleOk()" [nzCancelText]=null>
-                      <ng-container  *ngFor="let data of tableDataGroup, let i = index">
-                          <p>{{data.description}}</p>
-                      </ng-container>
-                    </nz-modal>
-              </tr>
+            <tr *ngFor="let data of tableDataFree, let i = index">
+              <td>{{ data.name }}</td>
+              <td>{{ data.ev }}</td>
+              <td>{{data.class}}</td>
+              <td>{{data.type}}</td>
+              <td>{{ data.ddl}}</td>
+              <td>
+                <button nz-button nzType="default" (click)="checkFree(data.id,data.name,data.description)">查看</button>
+                <button nz-button nzType="default" (click)="passFree(data.id,data.name)">通过</button></td>
+              <nz-modal [(nzVisible)]="isVisible" nzTitle="内容"  (nzOnOk)="handleOk()" [nzCancelText]=null>
+                <ng-container  *ngFor="let data of tableDataGroup, let i = index">
+                  <p>{{data.description}}</p>
+                </ng-container>
+              </nz-modal>
+            </tr>
             </tbody>
           </nz-table>
-          </nz-tab>
+        </nz-tab>
       </nz-tabset>
-  </nz-content>
-
+    </nz-content>
+  </nz-layout>
 
 </nz-layout>

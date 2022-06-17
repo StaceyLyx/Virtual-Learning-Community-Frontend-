@@ -14,19 +14,7 @@ export class PersonTaskComponent implements OnInit {
               private router: Router) { }
 
   initial: any = []
-  tableData: any = [{
-    id: 1,
-    name: '高级web',
-    optional: 1,
-    teamSize: 4,
-    ddl: '2021-2-1',
-  },{
-    id: 2,
-    name: '图形学',
-    optional: 1,
-    teamSize: 1,
-    ddl: '2021-2-1',
-  }]
+  tableData: any = []
 
   selectedValue: string = 'personal';
   groupHidden: boolean = this.selectedValue == 'personal';
@@ -35,7 +23,7 @@ export class PersonTaskComponent implements OnInit {
   ngOnInit(): void {
     axios.get('retrieveTasks/user', {
       params: {
-        userId: parseInt(<string>sessionStorage.getItem("userId")),
+        userId: sessionStorage.getItem("userId"),
       }
     }).then((res) =>{
       console.log(res)
@@ -93,6 +81,10 @@ export class PersonTaskComponent implements OnInit {
         console.log(r);
       })
     }
+  }
+
+  notFull(teamSize: number, process: number): boolean{
+    return !(process < teamSize);
   }
 
 }

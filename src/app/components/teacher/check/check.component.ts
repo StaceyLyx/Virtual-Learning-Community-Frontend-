@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ElMessageService } from 'element-angular';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from "ng-zorro-antd/notification";
+import {Router} from "@angular/router";
+import {NzMessageService} from "ng-zorro-antd/message";
 @Component({
   selector: 'app-check',
   templateUrl: './check.component.html',
@@ -10,7 +12,10 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 })
 export class CheckComponent implements OnInit {
 
-  constructor(private message: ElMessageService, private notification: NzNotificationService, private modal: NzModalService) { }
+  constructor(private message: NzMessageService,
+              private notification: NzNotificationService,
+              private modal: NzModalService,
+              private router: Router) { }
 
   expandSet = new Set<number>();
   tableDataGroup: any = [{
@@ -60,7 +65,6 @@ export class CheckComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("无任务");
         console.log(error);
       } else {
@@ -102,7 +106,7 @@ export class CheckComponent implements OnInit {
 
 
   passGroup(id: any, name: string) {
-    //delete 
+    //delete
     this.tableDataGroup = this.tableDataGroup.filter((d: { id: any; }) => d.id !== id);
     console.log(id)
     this.notification.create(
@@ -124,7 +128,6 @@ export class CheckComponent implements OnInit {
       }
     }).catch((error) => {
       if (error.status == 400) {
-        this.message.setOptions({ showClose: true });
         this.message.error("审核通过失败");
         console.log(error);
         this.notification.create(
@@ -153,30 +156,16 @@ export class CheckComponent implements OnInit {
     console.log('Button ok clicked!');
     this.isVisible = false;
   }
-  // passPerson(id:any,name:string){
-  //   //delete 
-  //   this.tableDataPerson = this.tableDataPerson.filter((d: { id: any; }) => d.id !== id);
-  //   console.log(id)
-  //   axios.post('http://localhost:8081/admin/checkCompletion/personTask', {
-  //     params: {
-  //       taskId:0,
-  //       userId:0,
-  //     }
-  //   }).then((response) =>{
-  //     if(response.status == 200){
-  //      console.log("审核完成")
-  //     }else{
-  //       console.log(response);
-  //     }
-  //   }).catch((error) =>{
-  //     if(error.status == 400){
-  //       this.message.setOptions({showClose: true});
-  //       this.message.error("审核通过失败");
-  //       console.log(error);
-  //     }else{
-  //       console.log(error);
-  //     }
-  //   })
-  // }
+
+  routerTo(path: string){
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        this.message.create('error', '跳转失败');
+        console.log("navigate failed");
+      }
+    })
+  }
 
 }

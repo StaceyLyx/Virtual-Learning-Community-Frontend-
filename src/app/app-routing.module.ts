@@ -15,7 +15,6 @@ import { FreeTaskComponent } from './components/personal/free-task/free-task.com
 import { GroupRoomComponent } from './components/group-room/group-room.component';
 import { CheckFinishedComponent } from './components/teacher/check-finished/check-finished.component';
 
-
 const routes: Routes = [
   // 登陆注册
   { path: '', component: LoginComponent},
@@ -34,9 +33,9 @@ const routes: Routes = [
   { path: 'tasks/upload', component: UploadComponent},
   { path: 'tasks/group', component: GroupRoomComponent},
   //老师与助教部分
-  { path: 'check', component: CheckComponent},
-  { path: 'assignTask', component: AssignTaskComponent},
-  {path:'checkFinished',component:CheckFinishedComponent}
+  { path: 'admin/check', component: CheckComponent},
+  { path: 'admin/assignTask', component: AssignTaskComponent},
+  { path: 'admin/checkFinished',component:CheckFinishedComponent}
 
 ]
 

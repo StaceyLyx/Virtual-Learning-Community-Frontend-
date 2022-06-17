@@ -1,16 +1,19 @@
 import { Component, forwardRef, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import axios from 'axios'
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {ElMessageService} from "element-angular";
 import {NzCascaderOption} from "ng-zorro-antd/cascader";
+import {NzMessageService} from "ng-zorro-antd/message";
+
 @Component({
   selector: 'app-assign-task',
   templateUrl: './assign-task.component.html',
   styleUrls: ['./assign-task.component.css']
 })
 export class AssignTaskComponent implements OnInit {
+
   percent: number = 0
   taskFormPerson: any
   taskFormGroup: any
@@ -58,18 +61,12 @@ export class AssignTaskComponent implements OnInit {
     }
   ];
   classOptions: NzCascaderOption[] | null = null;
-taskOptional:NzCascaderOption[] | null = null;
-  constructor(public http: HttpClient, private route: ActivatedRoute, @Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder, private message: ElMessageService) {
-    /*   this.taskForm = new FormGroup({
-        taskName: new FormControl(''),
-        taskClass: new FormControl(''),
-        taskExp: new FormControl(''),
-        taskTime: new FormControl(''),
-        property: new FormControl(''),
-        necessity: new FormControl('')
-      }) */
-
-  }
+  taskOptional:NzCascaderOption[] | null = null;
+  constructor(public http: HttpClient,
+              private route: ActivatedRoute,
+              @Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
+              private message: NzMessageService,
+              private router: Router) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -108,8 +105,8 @@ taskOptional:NzCascaderOption[] | null = null;
     }
  } */
   onSubmitPerson() {
-    
-   /* 
+
+   /*
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }; */
@@ -125,9 +122,9 @@ taskOptional:NzCascaderOption[] | null = null;
 
       console.log(this.taskInfo)
       console.log(res);
-    
-    }) 
-    
+
+    })
+
     */
     axios.post(  'api/createPersonalTask',{
       name: this.taskFormPerson.controls['taskName'].value,
@@ -137,17 +134,14 @@ taskOptional:NzCascaderOption[] | null = null;
      optional: this.taskFormPerson.controls['taskNecessity'].value,
       userId:0
     }).then((response) =>{
-      if(response.status == 200){   
-        this.message.setOptions({ showClose: true })
+      if(response.status == 200){
         this.message.success('任务布置成功')
       }
     }).catch((error) =>{
       console.log(error)
       if(error.response.status == 400){
-        this.message.setOptions({ showClose: true })
         this.message.error("任务布置失败")
       }else{
-        this.message.setOptions({ showClose: true })
         this.message.error("后端错误")
       }
     })
@@ -169,25 +163,32 @@ taskOptional:NzCascaderOption[] | null = null;
        optional: this.taskFormGroup.controls['taskNecessity'].value,
        userId:0
      }).then((response) =>{
-       if(response.status == 200){   
-         this.message.setOptions({ showClose: true })
+       if(response.status == 200){
          this.message.success('任务布置成功')
        }
      }).catch((error) =>{
        console.log(error)
        if(error.response.status == 400){
-         this.message.setOptions({ showClose: true })
          this.message.error("任务布置失败")
        }else{
-         this.message.setOptions({ showClose: true })
          this.message.error("后端错误")
        }
      })
-     
+
      console.log(this.taskInfo2)
     // console.log(response);
    }
 
+  routerTo(path: string){
+    this.router.navigateByUrl(path).then(r => {
+      if (r) {
+        console.log("navigate successfully")
+      } else {
+        this.message.create('error', '跳转失败');
+        console.log("navigate failed");
+      }
+    })
   }
+}
 
 

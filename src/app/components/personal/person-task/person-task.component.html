@@ -59,7 +59,15 @@
             <nz-descriptions [hidden]="groupHidden">
               <nz-descriptions-item nzTitle="小组组长">{{data.groupLeader}}</nz-descriptions-item>
               <nz-descriptions-item nzTitle="小组名称">{{data.groupName}}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="任务进度">{{data.groupProcess}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="组队进度">{{data.groupProcess}}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="组队提示">
+                <span style="color: red" [hidden]="notFull(data.teamSize, data.groupProcess)">
+                  组队尚未完成
+                </span>
+                <span [hidden]="!notFull(data.teamSize, data.groupProcess)">
+                  组队已完成
+                </span>
+              </nz-descriptions-item>
             </nz-descriptions>
           </tr>
         </ng-container>

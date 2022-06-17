@@ -19,22 +19,18 @@ export class GroupRoomComponent implements OnInit {
   taskId: number | undefined
   userId: number | undefined
   roomId: number | undefined
+  groupId: number | undefined
 
   // 团队任务
-  task: any;
+  task: any = {};
+
+  // 团队成员
+  members: any = [];
 
   // 房间留言信息
-  data = [
-    {
-      author: 'Sun Yue',
-      message: '评论'
-    },
-    {
-      author: 'Liu Peiqi',
-      message: '进行一个评论'
-    }
-  ];
+  data: any = [];
 
+  // 评论
   submitting = false;
   inputValue = '';
 
@@ -58,41 +54,106 @@ export class GroupRoomComponent implements OnInit {
       console.log("error: ", error);
     })
 
+    // 获取roomId
     this.roomId = 0;
-    axios.get("getRoom/task",{
+    axios.get("task/getRoomId",{
       params: {
         userId: sessionStorage.getItem("userId"),
         taskId: this.taskId,
       }
     }).then(response => {
-      console.log("response: ", response);
+      console.log("roomId: ", response);
       if(response.status == 200){
         this.roomId = response.data;
+
+        // 获取团队成员信息
+        axios.get("retrieveGroupUsers",{
+          params: {
+            roomId: this.roomId,
+          }
+        }).then(response => {
+          console.log("group members: ", response);
+          if(response.status == 200){
+            this.members = response.data;
+          }
+        }).catch((error) =>{
+          console.log("error: ", error);
+        })
+      }
+    }).catch((error) =>{
+      console.log("error: ", error);
+    })
+
+    // 获取groupId
+    axios.get('task/getGroupId', {
+      params: {
+        taskId: this.taskId,
+        userId: sessionStorage.getItem("userId"),
+      }
+    }).then((response) =>{
+      console.log("response: ", response);
+      if(response.status == 200){
+        this.groupId = response.data;
       }
     }).catch((error) =>{
       console.log("error: ", error);
     })
 
     // 获取团队房间的留言板信息
-    this.roomService.socketSend(this.roomId).subscribe(
-      raw => {
-        let data = JSON.parse(raw);
-        console.log("message data: " + data);
-      }
-    );
+    // this.roomService.socketSend(this.roomId).subscribe(
+    //   raw => {
+    //     let data = JSON.parse(raw);
+    //     console.log("message data: " + data);
+    //     this.data = [
+    //       ...this.data,
+    //       {
+    //         username: data['susername'],
+    //         message: data['message'],
+    //       }
+    //     ]
+    //   }
+    // );
   }
 
   handleSubmit(): void {
     this.submitting = true;
-    this.data = [
-      ...this.data,
-      {
-        author: 'Liao Yanxin',
-        message: this.inputValue,
-      }
-    ]
+    // 发出信息
+    this.roomService.sendMessage(this.inputValue);
     this.submitting = false;
     this.inputValue = '';
+  }
+
+  isVisible = false;
+  groupName: string = "";
+  groupLeader: string = "";
+  assignGroupInfo(){
+    axios.put('assignGroupInfo',
+      {
+        groupId: this.groupId,
+        groupLeader: this.groupLeader,
+        name: this.groupName,
+      }
+    ).then(response => {
+      console.log("response: ", response)
+      if(response.status === 200){
+        this.message.success("小组信息设置成功！");
+      }
+    }).catch(error => {
+      console.log("error: ", error.message)
+      this.message.error("小组信息设置失败");
+    })
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   routerTo(path: string){
