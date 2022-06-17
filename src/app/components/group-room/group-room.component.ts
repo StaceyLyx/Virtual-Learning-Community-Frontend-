@@ -66,6 +66,23 @@ export class GroupRoomComponent implements OnInit {
       if(response.status == 200){
         this.roomId = response.data;
 
+        // 获取团队房间的留言板信息
+        if(this.roomId){
+          this.roomService.socketSend(this.roomId).subscribe(
+            raw => {
+              let data = JSON.parse(raw);
+              console.log("message data: " + data);
+              this.data = [
+                ...this.data,
+                {
+                  username: data['susername'],
+                  message: data['message'],
+                }
+              ]
+            }
+          );
+        }
+
         // 获取团队成员信息
         axios.get("retrieveGroupUsers",{
           params: {
@@ -98,21 +115,6 @@ export class GroupRoomComponent implements OnInit {
     }).catch((error) =>{
       console.log("error: ", error);
     })
-
-    // 获取团队房间的留言板信息
-    this.roomService.socketSend(this.roomId).subscribe(
-      raw => {
-        let data = JSON.parse(raw);
-        console.log("message data: " + data);
-        this.data = [
-          ...this.data,
-          {
-            username: data['susername'],
-            message: data['message'],
-          }
-        ]
-      }
-    );
   }
 
   handleSubmit(): void {

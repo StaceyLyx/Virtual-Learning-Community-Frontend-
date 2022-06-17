@@ -47,9 +47,9 @@
         <div nz-row [nzGutter]="20">
           <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="type">任务类型</nz-form-label>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="optional">任务类型</nz-form-label>
               <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="任务类型是必选项">
-                <nz-cascader formControlName="type" id="type"
+                <nz-cascader formControlName="optional" id="optional"
                              [nzOptions]="typeOptions"
                              [nzShowSearch]="true"></nz-cascader>
               </nz-form-control>
@@ -62,6 +62,18 @@
                 <nz-input-number formControlName="ev" id="ev"
                                  style="text-align: center"
                                  [nzPlaceHolder]="evDefault"
+                                 [nzMin]="1" [nzMax]="10"
+                                 [nzStep]="1"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="20" nzRequired nzFor="teamSize">任务人数</nz-form-label>
+              <nz-form-control [nzSm]="10" [nzXs]="20" nzErrorTip="任务人数是必填项">
+                <nz-input-number formControlName="teamSize" id="teamSize"
+                                 style="text-align: center"
+                                 nzPlaceHolder="任务人数"
                                  [nzMin]="1" [nzMax]="10"
                                  [nzStep]="1"></nz-input-number>
               </nz-form-control>

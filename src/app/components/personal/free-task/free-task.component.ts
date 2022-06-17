@@ -1,7 +1,6 @@
 import { Component, forwardRef, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import axios from 'axios';
-import { ElMessageService } from 'element-angular';
 import {NzCascaderOption} from "ng-zorro-antd/cascader";
 import {NzButtonSize} from "ng-zorro-antd/button";
 import {Router} from "@angular/router";
@@ -22,31 +21,28 @@ export class FreeTaskComponent implements OnInit {
     name: new FormControl(null),    // 任务名称
     class: new FormControl(null),   // 所属课堂
     ddl: new FormControl(null),      // 截止日期
-    type: new FormControl(null),    // 任务类型
+    optional: new FormControl(null),    // 任务类型
     ev: new FormControl(null),      // 任务经验值
     description: new FormControl(null),      // 任务描述
+    teamSize: new FormControl(null),    // 任务人数
   })
 
   classes = [
     {
-      value: '高级Web',
-      label: '高级Web',
-      isLeaf: true
-    },
-    {
-      value: '计算机图形学',
-      label: '计算机图形学',
+      value: 0,
+      label: "请选择以下课堂",
       isLeaf: true
     }
   ];
-  types = [
+
+  optional = [
     {
-      value: 2,
-      label: '我要提问',
+      value: 0,
+      label: '必修',
       isLeaf: true
     },{
-      value: 3,
-      label: '我要出题',
+      value: 1,
+      label: '选修',
       isLeaf: true
     }
   ]
@@ -63,16 +59,35 @@ export class FreeTaskComponent implements OnInit {
       name: [null, [Validators.required]],
       class: [null, [Validators.required]],
       ddl: [null, [Validators.required]],
-      type: [null, [Validators.required]],
+      optional: [null, [Validators.required]],
       ev: [null, [Validators.required]],
       description: [null, [Validators.required]],
+      teamSize: [null, [Validators.required]],
     })
 
-    // 获取所有课堂
-    setTimeout(() => {
-      this.classOptions = this.classes;
-      this.typeOptions = this.types;
-    }, 100)
+    // 获取课堂列表
+    axios.get('retrieveClasses', {}).then(response => {
+      console.log("response: ", response)
+      if(response.status === 200){
+        for(let i = 0; i < response.data.result.length; ++i){
+          this.classes = [
+            ...this.classes,
+            {
+              value: response.data.result[i].id,
+              label: response.data.result[i].courseName,
+              isLeaf: true
+            }
+          ]
+        }
+        console.log("class: " + this.classes);
+        setTimeout(() => {
+          this.classOptions = this.classes;
+          this.typeOptions = this.optional;
+        }, 100)
+      }
+    }).catch(error => {
+      console.log("error: ", error);
+    })
 
     window.addEventListener("mousemove", () => {
       let temp = 0
@@ -91,29 +106,41 @@ export class FreeTaskComponent implements OnInit {
     title: null,
     subTitle: null,
   }
+
   onSubmit(){
-    this.status.status = "success";
-    this.status.title = "任务发布成功！去课堂列表中查看你的任务吧！";
-    this.status.subTitle = "任务名：高级Web 任务号：1";
-    this.status.hidden = false;
-    // axios.post( 'http://localhost:8081/createFreeTask',{
-    //    task: this.freeTask.controls['content'].value,
-    //    ex:this.freeTask.controls['taskExp'].value,
-    //    userId:0
-    // }).then((response) =>{
-    //   if(response.status == 200){
-    //     this.message.success('任务布置成功')
-    //   }
-    // }).catch((error) =>{
-    //   console.log(error)
-    //   if(error.response.status == 400){
-    //     this.message.setOptions({ showClose: true })
-    //     this.message.error("任务布置失败")
-    //   }else{
-    //     this.message.setOptions({ showClose: true })
-    //     this.message.error("后端错误")
-    //   }
-    // })
+    if(this.task.valid) {
+      axios.put( 'createFreeTask',{
+        classId: this.task.controls['class'].value,
+        ddl: this.task.controls['ddl'].value,
+        description: this.task.controls['description'].value,
+        ev: this.task.controls['ev'].value,
+        name: this.task.controls['name'].value,
+        optional: this.task.controls['optional'].value,
+        teamSize: this.task.controls['teamSize'].value,
+        userId: sessionStorage.getItem("userId"),
+      }).then((response) =>{
+        if(response.status === 200){
+          this.status.status = "success";
+          this.status.title = "任务发布成功！去课堂列表中查看你的任务吧！";
+          this.status.subTitle = "任务名：" + this.task.controls['name'].value;
+          this.status.hidden = false;
+        }
+      }).catch((error) =>{
+        console.log(error.response)
+        if(error.response.status === 400){
+          this.message.error("任务布置失败，请重试: " + error.response.message);
+        }else{
+          this.message.error("后端错误")
+        }
+      })
+    }else{
+      Object.values(this.task.controls).forEach(control =>{
+        if(control.invalid){
+          control.markAsDirty();
+          control.updateValueAndValidity();
+        }
+      })
+    }
   }
 
 }
