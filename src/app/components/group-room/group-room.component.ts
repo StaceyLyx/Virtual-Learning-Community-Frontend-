@@ -121,6 +121,15 @@ export class GroupRoomComponent implements OnInit {
     this.submitting = true;
     // 发出信息
     this.roomService.sendMessage(this.inputValue);
+    // 渲染自己的消息
+    this.data = [
+      ...this.data,
+      {
+        username: "Me",
+        message: this.inputValue,
+      }
+    ]
+
     this.submitting = false;
     this.inputValue = '';
   }

@@ -9,3 +9,11 @@
   font-family: "楷体";
   height: 100px;
 }
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 500px;
+}
+.table-expand {
+  font-size: 0;
+}

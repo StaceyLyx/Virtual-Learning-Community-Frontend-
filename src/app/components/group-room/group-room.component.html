@@ -63,8 +63,8 @@
 
       <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
         <ng-template #item let-item>
-          <nz-comment [nzAuthor]="item.name">
-            <nz-avatar nz-comment-avatar [nzText]="item.name.charAt(0)"></nz-avatar>
+          <nz-comment [nzAuthor]="item.username">
+            <nz-avatar nz-comment-avatar [nzText]="item.username.charAt(0)"></nz-avatar>
             <nz-comment-content>
               <p>{{ item.message }}</p>
             </nz-comment-content>

@@ -19,61 +19,39 @@ export class CheckFinishedComponent implements OnInit {
               private router: Router) { }
 
   expandSet = new Set<number>();
-  tableDataGroup: any = [{
-    id: 1,
-    name: '高级web',
-    optional: 1,
-    teamSize: 4,
-    ddl: '2021-2-1',
-  }, {
-    id: 2,
-    name: '图形学',
-    optional: 1,
-    teamSize: 5,
-    ddl: '2021-2-1',
-  }]
+  tableDataGroup: any = []
   tableDataPerson: any = []
-  tableDataFree: any = [
-    {
-      id: 3,
-      name: '3d技术',
-      type: '提问',
-      class: '高级web',
-      ev: 5,
-      ddl: '2021-6-15',
-      description: '为什么xxx'
-    }
-  ]
+
 
   ngOnInit(): void {
-    //this.getTaskGroup();
-    this.getTaskPerson();
-  }
-
-  getTaskGroup() {
-    //store的USERID AUTHORITYID
-    //http://localhost:8081/admin/retrieveTasks/unfinishedGroup
-
-    axios.get('http://localhost:8081/admin/retrieveTasks/unfinishedGroup', {
-      params: {
-        userId: 0,
-
-      }
+    // 获取团队任务
+    axios.get('admin/retrieveTasks/unfinishedGroup', {
     }).then((response) => {
-      if (response.status == 200) {
+      if (response.status === 200) {
         console.log(response)
-        this.tableDataGroup = response.data.tableData
-        console.log(this.tableDataGroup)
-        for (let i = 0; i < response.data.result.length; ++i) {
-          this.tableDataGroup.push(response.data.result[i]);
-        }
+        this.tableDataGroup = response.data;
+      }else{
+        console.log(response);
+      }
+    }).catch((error) => {
+      if (error.response.status === 400) {
+        console.log(error);
+      } else {
+        console.log(error);
+      }
+    })
 
+    // 获取个人任务
+    axios.get('admin/retrieveTasks/unfinishedPersonal', {
+    }).then((response) => {
+      if (response.status === 200) {
+        console.log(response)
+        this.tableDataPerson = response.data
       } else {
         console.log(response);
       }
     }).catch((error) => {
-      if (error.status == 400) {
-        this.message.error("无任务");
+      if (error.response.status === 400) {
         console.log(error);
       } else {
         console.log(error);
@@ -81,34 +59,7 @@ export class CheckFinishedComponent implements OnInit {
     })
   }
 
-  getTaskPerson() {
-    axios.get('http://localhost:8081/admin/retrieveTasks/unfinishedPersonal', {
-      params: {
-        userId: 0,
 
-      }
-    }).then((response) => {
-      if (response.status == 200) {
-        console.log(response)
-        this.tableDataPerson = response.data.tableData
-        console.log(this.tableDataPerson)
-        for (let i = 0; i < response.data.result.length; ++i) {
-          this.tableDataPerson.push(response.data.result[i]);
-        }
-
-      } else {
-        console.log(response);
-      }
-    }).catch((error) => {
-      if (error.status == 400) {
-        this.message.error("无任务");
-        console.log(error);
-      } else {
-        console.log(error);
-      }
-    })
-  }
-  //?
   checkFile(id: any, name: string) {
     axios.post('', { params: { userId: 0, } }, { responseType: 'blob' })
       .then((res) => {
@@ -195,49 +146,7 @@ export class CheckFinishedComponent implements OnInit {
       }
     })
   }
-  passFree(id: any, name: string) {
-    this.tableDataFree = this.tableDataFree.filter((d: { id: any; }) => d.id !== id);
-    console.log(id)
-    axios.post('http://localhost:8081/checkCompletion/freeTask', {
-      params: {
-        taskId: id,
-        userId: 0,
-      }
-    }).then((response) => {
-      if (response.status == 200) {
-        console.log("审核完成")
-        this.notification.create(
-          'success',
-          '审核完成',
-          '任务完成审核通过！'
-        )
-      } else {
-        console.log(response);
-      }
-    }).catch((error) => {
-      if (error.status == 400) {
-        this.message.error("审核通过失败");
-        console.log(error);
-        this.notification.create(
-          'fail',
-          '审核完成',
-          '审核不通过！'
-        )
-      } else {
-        console.log(error);
-      }
-    })
-  }
-  checkFree(id: any, name: string, description: string) {
-    console.log(id)
-    console.log(description)
-    //this.isVisible=true
-    this.modal.info({
-      nzTitle: '任务内容',
-      nzContent: description,
-      nzOnOk: () => console.log('Info OK')
-    });
-  }
+
 
   handleOk(): void {
     console.log('Button ok clicked!');
@@ -249,7 +158,6 @@ export class CheckFinishedComponent implements OnInit {
       if (r) {
         console.log("navigate successfully")
       } else {
-        this.message.create('error', '跳转失败');
         console.log("navigate failed");
       }
     })

@@ -1,6 +1,6 @@
 .header{
   text-align: center;
-  background-image: url("../../../../assets/img/taskboard.png");
+  background-image: url("../../../../assets/img/header.png");
   height: 100px;
   padding: 20px;
 }
@@ -12,11 +12,5 @@
 .inner-content {
   padding: 24px;
   background: #fff;
-  text-align: center;
-}
-nz-date-picker{
-  margin: 0 8px 12px 0;
-}
-nz-input-number{
-  width: 200px;
+  min-height: 500px;
 }

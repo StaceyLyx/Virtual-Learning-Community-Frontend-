@@ -52,7 +52,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzStepsModule} from "ng-zorro-antd/steps";
 import {NzCascaderModule} from "ng-zorro-antd/cascader";
 import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
-import { registerLocaleData } from '@angular/common';
+import {DatePipe, registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {NzProgressModule} from "ng-zorro-antd/progress";
 import {NzResultModule} from "ng-zorro-antd/result";
@@ -66,6 +66,7 @@ import { GenderTransformPipe } from './pipes/gender-transform.pipe';
 import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
 import { StatusTransformPipe } from './pipes/status-transform.pipe';
 import {NzCheckboxComponent, NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import { PersonalFreeTaskComponent } from './components/personal/personal-free-task/personal-free-task.component';
 registerLocaleData(zh);
 
 @NgModule({
@@ -94,6 +95,7 @@ registerLocaleData(zh);
     GenderTransformPipe,
     GroupNameTransformPipe,
     StatusTransformPipe,
+    PersonalFreeTaskComponent,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,
@@ -148,6 +150,7 @@ registerLocaleData(zh);
   providers: [
     CommunityWSService,
     RoomWSService,
+    DatePipe,
   ],      // 定义的服务
   bootstrap: [AppComponent]   // 默认启动加载的组件
 })

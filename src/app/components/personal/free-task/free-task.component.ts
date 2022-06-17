@@ -3,8 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import axios from 'axios';
 import {NzCascaderOption} from "ng-zorro-antd/cascader";
 import {NzButtonSize} from "ng-zorro-antd/button";
-import {Router} from "@angular/router";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-free-task',
@@ -14,8 +14,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 export class FreeTaskComponent implements OnInit {
 
   constructor( @Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
-               private message: NzMessageService,
-               private router: Router) { }
+               private message: NzMessageService) { }
 
   task: FormGroup = new FormGroup({
     name: new FormControl(null),    // 任务名称
@@ -110,14 +109,14 @@ export class FreeTaskComponent implements OnInit {
   onSubmit(){
     if(this.task.valid) {
       axios.put( 'createFreeTask',{
-        classId: this.task.controls['class'].value,
-        ddl: this.task.controls['ddl'].value,
-        description: this.task.controls['description'].value,
-        ev: this.task.controls['ev'].value,
-        name: this.task.controls['name'].value,
-        optional: this.task.controls['optional'].value,
-        teamSize: this.task.controls['teamSize'].value,
-        userId: sessionStorage.getItem("userId"),
+        classId: String(this.task.value.class[0]),
+        ddl: formatDate(this.task.value.ddl, 'yyyy-MM-dd hh:mm:ss', 'zh-Hans'),
+        description: this.task.value.description,
+        ev: this.task.value.ev,
+        name: this.task.value.name,
+        optional: String(this.task.value.optional[0]),
+        team_size: String(this.task.value.teamSize),
+        userId: String(sessionStorage.getItem("userId")),
       }).then((response) =>{
         if(response.status === 200){
           this.status.status = "success";
@@ -128,7 +127,7 @@ export class FreeTaskComponent implements OnInit {
       }).catch((error) =>{
         console.log(error.response)
         if(error.response.status === 400){
-          this.message.error("任务布置失败，请重试: " + error.response.message);
+          this.message.error("任务布置失败，请重试");
         }else{
           this.message.error("后端错误")
         }

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{   // 组件数据
         if (sessionStorage.getItem('token') && conf.headers) {
           conf.headers['Token'] = <string>sessionStorage.getItem("token");
         }
-        console.log("request sent: ", conf);
+        console.log("request sent: ", conf.data);
         return conf;
       },
       error => {

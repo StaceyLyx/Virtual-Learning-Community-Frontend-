@@ -55,7 +55,7 @@ export class UploadComponent implements OnInit {
     // 获取任务
     axios.get('retrieveTask/' + this.taskId).then((response) =>{
       console.log("response: ", response)
-      if(response.status == 200){
+      if(response.status === 200){
         this.task = response.data;
         this.score = this.task.teamSize === 1;    // 一定要在这里面设置，否则会出现回调的问题
       }
@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit {
       }
     }).then(response => {
       console.log("roomId: ", response);
-      if(response.status == 200){
+      if(response.status === 200){
         this.roomId = response.data;
 
         // 获取团队成员信息
@@ -81,7 +81,7 @@ export class UploadComponent implements OnInit {
           }
         }).then(response => {
           console.log("group members: ", response);
-          if(response.status == 200){
+          if(response.status === 200){
             this.members = response.data;
 
             let that = this;
@@ -109,7 +109,7 @@ export class UploadComponent implements OnInit {
       }
     }).then((response) =>{
       console.log("response: ", response);
-      if(response.status == 200){
+      if(response.status === 200){
         this.groupId = response.data;
       }
     }).catch((error) =>{
@@ -158,11 +158,10 @@ export class UploadComponent implements OnInit {
 
     // 提交经验值分配
     if(sum === 1){
-      var temp = {};
-      // for(let i = 0; i < this.groupScore.length; ++i) {
-      //   var demo = 'a';
-      //   temp[demo] = this.groupScore[i].value;
-      // }
+      var temp: any = {};
+      for(let i = 0; i < this.groupScore.length; ++i) {
+        temp[String(this.members[i].id)] = this.groupScore[i].value;
+      }
       console.log(temp);
       axios.put('submitGroupTask/exp',
         {
