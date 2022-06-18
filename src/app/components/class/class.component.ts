@@ -250,7 +250,7 @@ export class ClassComponent implements OnInit {
 
   private static task(object: Object3D): any{
     do{
-      if(object.name == "whiteboard"){
+      if(object.name === "whiteboard"){
         return true;
       }
       if(object.parent){

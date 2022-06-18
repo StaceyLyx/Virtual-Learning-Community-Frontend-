@@ -68,7 +68,7 @@ export class CheckComponent implements OnInit {
   ngOnInit(): void {
     axios.get('admin/retrieveTasks/uncheck', {
     }).then((response) => {
-      if (response.status == 200) {
+      if (response.status === 200) {
         this.tableData = response.data;
         console.log(this.tableData);
       } else {

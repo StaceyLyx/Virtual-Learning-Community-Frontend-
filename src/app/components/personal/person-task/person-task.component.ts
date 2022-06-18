@@ -17,7 +17,7 @@ export class PersonTaskComponent implements OnInit {
   tableData: any = []
 
   selectedValue: string = 'personal';
-  groupHidden: boolean = this.selectedValue == 'personal';
+  groupHidden: boolean = this.selectedValue === 'personal';
   expandSet = new Set<number>();
 
   ngOnInit(): void {
@@ -27,14 +27,14 @@ export class PersonTaskComponent implements OnInit {
       }
     }).then((res) =>{
       console.log(res)
-      if(res.status == 200){
+      if(res.status === 200){
         this.initial = res.data;
         this.tableData = res.data.personal;
       }else{
         console.log(res);
       }
     }).catch((error) =>{
-      if(error.status == 400){
+      if(error.response.status === 400){
         this.message.error("获取个人任务失败");
         console.log(error);
       }else{

@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
           password: this.infoForm.controls['password'].value,
           phone_num: this.infoForm.controls['phone'].value,
         }).then((response) =>{
-          if(response.status == 200){   // 注册成功，默认跳转
+          if(response.status === 200){   // 注册成功，默认跳转
             this.message.success('注册成功，请登录进入社区');
             this.router.navigateByUrl("").then(r => {
               if(r){
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
           }
         }).catch((error) =>{
           console.log("error: " + error);
-          if(error.response.status == 400){
+          if(error.response.status === 400){
             this.message.error("注册失败，密码长度需要有4-16位");
           }else{
             this.message.error("后端错误")

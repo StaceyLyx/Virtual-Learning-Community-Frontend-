@@ -244,7 +244,7 @@ export class CommunitySceneComponent implements OnInit {
 
   private static getClassroom(object: Object3D): any {
     do {
-      if (object.name == "classroom") {
+      if (object.name === "classroom") {
         return true;
       }
       if (object.parent) {

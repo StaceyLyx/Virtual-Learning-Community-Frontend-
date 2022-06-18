@@ -47,7 +47,7 @@ export class GroupRoomComponent implements OnInit {
     // 获取任务信息
     axios.get('retrieveTask/' + this.taskId).then((response) =>{
       console.log("response: ", response);
-      if(response.status == 200){
+      if(response.status === 200){
         this.task = response.data;
       }
     }).catch((error) =>{
@@ -63,7 +63,7 @@ export class GroupRoomComponent implements OnInit {
       }
     }).then(response => {
       console.log("roomId: ", response);
-      if(response.status == 200){
+      if(response.status === 200){
         this.roomId = response.data;
 
         // 获取团队房间的留言板信息
@@ -90,7 +90,7 @@ export class GroupRoomComponent implements OnInit {
           }
         }).then(response => {
           console.log("group members: ", response);
-          if(response.status == 200){
+          if(response.status === 200){
             this.members = response.data;
           }
         }).catch((error) =>{
@@ -109,7 +109,7 @@ export class GroupRoomComponent implements OnInit {
       }
     }).then((response) =>{
       console.log("response: ", response);
-      if(response.status == 200){
+      if(response.status === 200){
         this.groupId = response.data;
       }
     }).catch((error) =>{

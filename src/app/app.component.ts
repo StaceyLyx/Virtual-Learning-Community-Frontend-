@@ -11,7 +11,8 @@ export class AppComponent implements OnInit{   // 组件数据
   title = 'Virtual Community';
 
   ngOnInit(): void {
-    axios.defaults.baseURL = 'http://localhost:8081/api/';
+    // 修改前缀接口
+    axios.defaults.baseURL = '/api/';
 
     // 请求拦截器
     axios.interceptors.request.use(
