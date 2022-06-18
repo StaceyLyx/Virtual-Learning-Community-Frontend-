@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{   // 组件数据
 
   ngOnInit(): void {
     // 修改前缀接口
-    axios.defaults.baseURL = '/api/';
+    axios.defaults.baseURL = 'http://localhost:8081/api/';
 
     // 请求拦截器
     axios.interceptors.request.use(
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{   // 组件数据
         if (sessionStorage.getItem('token') && conf.headers) {
           conf.headers['Token'] = <string>sessionStorage.getItem("token");
         }
-        console.log("request sent: ", conf.data);
+        console.log("request sent: ", conf);
         return conf;
       },
       error => {

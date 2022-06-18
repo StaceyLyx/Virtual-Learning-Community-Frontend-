@@ -138,7 +138,7 @@ export class UploadComponent implements OnInit {
         }
       }).catch(error => {
         console.log("error: ", error.response)
-        this.message.error("任务提交失败");
+        this.message.error("任务提交失败，查看是否ddl到期或重新尝试一次吧！");
       })
     }else{
       const formData = new FormData();
@@ -160,7 +160,7 @@ export class UploadComponent implements OnInit {
         }
       }).catch(error => {
         console.log("error: ", error.response)
-        this.message.error("任务提交失败");
+        this.message.error("任务提交失败，查看是否ddl到期或重新尝试一次吧！");
       })
     }
   }

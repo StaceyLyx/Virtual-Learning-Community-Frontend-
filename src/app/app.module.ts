@@ -67,6 +67,7 @@ import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
 import { StatusTransformPipe } from './pipes/status-transform.pipe';
 import { NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import { PersonalFreeTaskComponent } from './components/personal/personal-free-task/personal-free-task.component';
+import { ProcessTransformPipe } from './pipes/process-transform.pipe';
 registerLocaleData(zh);
 
 @NgModule({
@@ -96,6 +97,7 @@ registerLocaleData(zh);
     GroupNameTransformPipe,
     StatusTransformPipe,
     PersonalFreeTaskComponent,
+    ProcessTransformPipe,
   ],
   imports: [          // 项目依赖模块
     BrowserModule,

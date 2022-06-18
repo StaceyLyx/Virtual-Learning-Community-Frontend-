@@ -36,52 +36,111 @@
     <nz-content style="background-color: white;">
       <nz-tabset nzType="card" nzSize="large" nzCentered="true">
         <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="团队任务">
-          <nz-table nzTableLayout="fixed" #borderedTable nzBordered [nzData]="tableDataGroup">
+          <nz-table #tableGroup [nzData]="tableDataGroup" nzTableLayout="fixed">
             <thead>
             <tr>
-              <th>任务名称</th>
-              <th>任务类型</th>
-              <th>任务人数</th>
-              <th>截止日期</th>
-
-              <th>操作</th>
+              <th nzWidth="60px"></th>
+              <th
+                *ngFor="let column of listOfColumns"
+                [nzSortOrder]="column.sortOrder"
+                [nzSortFn]="column.sortFn"
+                [nzSortDirections]="column.sortDirections">
+                {{ column.name }}
+              </th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let data of tableDataGroup, let i = index">
-              <td>{{ data.name }}</td>
-              <td>{{ data.optional |optionalTransform}}</td>
-              <td>{{ data.teamSize|teamSizeTransform }}</td>
-              <td>{{ data.ddl }}</td>
-              <td>
-                <button nz-button nzType="default" (click)="checkFile(data.id,data.name)">查看</button>
-
-                <button nz-button nzType="default" (click)="passGroup(data.id,data.name)">通过</button></td>
-            </tr>
-
+            <ng-container *ngFor="let data of tableGroup.data">
+              <tr>
+                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td>{{ data.name }}</td>
+                <td>{{data.uploaderUsername}}</td>
+                <td>{{ data.optional | optionalTransform}}</td>
+                <td>{{ data.teamSize | teamSizeTransform}}</td>
+                <td>{{ data.ddl | date }}</td>
+                <td>
+                  <button nz-button nzType="default" (click)="passGroup(data.userId, data.groupId, data.id)">
+                    检查通过
+                  </button>
+                </td>
+                <td>
+                  <button nz-button nzType="default" (click)="downloadGroupFile(data.groupId, data.file)">
+                    下载附加提交文件
+                  </button>
+                </td>
+              </tr>
+              <tr [nzExpand]="expandSet.has(data.id)">
+                <nz-descriptions nzTitle="任务详情">
+                  <nz-descriptions-item nzTitle="任务名称">{{data.name}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务类型">{{data.optional | optionalTransform}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务经验值">{{data.ev}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务发布者">{{data.publisher_name}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="发布者联系电话">{{data.publisher_phone}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="发布者联系邮箱">{{data.publisher_email}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务状态">{{data.validity | validityTransform}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务截止日期">{{data.ddl | date}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务描述">{{data.description}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者">{{data.uploaderUsername}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者联系电话">{{data.uploaderPhone}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者邮箱">{{data.uploaderEmail}}</nz-descriptions-item>
+                </nz-descriptions>
+              </tr>
+            </ng-container>
             </tbody>
           </nz-table>
         </nz-tab>
 
         <nz-tab style="width: 50%;font-family: cursive;color: black;" nzTitle="个人任务">
-          <nz-table nzTableLayout="fixed"  #borderedTable nzBordered [nzData]="tableDataPerson">
+          <nz-table #tablePerson [nzData]="tableDataPerson" nzTableLayout="fixed">
             <thead>
             <tr>
-              <th>任务名称</th>
-              <th>任务类型</th>
-              <th>截止日期</th>
-              <th>操作</th>
+              <th nzWidth="60px"></th>
+              <th
+                *ngFor="let column of listOfColumns"
+                [nzSortOrder]="column.sortOrder"
+                [nzSortFn]="column.sortFn"
+                [nzSortDirections]="column.sortDirections">
+                {{ column.name }}
+              </th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let data of tableDataPerson, let i = index">
-              <td>{{ data.name }}</td>
-              <td>{{ data.optional|optionalTransform }}</td>
-              <td>{{ data.ddl|teamSizeTransform}}</td>
-              <td>
-                <button nz-button nzType="default" (click)="passPerson(data.id,data.name)">通过</button></td>
-            </tr>
-
+            <ng-container *ngFor="let data of tablePerson.data">
+              <tr>
+                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td>{{ data.name }}</td>
+                <td>{{data.uploaderUsername}}</td>
+                <td>{{ data.optional | optionalTransform}}</td>
+                <td>{{ data.teamSize | teamSizeTransform}}</td>
+                <td>{{ data.ddl | date }}</td>
+                <td>
+                  <button nz-button nzType="default" (click)="passPerson(data.userId, data.id)">
+                    检查通过
+                  </button>
+                </td>
+                <td>
+                  <button nz-button nzType="default" (click)="downloadPersonalFile(data.userId, data.id, data.name)">
+                    下载附加提交文件
+                  </button>
+                </td>
+              </tr>
+              <tr [nzExpand]="expandSet.has(data.id)">
+                <nz-descriptions nzTitle="任务详情">
+                  <nz-descriptions-item nzTitle="任务名称">{{data.name}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务类型">{{data.optional | optionalTransform}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务经验值">{{data.ev}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务发布者">{{data.publisher_name}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="发布者联系电话">{{data.publisher_phone}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="发布者联系邮箱">{{data.publisher_email}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务状态">{{data.validity | validityTransform}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务截止日期">{{data.ddl | date}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="任务描述">{{data.description}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者">{{data.uploaderUsername}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者联系电话">{{data.uploaderPhone}}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="提交者邮箱">{{data.uploaderEmail}}</nz-descriptions-item>
+                </nz-descriptions>
+              </tr>
+            </ng-container>
             </tbody>
           </nz-table>
         </nz-tab>

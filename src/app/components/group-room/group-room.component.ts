@@ -71,7 +71,8 @@ export class GroupRoomComponent implements OnInit {
           this.roomService.socketSend(this.roomId).subscribe(
             raw => {
               let data = JSON.parse(raw);
-              console.log("message data: " + data);
+              console.log("data: ");
+              console.log(data);
               this.data = [
                 ...this.data,
                 {
