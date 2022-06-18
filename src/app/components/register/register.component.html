@@ -7,8 +7,12 @@
     <form class="form" nz-form [formGroup]="infoForm" (ngSubmit)="submit()">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不得为空">
-          <input nz-input formControlName="username" id="username" />
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="error">
+          <input nz-input formControlName="username" id="username" (ngModelChange)="updateUsernameConform()"/>
+          <ng-template #error let-control>
+            <ng-container *ngIf="control.hasError('required')">用户名不得为空</ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">用户名已被注册</ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
@@ -17,7 +21,7 @@
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="性别不得为空，系统将依据性别为您生成虚拟形象">
           <nz-radio-group id="gender" formControlName="gender">
             <label nz-radio nzValue="man">男</label>
-            <label nz-radio nzValue="woman">女</label>
+            <label nz-radio nzValue="woman" style="margin-left: 20px">女</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>

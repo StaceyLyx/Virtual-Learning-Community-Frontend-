@@ -65,7 +65,7 @@ import {RoomWSService} from "./services/room-ws.service";
 import { GenderTransformPipe } from './pipes/gender-transform.pipe';
 import { GroupNameTransformPipe } from './pipes/group-name-transform.pipe';
 import { StatusTransformPipe } from './pipes/status-transform.pipe';
-import {NzCheckboxComponent, NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import { NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import { PersonalFreeTaskComponent } from './components/personal/personal-free-task/personal-free-task.component';
 registerLocaleData(zh);
 

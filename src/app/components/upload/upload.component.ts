@@ -118,28 +118,51 @@ export class UploadComponent implements OnInit {
   }
 
   handleUpload(): void {
-    const formData = new FormData();
-    formData.append('userId', <string>sessionStorage.getItem("userId"));
-    formData.append('taskId', <string><unknown>this.taskId);
-    this.fileList.forEach((file: any) => {
-      formData.append('file', file);
-    });
-
-    axios.put('submitPersonalTask', formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+    if(this.task.teamSize === 1){
+      const formData = new FormData();
+      formData.append('userId', <string>sessionStorage.getItem("userId"));
+      formData.append('taskId', <string><unknown>this.taskId);
+      this.fileList.forEach((file: any) => {
+        formData.append('file', file);
+      });
+      axios.put('submitPersonalTask', formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
         }
-      }
-    ).then(response => {
-      console.log("response: ", response)
-      if(response.status === 200){
-        this.message.success("任务提交成功！");
-      }
-    }).catch(error => {
-      console.log("error: ", error.message)
-      this.message.error("任务提交失败");
-    })
+      ).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.message.success("任务提交成功！");
+        }
+      }).catch(error => {
+        console.log("error: ", error.response)
+        this.message.error("任务提交失败");
+      })
+    }else{
+      const formData = new FormData();
+      formData.append('userId', <string>sessionStorage.getItem("userId"));
+      formData.append('groupId', <string><unknown>this.groupId);
+      this.fileList.forEach((file: any) => {
+        formData.append('file', file);
+      });
+      axios.put('submitGroupTask', formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        }
+      ).then(response => {
+        console.log("response: ", response)
+        if(response.status === 200){
+          this.message.success("任务提交成功！");
+        }
+      }).catch(error => {
+        console.log("error: ", error.response)
+        this.message.error("任务提交失败");
+      })
+    }
   }
 
   // 分配经验值

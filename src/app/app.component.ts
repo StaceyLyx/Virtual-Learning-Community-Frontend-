@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import axios from "axios";
-import {HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',     // 组件名称

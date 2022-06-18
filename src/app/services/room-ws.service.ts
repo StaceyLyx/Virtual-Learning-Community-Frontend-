@@ -12,7 +12,7 @@ export class RoomWSService {
 
   socketSend(roomId: number): Observable<any>{
     let userId = parseInt(<string>sessionStorage.getItem("userId"));
-    this.ws = new WebSocket('ws://localhost:8081/api/ws/room/' + userId + "/" + roomId + "/0/0");
+    this.ws = new WebSocket('ws://106.15.170.212:8011/api/ws/room/' + userId + "/" + roomId + "/0/0");
     if('WebSocket' in window){
       return new Observable(observer => {
         if(this.ws){

@@ -54,7 +54,7 @@ export class TaskListComponent implements OnInit {
       }
     }).then((response) =>{
       console.log("response", response)
-      if(response.status == 200){
+      if(response.status === 200){
         this.tableData = response.data.result;
 
         // 获取该用户接受过的任务
@@ -64,7 +64,7 @@ export class TaskListComponent implements OnInit {
           }
         }).then((res) =>{
           console.log(res)
-          if(res.status == 200){
+          if(res.status === 200){
             this.acceptedTask = res.data;
 
             // 查看是否有用户接受过的任务

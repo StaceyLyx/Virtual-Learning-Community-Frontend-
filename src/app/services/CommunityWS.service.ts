@@ -10,7 +10,7 @@ export class CommunityWSService {
 
   socketSend(x: number, y: number): Observable<any>{
     let userId = parseInt(<string>sessionStorage.getItem("userId"));
-    let ws = new WebSocket('ws://localhost:8081/api/ws/community/' + userId + "/" + x + "/" + y);
+    let ws = new WebSocket('ws://106.15.170.212:8011/api/ws/community/' + userId + "/" + x + "/" + y);
     if('WebSocket' in window){
       return new Observable(observer => {
         ws.onopen = function (event){
