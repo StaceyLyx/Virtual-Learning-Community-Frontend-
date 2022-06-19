@@ -117,7 +117,9 @@ export class UploadComponent implements OnInit {
     })
   }
 
+  uploading: boolean = false;
   handleUpload(): void {
+    this.uploading = true;
     if(this.task.teamSize === 1){
       const formData = new FormData();
       formData.append('userId', <string>sessionStorage.getItem("userId"));
@@ -125,6 +127,7 @@ export class UploadComponent implements OnInit {
       this.fileList.forEach((file: any) => {
         formData.append('file', file);
       });
+
       axios.put('submitPersonalTask', formData,
         {
           headers: {
@@ -135,10 +138,12 @@ export class UploadComponent implements OnInit {
         console.log("response: ", response)
         if(response.status === 200){
           this.message.success("任务提交成功！");
+          this.uploading = false;
         }
       }).catch(error => {
         console.log("error: ", error.response)
         this.message.error("任务提交失败，查看是否ddl到期或重新尝试一次吧！");
+        this.uploading = false;
       })
     }else{
       const formData = new FormData();
@@ -157,10 +162,12 @@ export class UploadComponent implements OnInit {
         console.log("response: ", response)
         if(response.status === 200){
           this.message.success("任务提交成功！");
+          this.uploading = false;
         }
       }).catch(error => {
         console.log("error: ", error.response)
         this.message.error("任务提交失败，查看是否ddl到期或重新尝试一次吧！");
+        this.uploading = false;
       })
     }
   }
@@ -199,7 +206,11 @@ export class UploadComponent implements OnInit {
         }
       }).catch(error => {
         console.log("error: ", error.response)
-        this.message.error("分配失败，请重试！");
+        if(error.response.data.message === "GroupTask hasn't been checked"){
+          this.message.error("该任务该没有被检查通过，再等等吧！");
+        }else{
+          this.message.error("分配失败，请重试！");
+        }
       })
     }
   }

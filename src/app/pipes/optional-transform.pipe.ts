@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class OptionalTransformPipe implements PipeTransform {
 
   transform(value: number): string {
-    if (value === 0){
+    if (value === 1){
       return "必修";
     }else{
       return "选修";

@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{   // 组件数据
 
   ngOnInit(): void {
     // 修改前缀接口
-    axios.defaults.baseURL = 'http://localhost:8081/api/';
+    axios.defaults.baseURL = '/api/';
 
     // 请求拦截器
     axios.interceptors.request.use(

@@ -34,6 +34,9 @@ export class ClassComponent implements OnInit {
 
   onlineDraw = false;
 
+  classId = 0;
+  className = '';
+
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private notification: NzNotificationService,
@@ -41,23 +44,21 @@ export class ClassComponent implements OnInit {
               private classService: ClassWSService) { }
 
   ngOnInit(): void {
-    let classId = 0;
-    let className = '';
 
     // 获取课堂信息
     this.activatedRoute.queryParams.subscribe(queryParams => {
-      classId = queryParams['classId'];
-      className = queryParams['className'];
+      this.classId = queryParams['classId'];
+      this.className = queryParams['className'];
     })
 
     this.notification.blank(
-        '欢迎来到 ' + className + ' 课堂',
+        '欢迎来到 ' + this.className + ' 课堂',
         '点击白板来查看该课堂的任务吧！点击教室门也可以回到社区哦',
       { nzDuration: 0 }
       );
 
     // 发送进入房间信息
-    this.classService.socketSend(classId
+    this.classService.socketSend(this.classId
       , 100 + parseInt(<string>sessionStorage.getItem("userId")) * 2
       , 80 + parseInt(<string>sessionStorage.getItem("userId"))).subscribe(
       raw => {
@@ -104,20 +105,18 @@ export class ClassComponent implements OnInit {
       // 点击前往课堂任务
       const intersect = intersects.filter(intersect => ClassComponent.task(intersect.object))[0];
       if(intersect != undefined){
-        // 需要先移除three.js渲染的canvas标签
-        const div = document.getElementsByTagName('canvas')[0]
-        document.body.removeChild(div);
-
         this.router.navigate(["class/tasks"], {
           queryParams: {
-            classId: classId,
-            className: className,
+            classId: this.classId,
+            className: this.className,
           }
         }).then(r => {
           if (r) {
             console.log("navigate to tasks of class");
+            // 跳转成功后需要移除three.js渲染的canvas标签
+            const div = document.getElementsByTagName('canvas')[0]
+            document.body.removeChild(div);
           } else {
-            this.message.warning('跳转失败');
             console.log("navigate failed");
           }
         })
@@ -155,7 +154,7 @@ export class ClassComponent implements OnInit {
             this.isVisibleUser = true;
           }
         }).catch(error => {
-          console.log("error: ", error);
+          console.log("error: ", error.response.data);
         })
       }
 

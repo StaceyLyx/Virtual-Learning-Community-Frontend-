@@ -142,9 +142,6 @@ export class CommunitySceneComponent implements OnInit {
   }
 
   routeToClassroom(id: number, name: string){
-    // 通过移除挂载dom节点删除
-    const div = document.getElementsByTagName('canvas')[0];
-    document.body.removeChild(div);
 
     //关于携带参数的问题
     this.router.navigate(["class"], {
@@ -155,6 +152,9 @@ export class CommunitySceneComponent implements OnInit {
     }).then(r => {
       if (r) {
         console.log("navigate to class")
+        // 跳转成功后通过移除挂载dom节点删除
+        const div = document.getElementsByTagName('canvas')[0];
+        document.body.removeChild(div);
       } else {
         console.log("navigate failed")
       }

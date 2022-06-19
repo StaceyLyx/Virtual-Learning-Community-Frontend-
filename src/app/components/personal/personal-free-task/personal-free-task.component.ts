@@ -26,7 +26,8 @@ export class PersonalFreeTaskComponent implements OnInit {
 
   constructor(private message: NzMessageService) { }
 
-  tableData: any = []
+  tableDataGroup: any = []
+  tableDataPerson: any = []
 
   expandSet = new Set<number>();
   listOfColumns: ColumnItem[] = [
@@ -69,17 +70,16 @@ export class PersonalFreeTaskComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const formData = new FormData();
-    formData.append('userId', <string>sessionStorage.getItem("userId"));
-
+    let params = new URLSearchParams();
+    params.append('userId', <string>sessionStorage.getItem("userId"));
+    console.log(sessionStorage.getItem("token"));
     axios.post('retrieveTasks/unfinishedFree',
-      {
-        userId: sessionStorage.getItem("userId"),
-      }
+      params
     ).then(response => {
       console.log("response: ", response)
       if(response.status === 200){
-        this.tableData = response.data;
+        this.tableDataPerson = response.data.personalFree;
+        this.tableDataGroup = response.data.groupFree;
       }
     }).catch(error => {
       console.log("error: ", error.response.data)
@@ -95,83 +95,83 @@ export class PersonalFreeTaskComponent implements OnInit {
     }
   }
 
-  downloadFile(userId: number, taskId: number, taskName: string, teamSize: number) {
-    if(teamSize === 1){
-      axios.get('downloadFile/personalTask', {
-        params: {
-          taskId: taskId,
-          userId: userId,
-        },
-        responseType: 'blob',
-      }).then((response) => {
-        console.log("response: ", response);
-        const blob = new Blob([response.data])
-        const fileName = taskName;
-        const fileURL = window.URL.createObjectURL(blob);
-        const fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.setAttribute('download', fileName);
-        document.body.appendChild(fileLink);
-        fileLink.click();
-      }).catch((err) => {
-        console.log(err.response);
-      })
-    }else{
-      axios.get('downloadFile/groupTask', {
-        params: {
-          groupId: taskId,
-          userId: sessionStorage.getItem("userId"),
-        },
-        responseType: 'blob',
-      }).then((response) => {
-        console.log("response: ", response);
-        const blob = new Blob([response.data])
-        const fileName = taskName;
-        const fileURL = window.URL.createObjectURL(blob);
-        const fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.setAttribute('download', fileName);
-        document.body.appendChild(fileLink);
-        fileLink.click();
-      }).catch((err) => {
-        console.log("error: ", err);
-      })
-    }
+  downloadPersonalFile(userId: number, taskId: number, taskName: string) {
+    axios.get('downloadFile/personalTask', {
+      params: {
+        taskId: taskId,
+        userId: userId,
+      },
+      responseType: 'blob',
+    }).then((response) => {
+      console.log("response: ", response);
+      const blob = new Blob([response.data])
+      const fileName = taskName;
+      const fileURL = window.URL.createObjectURL(blob);
+      const fileLink = document.createElement('a');
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', fileName);
+      document.body.appendChild(fileLink);
+      fileLink.click();
+    }).catch((err) => {
+      console.log(err.response);
+    })
   }
 
-  pass(userId: number, groupId: number, taskId: number, teamSize: number) {
-    if(teamSize === 1){
-      axios.put('admin/checkCompletion/personalTask', {
-        userId: userId,
-        taskId: taskId,
-      }).then((response) => {
-        console.log("response: ", response);
-        if (response.status === 200) {
-          this.message.success("审核成功，该任务已通过");
-        }
-      }).catch((error) => {
-        console.log(error);
-        if (error.response.status === 400) {
-          this.message.error("审核失败，请联系管理员");
-        }
-      })
-    }else{
-      axios.put('admin/checkCompletion/groupTask', {
-        userId: userId,
+  downloadGroupFile(groupId: number, taskName: string) {
+    axios.get('downloadFile/groupTask', {
+      params: {
         groupId: groupId,
-        taskId: taskId,
-      }).then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          this.message.success("审核成功，该任务已通过");
-        }
-      }).catch((error) => {
-        console.log(error);
-        if (error.response.status === 400) {
-          this.message.error("审核失败，请联系管理员");
-        }
-      })
-    }
+        userId: sessionStorage.getItem("userId"),
+      },
+      responseType: 'blob',
+    }).then((response) => {
+      console.log("response: ", response);
+      const blob = new Blob([response.data])
+      const fileName = taskName;
+      const fileURL = window.URL.createObjectURL(blob);
+      const fileLink = document.createElement('a');
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', fileName);
+      document.body.appendChild(fileLink);
+      fileLink.click();
+    }).catch((err) => {
+      console.log("error: ", err);
+    })
   }
 
+  passGroup(groupId: number, taskId: number) {
+    axios.put('checkCompletion/freeGTask', {
+      nowId: sessionStorage.getItem("userId"),
+      groupId: groupId,
+      taskId: taskId,
+    }).then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        this.message.success("审核成功，该任务已通过");
+      }
+    }).catch((error) => {
+      console.log(error);
+      if (error.response.status === 400) {
+        this.message.error("审核失败，请联系管理员");
+      }
+    })
+  }
+
+  passPerson(userId: number, taskId: number) {
+    axios.put('checkCompletion/freeTask', {
+      nowId: sessionStorage.getItem("userId"),
+      userId: userId,
+      taskId: taskId,
+    }).then((response) => {
+      console.log("response: ", response);
+      if (response.status === 200) {
+        this.message.success("审核成功，该任务已通过");
+      }
+    }).catch((error) => {
+      console.log(error);
+      if (error.response.status === 400) {
+        this.message.error("审核失败，请联系管理员");
+      }
+    })
+  }
 }
