@@ -29,8 +29,10 @@
 
   <nz-modal [(nzVisible)]="isVisible" nzTitle="设置小组信息" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent style="text-align: center">
-      <input nz-input placeholder="组名" style="width: 200px;margin-left: 30%"
-             [(ngModel)]="groupName" />
+      <label>
+        <input nz-input placeholder="组名" style="width: 200px;margin-left: 30%"
+               [(ngModel)]="groupName" />
+      </label>
       <p></p>
       <nz-select [(ngModel)]="groupLeader" nzAllowClear nzPlaceHolder="组长" style="width: 200px;margin-left: 30%">
         <nz-option *ngFor="let member of members"
@@ -76,7 +78,9 @@
         <nz-avatar nz-comment-avatar nzText="Me"></nz-avatar>
         <nz-comment-content>
           <nz-form-item>
-            <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+            <label>
+              <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+            </label>
           </nz-form-item>
           <nz-form-item>
             <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">

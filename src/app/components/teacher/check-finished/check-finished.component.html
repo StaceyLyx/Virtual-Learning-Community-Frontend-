@@ -52,7 +52,7 @@
             <tbody>
             <ng-container *ngFor="let data of tableGroup.data">
               <tr>
-                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td [nzExpand]="expandSet.has(data.acceptId)" (nzExpandChange)="onExpandChange(data.acceptId, $event)"></td>
                 <td>{{ data.name }}</td>
                 <td>{{data.uploaderUsername}}</td>
                 <td>{{ data.optional | optionalTransform}}</td>
@@ -69,7 +69,7 @@
                   </button>
                 </td>
               </tr>
-              <tr [nzExpand]="expandSet.has(data.id)">
+              <tr [nzExpand]="expandSet.has(data.acceptId)">
                 <nz-descriptions nzTitle="任务详情">
                   <nz-descriptions-item nzTitle="任务名称">{{data.name}}</nz-descriptions-item>
                   <nz-descriptions-item nzTitle="任务类型">{{data.optional | optionalTransform}}</nz-descriptions-item>
@@ -107,7 +107,7 @@
             <tbody>
             <ng-container *ngFor="let data of tablePerson.data">
               <tr>
-                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td [nzExpand]="expandSet.has(data.acceptId)" (nzExpandChange)="onExpandChange(data.acceptId, $event)"></td>
                 <td>{{ data.name }}</td>
                 <td>{{data.uploaderUsername}}</td>
                 <td>{{ data.optional | optionalTransform}}</td>
@@ -124,7 +124,7 @@
                   </button>
                 </td>
               </tr>
-              <tr [nzExpand]="expandSet.has(data.id)">
+              <tr [nzExpand]="expandSet.has(data.acceptId)">
                 <nz-descriptions nzTitle="任务详情">
                   <nz-descriptions-item nzTitle="任务名称">{{data.name}}</nz-descriptions-item>
                   <nz-descriptions-item nzTitle="任务类型">{{data.optional | optionalTransform}}</nz-descriptions-item>

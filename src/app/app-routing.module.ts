@@ -7,7 +7,6 @@ import { AssignTaskComponent } from "./components/teacher/assign-task/assign-tas
 import { TaskListComponent} from "./components/task-list/task-list.component";
 import { UploadComponent} from "./components/upload/upload.component";
 import { CommunitySceneComponent} from "./components/community-scene/community-scene.component";
-import { PersonImageComponent } from './components/personal/person-image/person-image.component';
 import { PersonalInfoComponent } from './components/personal/personal-info/personal-info.component';
 import { CheckComponent } from './components/teacher/check/check.component';
 import { PersonTaskComponent } from './components/personal/person-task/person-task.component';
@@ -27,7 +26,6 @@ const routes: Routes = [
   { path: 'class/tasks', component: TaskListComponent},
   // 个人资料
   { path: 'personalInfo', component: PersonalInfoComponent},
-  { path: 'personalInfo/Image', component: PersonImageComponent},
   { path: 'personalInfo/Task', component: PersonTaskComponent},
   { path: 'personalInfo/freeTask', component: FreeTaskComponent},
   { path: 'personalInfo/myFreeTask', component: PersonalFreeTaskComponent},

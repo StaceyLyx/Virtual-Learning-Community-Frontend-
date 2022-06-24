@@ -40,22 +40,13 @@ export class TaskListComponent implements OnInit {
   acceptedTask: any = [];
 
   ngOnInit(): void {
-    this.classId = 0;
-    this.className = "";
     // 获取课堂id
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.classId = queryParams['classId'];
       this.className = queryParams['className'];
     })
 
-    console.log(this.classId);
-    console.log(this.className);
-
-    this.getTasks();
-  }
-
-  // 获取课堂任务
-  getTasks(){
+    // 获取课堂任务
     axios.get('retrieveTasks/class', {
       params: {
         classId: this.classId,

@@ -35,7 +35,6 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {CommunitySceneComponent} from "./components/community-scene/community-scene.component";
 import {PersonalInfoComponent} from "./components/personal/personal-info/personal-info.component";
 import {PersonalSideComponent} from "./components/personal/personal-side/personal-side.component";
-import {PersonImageComponent} from "./components/personal/person-image/person-image.component";
 import {PersonTaskComponent} from "./components/personal/person-task/person-task.component";
 import {MenuComponent} from "./components/personal/menu/menu.component";
 import {CheckComponent} from "./components/teacher/check/check.component";
@@ -82,7 +81,6 @@ registerLocaleData(zh);
     PersonalInfoComponent,
     MenuComponent,
     PersonalSideComponent,
-    PersonImageComponent,
     PersonTaskComponent,
     CheckComponent,
     CheckFinishedComponent,

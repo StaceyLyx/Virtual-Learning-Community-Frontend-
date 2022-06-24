@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.infoForm = this.formBuilder.group({
-      username: [null, [Validators.required, this.confirmUsername]],
+      username: [null, [Validators.required]],
       email: [null, [Validators.email, Validators.required]],
       gender: [null, [Validators.required]],
       password: [null, [Validators.required]],
@@ -57,9 +57,9 @@ export class RegisterComponent implements OnInit {
             })
           }
         }).catch((error) =>{
-          console.log("error: " + error);
+          console.log(error.response);
           if(error.response.status === 400){
-            this.message.error("注册失败，密码长度需要有4-16位");
+            this.message.error("注册失败，" + error.response.data.message);
           }else{
             this.message.error("后端错误")
           }
@@ -78,36 +78,12 @@ export class RegisterComponent implements OnInit {
     Promise.resolve().then(() => this.infoForm.controls['passwordConfirm'].updateValueAndValidity());
   }
 
-  updateUsernameConform(): void{
-    Promise.resolve().then(() => this.infoForm.controls['username'].updateValueAndValidity());
-  }
-
   confirmPassword = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
     } else if (control.value !== this.infoForm.controls['password'].value) {
       return { confirm: true, error: true };
     }
-    return {};
-  };
-
-  confirmUsername = (control: FormControl): { [s: string]: boolean } => {
-    const formData = new FormData();
-    formData.append('userName', control.value);
-
-    axios.post('username', formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      }
-    ).then(response => {
-      console.log("response: ", response)
-      return {};
-    }).catch(error => {
-      console.log("error: ", error.message)
-      return { confirm: true, error: true };
-    })
     return {};
   };
 }

@@ -7,12 +7,8 @@
     <form class="form" nz-form [formGroup]="infoForm" (ngSubmit)="submit()">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="error">
-          <input nz-input formControlName="username" id="username" (ngModelChange)="updateUsernameConform()"/>
-          <ng-template #error let-control>
-            <ng-container *ngIf="control.hasError('required')">用户名不得为空</ng-container>
-            <ng-container *ngIf="control.hasError('confirm')">用户名已被注册</ng-container>
-          </ng-template>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不得为空">
+          <label for="username"></label><input nz-input formControlName="username" id="username" />
         </nz-form-control>
       </nz-form-item>
 
@@ -29,14 +25,14 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不得为空">
-          <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()"/>
+          <label for="password"></label><input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()"/>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="passwordConfirm" nzRequired>确认密码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
-          <input nz-input type="password" formControlName="passwordConfirm" id="passwordConfirm" />
+          <label for="passwordConfirm"></label><input nz-input type="password" formControlName="passwordConfirm" id="passwordConfirm" />
           <ng-template #errorTpl let-control>
             <ng-container *ngIf="control.hasError('required')">确认密码不得为空</ng-container>
             <ng-container *ngIf="control.hasError('confirm')">
@@ -49,7 +45,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="邮箱格式不正确">
-          <input nz-input formControlName="email" id="email" />
+          <label for="email"></label><input nz-input formControlName="email" id="email" />
         </nz-form-control>
       </nz-form-item>
 
@@ -57,7 +53,7 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>电话号码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="infoForm.controls['phone']"
           nzErrorTip="请输入注册手机号码">
-          <input formControlName="phone" id="phone" nz-input />
+          <label for="phone"></label><input formControlName="phone" id="phone" nz-input />
         </nz-form-control>
       </nz-form-item>
 

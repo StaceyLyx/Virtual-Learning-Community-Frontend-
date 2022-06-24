@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
             })
           }
         }).catch((error) =>{
-          console.log(error);
+          console.log(error.response);
           if(error.response.status === 400){
             this.message.create('error', "用户名或密码错误")
           }

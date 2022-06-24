@@ -32,7 +32,7 @@ export class GroupRoomComponent implements OnInit {
 
   // 评论
   submitting = false;
-  inputValue = '';
+  inputValue: string = '';
 
   ngOnInit(): void {
 
@@ -73,11 +73,17 @@ export class GroupRoomComponent implements OnInit {
               let data = JSON.parse(raw);
               console.log("data: ");
               console.log(data);
+
+              let msg = <string>data['message'];
+              if(msg !== "online"){
+                msg = msg.slice(1, msg.length - 1);
+              }
+
               this.data = [
                 ...this.data,
                 {
                   username: data['susername'],
-                  message: data['message'],
+                  message: msg,
                 }
               ]
             }
