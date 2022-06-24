@@ -32,7 +32,7 @@ export class GroupRoomComponent implements OnInit {
 
   // 评论
   submitting = false;
-  inputValue: string = '';
+  inputValue?: string;
 
   ngOnInit(): void {
 
@@ -127,23 +127,25 @@ export class GroupRoomComponent implements OnInit {
   handleSubmit(): void {
     this.submitting = true;
     // 发出信息
-    this.roomService.sendMessage(this.inputValue);
-    // 渲染自己的消息
-    this.data = [
-      ...this.data,
-      {
-        username: "Me",
-        message: this.inputValue,
-      }
-    ]
+    if(this.inputValue){
+      this.roomService.sendMessage(this.inputValue);
+      // 渲染自己的消息
+      this.data = [
+        ...this.data,
+        {
+          username: "Me",
+          message: this.inputValue,
+        }
+      ]
+    }
 
     this.submitting = false;
     this.inputValue = '';
   }
 
   isVisible = false;
-  groupName: string = "";
-  groupLeader: string = "";
+  groupName?: string;
+  groupLeader?: string;
   assignGroupInfo(){
     axios.put('assignGroupInfo',
       {

@@ -12,7 +12,7 @@ export class PersonalInfoComponent implements OnInit {
 
   info: any;
 
-  status: string = "";
+  status?: string;
 
   ngOnInit(): void {
     axios.get('retrieveUserInfo', {
@@ -38,27 +38,31 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   statusConfirm(){
-    const formData = new FormData();
-    formData.append('userId', <string>sessionStorage.getItem("userId"));
-    formData.append('status', this.status);
+    if(this.status){
+      const formData = new FormData();
+      formData.append('userId', <string>sessionStorage.getItem("userId"));
+      formData.append('status', this.status);
 
-    axios.post('changeStatus', formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      axios.post('changeStatus', formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
         }
-      }
-    ).then(response => {
-      console.log("response: ", response)
-      if (response.status === 200) {
-        this.message.success("设置成功");
-      }
-    }).catch(error => {
-      console.log(error.response);
-      if(error.response.status === 400){
-        this.message.error("设置失败");
-      }
-    })
+      ).then(response => {
+        console.log("response: ", response)
+        if (response.status === 200) {
+          this.message.success("设置成功");
+        }
+      }).catch(error => {
+        console.log(error.response);
+        if(error.response.status === 400){
+          this.message.error("设置失败");
+        }
+      })
+    }else{
+      this.message.error("请填写你的状态信息");
+    }
   }
 
 }

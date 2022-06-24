@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ElModule } from "element-angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClassComponent } from './components/class/class.component';
@@ -102,7 +101,6 @@ registerLocaleData(zh);
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ElModule.forRoot(),
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
